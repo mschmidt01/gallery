@@ -700,7 +700,7 @@ var render = function() {
           _c(
             "router-link",
             { staticClass: "navbar-brand", attrs: { to: { name: "home" } } },
-            [_vm._v("Projekt")]
+            [_vm._v("BOS PROJEKT")]
           ),
           _vm._v(" "),
           _c(
