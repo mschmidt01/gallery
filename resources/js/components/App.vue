@@ -1,23 +1,30 @@
 <template>
     <div>
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <router-link :to="{name: 'home'}" class="navbar-brand">BOS PROJEKT</router-link>
-                <router-link :to="{name: 'quiz'}" class="navbar-brand">QUIZ</router-link>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto"></ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-link"> Hi, There</li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+        <ul class="navbar navbar-fixed-top">
+            <li><a href="index.php?inhalt=home">BILDER</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="" aria-expanded="false">INFORMATIONEN
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <router-link :to="{name: 'home'}" class="navbar-brand">BOS PROJEKT</router-link>
+                    <router-link :to="{name: 'pattern'}" class="navbar-brand">Trainer Muster</router-link>
+                    <li><a href="index.php?inhalt=statistic">Statistik</a></li>
+                </ul>
+            </li>
+            <router-link :to="{name: 'live'}" class="navbar-brand">BoS LIVE</router-link>
+            <router-link :to="{name: 'snippets'}" class="navbar-brand">Snippets</router-link>
+            <router-link :to="{name: 'quiz'}" class="navbar-brand">QUIZ</router-link>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">HILFE <span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <router-link :to="{name: 'quiz'}" class="navbar-brand">FRAGEN</router-link>
+                    <router-link :to="{name: 'functions'}" class="navbar-brand">FUNKTIONEN</router-link>
+                    <li role="presentation" class="divider"></li>
+                    <li><a href="index.php?inhalt=about">ÜBER</a></li>
+                </ul>
+            </li>
+        </ul>
         <div class="row justify-content-center">
             <div id="Inhalt" class="col-md-9 col-md-offset-1" style="padding-bottom:75px;">
                 <main class="py-4">
