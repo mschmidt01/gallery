@@ -11,13 +11,15 @@ import Live from './components/Live'
 import Snippets from './components/Snippets'
 import Questions from './components/Questions'
 import Functions from './components/Functions'
+import Home from './components/Home'
+import About from './components/About'
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/',
-            name: 'home',
+            path: '/project',
+            name: 'project',
             component: Project
         },
         {
@@ -49,6 +51,16 @@ const router = new VueRouter({
             path: '/functions',
             name: 'functions',
             component: Functions
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: Home
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: About
         }
     ],
 });
