@@ -15,5 +15,21 @@ class PictureController extends Controller
     public function getPicturesOrderdByTopic(){
         return Picture::getPicturesOrderdByTopic();
     }
+
+    public function getRatings(){
+        return Picture::getRatings();
+    }
+
+    public function getRatingsCount(){
+        return Picture::getRatingsCount();
+    }
+
+    public function getCountVotes(){
+        return Picture::getCountVotes();
+    }
+    public function getPicturesForRating($rating){
+        return Picture::getPicturesForRating($rating);
+    }
+
     //
 }

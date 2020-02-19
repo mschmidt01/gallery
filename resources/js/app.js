@@ -13,6 +13,7 @@ import Questions from './components/Questions'
 import Functions from './components/Functions'
 import Home from './components/Home'
 import About from './components/About'
+import Statistics from './components/Statistics'
 
 const router = new VueRouter({
     mode: 'history',
@@ -61,6 +62,10 @@ const router = new VueRouter({
             path: '/about',
             name: 'about',
             component: About
+        },{
+            path: '/statistics',
+            name: 'statistics',
+            component: Statistics
         }
     ],
 });

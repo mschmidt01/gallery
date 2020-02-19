@@ -7,9 +7,9 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="" aria-expanded="false">INFORMATIONEN
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <router-link :to="{name: 'project'}" class="navbar-brand">BOS PROJEKT</router-link>
-                    <router-link :to="{name: 'pattern'}" class="navbar-brand">Trainer Muster</router-link>
-                    <li><a href="index.php?inhalt=statistic">Statistik</a></li>
+                    <li><router-link :to="{name: 'project'}" class="navbar-brand">BOS PROJEKT</router-link></li>
+                    <li><router-link :to="{name: 'pattern'}" class="navbar-brand">Trainer Muster</router-link></li>
+                    <li><router-link :to="{name: 'statistics'}" class="navbar-brand">Statistik</router-link></li>
                 </ul>
             </li>
             <router-link :to="{name: 'live'}" class="navbar-brand">BoS LIVE</router-link>
