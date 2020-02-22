@@ -1985,6 +1985,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3639,136 +3674,150 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "ul",
-      { staticClass: "navbar navbar-fixed-top" },
-      [
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              { staticClass: "navbar-brand", attrs: { to: { name: "home" } } },
-              [_vm._v("BILDER")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "dropdown" }, [
+    _c("header", [
+      _c(
+        "nav",
+        {
+          staticClass: "navbar navbar-expand-md navbar-dark bg-dark sticky-top"
+        },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "navbar-brand responsive-logo",
+              attrs: { to: { name: "project" } }
+            },
+            [
+              _c("img", {
+                staticClass: "d-inline-block align-top",
+                attrs: {
+                  src: "/img/BoS-Logo.svg",
+                  width: "40",
+                  height: "40",
+                  alt: ""
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
-          _c("ul", { staticClass: "dropdown-menu" }, [
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "navbar-brand",
-                    attrs: { to: { name: "project" } }
-                  },
-                  [_vm._v("BOS PROJEKT")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "navbar-brand",
-                    attrs: { to: { name: "pattern" } }
-                  },
-                  [_vm._v("Trainer Muster")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "navbar-brand",
-                    attrs: { to: { name: "statistics" } }
-                  },
-                  [_vm._v("Statistik")]
-                )
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          { staticClass: "navbar-brand", attrs: { to: { name: "live" } } },
-          [_vm._v("BoS LIVE")]
-        ),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          { staticClass: "navbar-brand", attrs: { to: { name: "snippets" } } },
-          [_vm._v("Snippets")]
-        ),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          { staticClass: "navbar-brand", attrs: { to: { name: "quiz" } } },
-          [_vm._v("QUIZ")]
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "dropdown" }, [
-          _vm._m(1),
-          _vm._v(" "),
           _c(
-            "ul",
-            { staticClass: "dropdown-menu" },
+            "div",
+            {
+              staticClass: "collapse navbar-collapse text-center",
+              attrs: { id: "navigation" }
+            },
             [
               _c(
-                "router-link",
-                {
-                  staticClass: "navbar-brand",
-                  attrs: { to: { name: "quiz" } }
-                },
-                [_vm._v("FRAGEN")]
+                "ul",
+                { staticClass: "navbar-nav mr-auto w-100 nav-justified" },
+                [
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "home" }, href: "#" }
+                        },
+                        [_vm._v("Gallerie")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item dropdown" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          id: "test",
+                          role: "button",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [_vm._v("Learn BoS")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dropdown-menu bg-dark",
+                        attrs: { "aria-labelledby": "dropdownMenuButton" }
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "live" } }
+                          },
+                          [_vm._v("BoS Live")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "snippets" } }
+                          },
+                          [_vm._v("Snippets")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "pattern" } }
+                          },
+                          [_vm._v("Trainer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "quiz" } }
+                          },
+                          [_vm._v("Quiz")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "functions" }, href: "#" }
+                        },
+                        [_vm._v("Informationen")]
+                      )
+                    ],
+                    1
+                  )
+                ]
               ),
               _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "navbar-brand",
-                  attrs: { to: { name: "functions" } }
-                },
-                [_vm._v("FUNKTIONEN")]
-              ),
-              _vm._v(" "),
-              _c("li", {
-                staticClass: "divider",
-                attrs: { role: "presentation" }
-              }),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "navbar-brand",
-                  attrs: { to: { name: "about" } }
-                },
-                [_vm._v("Über")]
-              )
-            ],
-            1
+              _vm._m(1)
+            ]
           )
-        ])
-      ],
-      1
-    ),
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c(
@@ -3791,15 +3840,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "button",
       {
-        staticClass: "dropdown-toggle",
-        attrs: { "data-toggle": "dropdown", href: "", "aria-expanded": "false" }
+        staticClass: "navbar-toggler",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "#navigation",
+          "aria-controls": "navigation",
+          "aria-expanded": "false",
+          "aria-label": "Toggle navigation"
+        }
       },
-      [
-        _vm._v("INFORMATIONEN\n            "),
-        _c("span", { staticClass: "caret" })
-      ]
+      [_c("span", { staticClass: "navbar-toggler-icon" })]
     )
   },
   function() {
@@ -3807,12 +3860,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
-      {
-        staticClass: "dropdown-toggle",
-        attrs: { "data-toggle": "dropdown", href: "" }
-      },
-      [_vm._v("HILFE "), _c("span", { staticClass: "caret" })]
+      "button",
+      { staticClass: "btn login", attrs: { type: "button" } },
+      [_c("i", { staticClass: " fas fa-sign-in-alt " }), _vm._v(" Login")]
     )
   },
   function() {
@@ -20639,8 +20689,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
