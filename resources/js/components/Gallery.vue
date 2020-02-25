@@ -1,12 +1,16 @@
 <template>
     <div class="container-fluid">
-        <h2>Themen </h2>
-        <ul v-if="topics">
-            <li v-for="{ gallery } in topics">
-                <strong>Name:</strong> {{ gallery }}
-            </li>
-        </ul>
-        <p><b>Daten für Bilder-Gallerie in this.pictures verfügbar, siehe console.</b></p>
+        <h2>Gallery </h2>
+       <!-- <ul v-if="topics">
+
+            <div v-for="topic in topics">
+                <router-link :to="{name: 'gallery', params: {name: topic.name}}">
+                    <img v-bind:src="'/img/gallery/' +  topic.randomPicture " />
+                    <div><p></p><strong>Name:</strong> {{ topic.name }}
+                        ({{ topic.count }})</div>
+                </router-link>
+            </div>
+        </ul>-->
     </div>
 </template>
 <script>
@@ -33,13 +37,13 @@
                         this.topics = response.data;
                         console.log(this.topics)
                     });
-                axios
-                    .get('/api/pictures/ordered')
-                    .then(response => {
-                        this.loading = false;
-                        this.pictures = response.data;
-                        console.log(this.pictures)
-                    });
+                /* axios
+                     .get('/api/pictures/ordered')
+                     .then(response => {
+                         this.loading = false;
+                         this.pictures = response.data;
+                         console.log(this.pictures)
+                     });*/
             }
         }
     }

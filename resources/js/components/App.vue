@@ -13,7 +13,7 @@
 
                     <ul class="navbar-nav mr-auto w-100 nav-justified">
                         <li class="nav-item">
-                            <router-link :to="{name: 'home'}" class="nav-link" href="#">Gallerie</router-link>
+                            <router-link :to="{name: 'topics'}" class="nav-link" href="#">Gallerie</router-link>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn BoS</a>

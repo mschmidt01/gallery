@@ -11,9 +11,10 @@ import Live from './components/Live'
 import Snippets from './components/Snippets'
 import Questions from './components/Questions'
 import Functions from './components/Functions'
-import Home from './components/Home'
+import Topics from './components/Topics'
 import About from './components/About'
 import Statistics from './components/Statistics'
+import Gallery from './components/Gallery'
 
 const router = new VueRouter({
     mode: 'history',
@@ -54,11 +55,6 @@ const router = new VueRouter({
             component: Functions
         },
         {
-            path: '/home',
-            name: 'home',
-            component: Home
-        },
-        {
             path: '/about',
             name: 'about',
             component: About
@@ -66,6 +62,16 @@ const router = new VueRouter({
             path: '/statistics',
             name: 'statistics',
             component: Statistics
+        },
+        {
+            path: '/topics',
+            name: 'topics',
+            component: Topics
+        },
+        {
+            path: '/gallery',
+            name: 'gallery',
+            component: Gallery
         }
     ],
 });
