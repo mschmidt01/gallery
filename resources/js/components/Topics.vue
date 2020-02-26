@@ -35,7 +35,6 @@
                     .then(response => {
                         this.loading = false;
                         this.topics = response.data;
-                        console.log(this.topics)
                     });
                /* axios
                     .get('/api/pictures/ordered')

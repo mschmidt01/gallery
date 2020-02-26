@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueRouter)
+Vue.use(VueLazyload)
 
 import App from './components/App'
 import Project from './components/Project'

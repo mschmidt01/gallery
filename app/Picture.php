@@ -14,7 +14,7 @@ class Picture extends Model
     }
 
     public static function getPicturesOrderdByTopic(){
-        return Picture::all()->groupBy('Gallery');
+        return Picture::all()->groupBy('Gallery')->toArray();
     }
 
 

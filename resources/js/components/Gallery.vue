@@ -1,16 +1,11 @@
 <template>
     <div class="container-fluid">
         <h2>Gallery </h2>
-       <!-- <ul v-if="topics">
-
-            <div v-for="topic in topics">
-                <router-link :to="{name: 'gallery', params: {name: topic.name}}">
-                    <img v-bind:src="'/img/gallery/' +  topic.randomPicture " />
-                    <div><p></p><strong>Name:</strong> {{ topic.name }}
-                        ({{ topic.count }})</div>
-                </router-link>
-            </div>
-        </ul>-->
+        <ul v-if="filtered">
+            <li v-for="image in filtered">
+                <img  height="42" width="42" v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename " />
+            </li>
+        </ul>
     </div>
 </template>
 <script>
@@ -19,31 +14,34 @@
         data() {
             return {
                 loading: false,
-                topics: null,
                 error: null,
+                topic: null,
+                pictures : null,
+                filtered: null
             };
         },
         created() {
             this.fetchData();
+            this.topic = this.$route.params.name;
+            if(this.topic === undefined){
+                this.topic = "Buchstaben";
+            }
         },
         methods: {
             fetchData() {
-                this.error = this.topics = null;
                 this.loading = true;
-                axios
-                    .get('/api/topics')
-                    .then(response => {
-                        this.loading = false;
-                        this.topics = response.data;
-                        console.log(this.topics)
-                    });
-                /* axios
+
+                 axios
                      .get('/api/pictures/ordered')
                      .then(response => {
-                         this.loading = false;
                          this.pictures = response.data;
-                         console.log(this.pictures)
-                     });*/
+                         this.loading = false;
+                         //console.log(this.pictures);
+                         //console.log(this.topic);
+                         let topic = this.topic;
+                         this.filtered = response.data[topic];
+                     });
+
             }
         }
     }
