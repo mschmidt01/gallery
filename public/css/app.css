@@ -17345,6 +17345,10 @@ pre {
   color: #ddd;
 }
 
+.carousel {
+  margin-top: 1.5rem;
+}
+
 /*Navigation*/
 
 .navbar-dark .navbar-nav .nav-link {
