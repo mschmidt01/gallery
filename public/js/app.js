@@ -2750,6 +2750,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -6352,40 +6406,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex-center position-ref full-height" }, [
-    _c("div", { staticClass: "content" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("h1", { staticClass: "title" }, [_vm._v("BoS Project")]),
+    _vm._v(" "),
+    _c("section", [
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-9 col-md-offset-1" }, [
-          _vm._v(
-            "\n\n                Auf dieser Web-Site sind Bilder zusammengestellt, die in verschiedenen Lehrveranstaltungen\n                mittels "
-          ),
-          _c("em", [_vm._v("Board of Symbols")]),
-          _vm._v(
-            " (BoS) erstellt wurden.\n                Mit BoS kann man über einfache Befehle Muster erzeugen.\n                Zu wird beispielsweise mit dem Code-Abschnitt\n                "
-          ),
-          _vm._m(0),
-          _vm._v("\n                das Bild\n                "),
-          _c("div", [
-            _c("img", {
-              staticStyle: { "max-width": "100%" },
-              attrs: { src: "/img/BoS.png", alt: "BoS Screen" }
-            })
-          ]),
-          _vm._v(
-            "\n                erzeugt.\n                Informationen zum BoS-Projekt findet man auf "
-          ),
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "https://github.com/stephaneuler/board-of-symbols"
-              }
-            },
-            [_vm._v("github")]
-          )
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("img", {
+            staticClass: "mx-auto d-block",
+            staticStyle: { height: "242px" },
+            attrs: { src: "/img/BoS.png", alt: "BoS Screen" }
+          })
         ])
-      ])
-    ])
+      ]),
+      _vm._v(" "),
+      _vm._m(2)
+    ]),
+    _vm._v(" "),
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -6393,13 +6435,119 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("pre", [
-      _c("code", [
+    return _c("div", [
+      _c("p", [
         _vm._v(
-          'for( x=1; x<6;  x++ ) {\n                      for( y=x; y<6; y++ ) {\n                        farbe2( x, y, BLUE )\n                        if( x == y ) {\n                          form2( x, y, "tlu" )\n                        } else {\n                          form2( x, y, "s" )\n                       }\n                      }\n                    }\n                    '
+          "Auf dieser Web-Site sind Bilder zusammengestellt, die in verschiedenen Lehrveranstaltungen\n                    mittels "
+        ),
+        _c("em", [_vm._v("Board of Symbols")]),
+        _vm._v(
+          " (BoS) erstellt wurden.\n                    Mit BoS kann man über einfache Befehle Muster erzeugen.\n                    So wird beispielsweise mit dem Code-Abschnitt das nachfolgende Bild erzeugt:"
         )
-      ]),
-      _vm._v("\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("pre", [
+        _c("code", [
+          _vm._v(
+            'for( x=1; x<6;  x++ ) {\n    for( y=x; y<6; y++ ) {\n        farbe2( x, y, BLUE )\n        if( x == y ) {\n            form2( x, y, "tlu" )\n        } else {\n            form2( x, y, "s" )\n        }\n    }\n}'
+          )
+        ]),
+        _vm._v("\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("p", { staticClass: "pt-4 pt-md-3" }, [
+        _vm._v("Informationen zum BoS-Projekt findet man auf "),
+        _c(
+          "a",
+          {
+            attrs: { href: "https://github.com/stephaneuler/board-of-symbols" }
+          },
+          [_vm._v("github")]
+        ),
+        _vm._v(".")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", [
+        _c("h2", [_vm._v("Technologien & Umsetzung")]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Diese Web-Applikation nutzt mehrere freie Bibliotheken und Module, die nachfolgend aufgeführt\n                    sind."
+          )
+        ]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://jquery.com",
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("jQuery")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://getbootstrap.com",
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("Bootstrap")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    "https://www-coding.de/so-gehts-eigenes-captcha-mit-php/",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("Captcha-Modul\n                        von WWW Coding")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", [_vm._v("Bei der Realisierung haben mitgewirkt:")]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _vm._v(
+              "Ibrahim Nasim: erste Version mit Datenbank, Bewertung und Filterung"
+            )
+          ])
+        ])
+      ])
     ])
   }
 ]
@@ -22709,8 +22857,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

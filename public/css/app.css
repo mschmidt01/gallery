@@ -17307,6 +17307,46 @@ html {
   font-family: "Roboto";
 }
 
+/* Allegmeines */
+
+h1 {
+  text-align: center;
+  padding-top: 1.5rem;
+}
+
+h2 {
+  padding-top: 1.5rem;
+}
+
+.title::after {
+  content: " ";
+  display: block;
+  width: 25%;
+  height: 4px;
+  background-color: blue;
+  margin-left: 37%;
+  margin-top: 1.5rem;
+}
+
+section {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+p {
+  text-align: justify;
+}
+
+pre {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #272822;
+  color: #ddd;
+}
+
+/*Navigation*/
+
 .navbar-dark .navbar-nav .nav-link {
   color: white;
 }
@@ -17370,6 +17410,8 @@ i {
   color: white;
 }
 
+/*MediaQueries*/
+
 @media (min-width: 768px) {
   .test {
     background-color: #000;
@@ -17378,15 +17420,13 @@ i {
     border-radius: 0;
     width: 100%;
     border: none;
-    /*display: flex;
-    justify-content: space-between;*/
   }
 
   .nav > li.dropdown.open {
     position: static;
   }
 
-  .nav > li.dropdown.open .dropdown-menu {
+  .nav > li.dropdown.open.dropdown-menu {
     display: table;
     width: 100%;
     text-align: center;
@@ -17428,12 +17468,4 @@ i {
     margin-right: auto !important;
   }
 }
-
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
 
