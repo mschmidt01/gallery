@@ -2994,213 +2994,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      items: [{
+        title: 'Zufall',
+        code: '' + 'const n = 16;\n' + 'groesse( n, n );\n' + 'flaeche( LAVENDERBLUSH )\n' + '\n' + 'for(var x=0; x<n; x++ ) {\n' + '\tfor( var y=0;y<n; y++ ) {\n' + '\t\tvar r = Math.floor(Math.random() * 255);\n' + '\t\tvar g = Math.floor(Math.random() * 255);\n' + '\t\tvar b = Math.floor(Math.random() * 255);\n' + '\t\tfarbe2(    x, y, "rgb(" + r + "," + g + "," + b + ")" )\n' + '\t}\n' + '}'
+      }, {
+        title: 'Rahmen',
+        code: 'var n = 12;\n' + 'groesse( n, n );\n' + 'flaeche(   MOCCASIN );\n' + 'var farbe = [DARKOLIVEGREEN, BLUE, YELLOW, CRIMSON, BLACK]\n' + '\n' + 'for(var j=0; j<farbe.length; j++ ) {\n' + '\tfor( var i=0; i<n-2*j; i++ ) {\n' + '\t\tfarbe2( j, j+i, farbe[j] );\n' + '\t\tfarbe2( n-j-1, j+i, farbe[j] );\n' + '\t\tfarbe2( j+i, j, farbe[j] );\n' + '\t\tfarbe2( j+i, n-j-1, farbe[j] ); \n' + '\t}\n' + '}'
+      }, {
+        title: 'Kreuz und Quer',
+        code: 'const N = 32;\n' + 'const d = 8;\n' + '\n' + 'groesse( N, N );\n' + 'formen("s");\n' + 'farben( BLUE );\n' + '\n' + 'for( var x=0; x<N; x++ ) {\n' + '\tfor( var y=0; y<N; y++ ) {\n' + '\t\tif( (x + y) % d == 0 || (x-y) % d == 0 ) {\n' + '\t\t\tfarbe2( x, y, YELLOW );\n' + '\t\t}\n' + '\t}\n' + '}'
+      }, {
+        title: 'Textanzeiger',
+        code: 'async function textAnzeige() {\n' + '\tvar text = ""\n' + '\tfor( i=10; i>0; i-- ) {\n' + '\t\ttext +=  i + " "\n' + '\t\tstatusText(text)\n' + '\t\tawait sleep(400)\n' + '\t}\n' + '\tstatusText(text + "<br> Fertig")\n' + '}\n' + 'textAnzeige()'
+      }, {
+        title: 'Buchstabe L',
+        code: 'groesse( 10, 10 );\n' + 'for(var x=2; x<6; x++ ) {\n' + '\tfarbe2( x, 2, BLUE );\n' + '\tform2( x, 2, "s" ); \n' + '}\n' + 'for(var  y=2; y<8; y++ ) {\n' + '\tfarbe2( 2, y, BLUE );\n' + '\tform2( 2, y, "s" ); \n' + '}\n' + 'farbe2( 5,3, BLUE);\n' + 'form2( 5,3, "b");\n' + 'symbolGroesse2( 5, 3, 0.2 );'
+      }, {
+        title: 'Bubble Sort',
+        code: 'var feld = []\n' + 'const N = 10\n' + 'const warteZeit = 100\n' + '\n' + 'function aendere(i, farbe) {\n' + '\tfarbe2(i, 0, farbe);\n' + '\tsymbolGroesse2(i, 0, feld[i]);\n' + '}\n' + '\n' + 'function tausche(i, j) {\n' + '\tvar tmp = feld[i];\n' + '\tfeld[i] = feld[j];\n' + '\tfeld[j] = tmp;\n' + '}\n' + '\n' + 'async function bubble() {\n' + '\tgroesse(N, 1)\n' + '\tstatusText("Bubble Sort Demo")\n' + '\tformen("b")\n' + '\tfor (var i = 0; i < N; i++) {\n' + '\t\tfeld[i] = 0.1 + 0.4 * Math.random()\n' + '\t\taendere(i, BLUE)\n' + '\t}\n' + '\n' + '\tfor (var n = feld.length; n > 1; --n) {\n' + '\t\tfor (var i = 0; i < n - 1; ++i) {\n' + '\t\t\taendere(i, YELLOW);\n' + '\t\t\tawait sleep(warteZeit);\n' + '\t\t\tif (feld[i] > feld[i + 1]) {\n' + '\t\t\t\ttausche(i, i + 1);\n' + '\t\t\t\taendere(i + 1, RED);\n' + '\t\t\t\tawait sleep(warteZeit);\n' + '\t\t\t}\n' + '\t\t\taendere(i, BLUE);\n' + '\t\t\taendere(i + 1, BLUE);\n' + '\t\t}\n' + '\t\taendere(n - 1, LIGHTGREEN);\n' + '\t\taendere(0, LIGHTGREEN)\n' + '\t}\n' + '}\n' + '\n' + 'bubble()'
+      }, {
+        title: 'Game of life',
+        code: '// setze Semicolons auf optional \n' + '// jshint asi:true\n' + '// jshint esversion:6\n' + '\n' + 'const N = 40\n' + 'const warteZeit = 300\n' + 'const maxGen = 50;\n' + 'var feld = []\n' + 'groesse( N, N );\n' + 'formen( "s" );\n' + '\n' + 'function anlegen() {\n' + '\tfor( var x=0; x<N; x++) {\n' + '\t\tfeld[x] = [];\n' + '\t\tfor( var y=0; y<N; y++ ) {\n' + '\t\t\tfeld[x][y] = (Math.random()<0.5)?1:0;\n' + '\t\t}\n' + '\t}\n' + '}\n' + '\n' + 'function anzeigen() {\n' + 'farben( WHITE );\n' + '\tfor( var x=1; x<N-1; x++ ) {\n' + '\t\tfor( var  y=1; y<N-1; y++ ) {\n' + '\t\t\tif( feld[x][y] == 1 ) {\n' + '\t\t\t\tfarbe2( x, y, LIGHTGREEN );\n' + '\t\t\t}\n' + '\t\t}\n' + '\t}\n' + '}\n' + '\n' + 'function  nextGeneration(  )  {\n' + '\tvar neu = [];\n' + '\tfor( var x=0; x<N; x++ ) {\n' + '\t\tneu[x] = [];\n' + '\t\tfor( var y=0; y<N; y++ ) {\n' + '\t\t\tif( x == 0 | y == 0 | x == N-1 | y == N-1 ) {\n' + '\t\t\t\tneu[x][y] = 0;\n' + '\t\t\t} else {\n' + '\t\t\t\tvar n = anzahlNachbarn( x, y  );\n' + '\t\t\t\tneu[x][y] = ueberleben( feld[x][y], n );\n' + '\t\t\t}\n' + '\t\t}\n' + '\t}\n' + '\treturn neu;\n' + '}\n' + '\n' + 'function anzahlNachbarn(  x,  y ) {\n' + '\tvar anz = 0;\n' + '\tfor( var i=x-1; i<=x+1; i++ ) {\n' + '\t\tfor( var j=y-1; j<=y+1; j++ ) {\n' + '\t\t\tanz += feld[i][j];\n' + '\t\t}\n' + '\t}\n' + '\treturn anz - feld[x][y];\n' + '}\n' + '\n' + 'function  ueberleben(  lebe,  nachbarn) {\n' + '\tif( lebe == 0 & nachbarn == 3 ) {\n' + '\t\treturn 1;\n' + '\t} else if( lebe == 1 & (nachbarn == 2 | nachbarn == 3 ) ) {\n' + '\t\treturn 1;\n' + '\t}\n' + '\treturn 0;\n' + '}\n' + '\n' + 'async function life() {\n' + '\tanlegen();\n' + '\tfor( var n=0; n<maxGen; n++ ) {\n' + '\t\tstatusText("Generation " + n)\n' + '\t\tfeld = nextGeneration();\n' + '\t\tanzeigen();\n' + '\t\tawait sleep(warteZeit);\n' + '\t}\n' + '}\n' + '\n' + 'life();'
+      }]
+    };
+  }
+});
 
 /***/ }),
 
@@ -6919,92 +6740,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("h1", { staticClass: "title" }, [_vm._v("Code-Snippets")]),
+    _vm._v(" "),
+    _c(
+      "section",
+      [
+        _c("p", [
+          _vm._v(
+            "Hier sind einige Beispiele für die Live-Version zusammengestellt. Die Programmiersprache ist JavaScript.\n                Die Beispiele funktioniert in BoS-Live, aber nur teilweise im JS Mode in BoS. Der in Java eingebaute\n                JS-Interpreter unterstützt den aktuellen JS-Standard nicht vollständig."
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Auf der Suche nach einem bestimmten Snippet? Dann wähle hier das passende aus."
+          )
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.items, function(value) {
+          return _c("div", [
+            _c("a", { attrs: { href: "#" + value.title } }, [
+              _vm._v(_vm._s(value.title))
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.items, function(value) {
+          return _c("div", { attrs: { id: value.title } }, [
+            _c("h2", [_vm._v(_vm._s(value.title))]),
+            _vm._v(" "),
+            _c("pre", [
+              _vm._v("                    "),
+              _c("code", [
+                _vm._v("\n" + _vm._s(value.code) + "\n                    ")
+              ]),
+              _vm._v("\n                ")
+            ])
+          ])
+        })
+      ],
+      2
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("p", [
-        _vm._v(
-          "\r\n                Hier sind einige Beispiele für die Live-Version zusammengestellt.\r\n                Die Programmiersprache ist JavaScript.\r\n                Die Beispiele funktioniert in BoS-Live, aber nur teilweise im JS Mode in BoS.\r\n                Der in Java\r\n                eingebaute JS-Interpreter unterstützt den aktuellen JS-Standard nicht vollständig.\r\n            "
-        )
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Zufall")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            'const n = 16;\r\n    groesse( n, n );\r\n    flaeche( LAVENDERBLUSH )\r\n\r\n    for(var x=0; x<n; x++ ) {\r\n       for( var y=0;y<n; y++ ) {\r\n        var r = Math.floor(Math.random() * 255);\r\n        var g = Math.floor(Math.random() * 255);\r\n        var b = Math.floor(Math.random() * 255);\r\n       farbe2(    x, y, "rgb(" + r + "," + g + "," + b + ")" )\r\n     }\r\n    }\r\n    '
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Rahmen")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            "var n = 12;\r\n    groesse( n, n );\r\n    flaeche(   MOCCASIN );\r\n    var farbe = [DARKOLIVEGREEN, BLUE, YELLOW, CRIMSON, BLACK]\r\n\r\n    for(var j=0; j<farbe.length; j++ ) {\r\n       for( var i=0; i<n-2*j; i++ ) {\r\n          farbe2( j, j+i, farbe[j] );\r\n          farbe2( n-j-1, j+i, farbe[j] );\r\n          farbe2( j+i, j, farbe[j] );\r\n          farbe2( j+i, n-j-1, farbe[j] );\r\n       }\r\n    }\r\n    "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Kreuz und Quer")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            'const N = 32;\r\n    const d = 8;\r\n\r\n    groesse( N, N );\r\n    formen("s");\r\n    farben( BLUE );\r\n\r\n    for( var x=0; x<N; x++ ) {\r\n       for( var y=0; y<N; y++ ) {\r\n          if( (x + y) % d == 0 || (x-y) % d == 0 ) {\r\n           farbe2( x, y, YELLOW );\r\n          }\r\n       }\r\n    }\r\n    '
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Textanzeiger")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            'async function textAnzeige() {\r\n      var text = ""\r\n      for( i=10; i>0; i-- ) {\r\n        text +=  i + " "\r\n        statusText(text)\r\n        await sleep(400)\r\n      }\r\n      statusText(text + "<br>Fertig")\r\n    }\r\n    textAnzeige()\r\n    '
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Buchstabe L")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            'groesse( 10, 10 );\r\n    for(var x=2; x<6; x++ ) {\r\n        farbe2( x, 2, BLUE );\r\n        form2( x, 2, "s" );\r\n    }\r\n    for(var  y=2; y<8; y++ ) {\r\n        farbe2( 2, y, BLUE );\r\n        form2( 2, y, "s" );\r\n    }\r\n    farbe2( 5,3, BLUE);\r\n    form2( 5,3, "b");\r\n    symbolGroesse2( 5, 3, 0.2 );\r\n    '
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Bubble Sort")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            'var feld = []\r\n    const N = 10\r\n    const warteZeit = 100\r\n\r\n    function aendere(i, farbe) {\r\n      farbe2(i, 0, farbe);\r\n      symbolGroesse2(i, 0, feld[i]);\r\n    }\r\n\r\n    function tausche(i, j) {\r\n      var tmp = feld[i];\r\n      feld[i] = feld[j];\r\n      feld[j] = tmp;\r\n    }\r\n\r\n    async function bubble() {\r\n      groesse(N, 1)\r\n      statusText("Bubble Sort Demo")\r\n      formen("b")\r\n      for (var i = 0; i < N; i++) {\r\n        feld[i] = 0.1 + 0.4 * Math.random()\r\n        aendere(i, BLUE)\r\n      }\r\n\r\n      for (var n = feld.length; n > 1; --n) {\r\n        for (var i = 0; i < n - 1; ++i) {\r\n          aendere(i, YELLOW);\r\n          await sleep(warteZeit);\r\n          if (feld[i] > feld[i + 1]) {\r\n            tausche(i, i + 1);\r\n            aendere(i + 1, RED);\r\n            await sleep(warteZeit);\r\n          }\r\n          aendere(i, BLUE);\r\n          aendere(i + 1, BLUE);\r\n        }\r\n        aendere(n - 1, LIGHTGREEN);\r\n        aendere(0, LIGHTGREEN)\r\n      }\r\n    }\r\n\r\n    bubble()\r\n    '
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Game of life")]),
-      _vm._v(" "),
-      _c("pre", [
-        _c("code", [
-          _vm._v(
-            '// setze Semicolons auf optional\r\n    // jshint asi:true\r\n    // jshint esversion:6\r\n\r\n    const N = 40\r\n    const warteZeit = 300\r\n    const maxGen = 50;\r\n    var feld = []\r\n    groesse( N, N );\r\n    formen( "s" );\r\n\r\n    function anlegen() {\r\n        for( var x=0; x<N; x++) {\r\n             feld[x] = [];\r\n             for( var y=0; y<N; y++ ) {\r\n                feld[x][y] = (Math.random()<0.5)?1:0;\r\n             }\r\n         }\r\n    }\r\n\r\n    function anzeigen() {\r\n       farben( WHITE );\r\n       for( var x=1; x<N-1; x++ ) {\r\n          for( var  y=1; y<N-1; y++ ) {\r\n             if( feld[x][y] == 1 ) {\r\n                farbe2( x, y, LIGHTGREEN );\r\n             }\r\n          }\r\n       }\r\n    }\r\n\r\n    function  nextGeneration(  )  {\r\n       var neu = [];\r\n       for( var x=0; x<N; x++ ) {\r\n          neu[x] = [];\r\n          for( var y=0; y<N; y++ ) {\r\n              if( x == 0 | y == 0 | x == N-1 | y == N-1 ) {\r\n                  neu[x][y] = 0;\r\n              } else {\r\n              var n = anzahlNachbarn( x, y  );\r\n              neu[x][y] = ueberleben( feld[x][y], n );\r\n              }\r\n          }\r\n       }\r\n       return neu;\r\n    }\r\n\r\n    function anzahlNachbarn(  x,  y ) {\r\n       var anz = 0;\r\n       for( var i=x-1; i<=x+1; i++ ) {\r\n          for( var j=y-1; j<=y+1; j++ ) {\r\n             anz += feld[i][j];\r\n          }\r\n       }\r\n       return anz - feld[x][y];\r\n    }\r\n    function  ueberleben(  lebe,  nachbarn) {\r\n       if( lebe == 0 & nachbarn == 3 ) {\r\n          return 1;\r\n       } else if( lebe == 1 & (nachbarn == 2 | nachbarn == 3 ) ) {\r\n          return 1;\r\n       }\r\n       return 0;\r\n    }\r\n\r\n    async function life() {\r\n      anlegen();\r\n      for( var n=0; n<maxGen; n++ ) {\r\n        statusText("Generation " + n)\r\n        feld = nextGeneration();\r\n        anzeigen();\r\n        await sleep(warteZeit);\r\n       }\r\n    }\r\n\r\n    life();\r\n    '
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
