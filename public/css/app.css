@@ -17337,12 +17337,8 @@ p {
   text-align: justify;
 }
 
-pre {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #272822;
-  color: #ddd;
+a {
+  color: blue;
 }
 
 .carousel {
