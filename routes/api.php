@@ -23,4 +23,6 @@ Route::namespace('Api')->group(function () {
     Route::get('/pictures/ratings/counts', 'PictureController@getRatingsCount');
     Route::get('/pictures/ratings/voting/counts', 'PictureController@getCountVotes');
     Route::get('/pictures/ratings/voting/{id}/count', 'PictureController@getPicturesForRating');
+
 });
+Route::post('/pictures/filter', 'GalleryController@getFilters');

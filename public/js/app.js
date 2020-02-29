@@ -2127,6 +2127,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2135,16 +2152,20 @@ __webpack_require__.r(__webpack_exports__);
       error: null,
       topic: null,
       pictures: null,
-      filtered: null
+      filtered: null,
+      filters: null,
+      gallery: null,
+      sortOptions: ["alphabetical", "date"]
     };
   },
   created: function created() {
-    this.fetchData();
     this.topic = this.$route.params.name;
 
     if (this.topic === undefined) {
       this.topic = "Buchstaben";
     }
+
+    this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
@@ -2158,7 +2179,43 @@ __webpack_require__.r(__webpack_exports__);
 
         var topic = _this.topic;
         _this.filtered = response.data[topic];
+        _this.gallery = _this.filtered;
       });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter', {
+        gallery: this.topic
+      }).then(function (response) {
+        _this.filters = response.data;
+      });
+    },
+    filter: function filter(event, _filter) {
+      event.preventDefault();
+      this.filtered = this.gallery.filter(function (el) {
+        return el.THMModule === _filter;
+      });
+    },
+    sort: function sort(event, name) {
+      event.preventDefault();
+      console.log(name);
+
+      if (name === "alphabetical") {
+        this.filtered = this.filtered.sort(function (a, b) {
+          if (a.Filename < b.Filename) {
+            return -1;
+          }
+
+          if (a.Filename > b.Filename) {
+            return 1;
+          }
+
+          return 0;
+        });
+      }
+
+      if (name === "date") {
+        this.filtered = this.filtered.sort(function (a, b) {
+          return new Date(b.Timestamp) - new Date(a.Timestamp);
+        });
+      }
     }
   }
 });
@@ -6178,11 +6235,63 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _c("h2", [_vm._v("Gallery ")]),
     _vm._v(" "),
-    _vm.filtered
-      ? _c(
-          "ul",
-          _vm._l(_vm.filtered, function(image) {
-            return _c("li", [
+    _c("div", { staticClass: "left" }, [
+      _c(
+        "ul",
+        _vm._l(_vm.filters, function(filtername) {
+          return _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  return _vm.filter($event, filtername)
+                }
+              }
+            },
+            [_c("li", [_vm._v(_vm._s(filtername))])]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "right" }, [
+      _c("ul", [
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                return _vm.sort($event, _vm.sortOptions[0])
+              }
+            }
+          },
+          [_c("li", [_vm._v("alphabetisch")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                return _vm.sort($event, _vm.sortOptions[1])
+              }
+            }
+          },
+          [_c("li", [_vm._v("Datum")])]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.filtered, function(image, index) {
+        return index % 5 == 0
+          ? _c("div", { staticClass: "column" }, [
               _c("img", {
                 directives: [
                   {
@@ -6194,12 +6303,20 @@ var render = function() {
                   }
                 ],
                 attrs: { height: "42", width: "42" }
-              })
+              }),
+              _vm._v(
+                _vm._s(image.THMModule) +
+                  "," +
+                  _vm._s(image.Filename) +
+                  "," +
+                  _vm._s(image.Timestamp) +
+                  "\n            "
+              )
             ])
-          }),
-          0
-        )
-      : _vm._e()
+          : _vm._e()
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []
@@ -23000,8 +23117,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

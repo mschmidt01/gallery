@@ -34,8 +34,12 @@ class Picture extends Model
     }
 
     public static  function  getRandomTopicByGallery( $sTopic ) {
-        //return  DB::table('pictures')->select('Path',"Filename")->where("Gallery","=", $sTopic)->random(1)->toArray();
         return Picture::all()->where("Gallery","=", $sTopic)->random(1)->toArray();
     }
+
+    public static  function  getModuleNames( $sGallery ) {
+        return  DB::table('pictures')->select('THMModule')->where("Gallery", "=", $sGallery )->distinct()->pluck("THMModule")->toArray();
+    }
+
 
 }
