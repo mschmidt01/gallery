@@ -18,6 +18,9 @@ import About from './components/About'
 import Statistics from './components/Statistics'
 import Gallery from './components/Gallery'
 
+import Galleryfooter from "./components/galleryfooter";
+Vue.component('galleryfooter', Galleryfooter);
+
 const router = new VueRouter({
     mode: 'history',
     routes: [

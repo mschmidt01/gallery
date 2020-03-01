@@ -3,9 +3,10 @@
         <header>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
                 <router-link :to="{name: 'project'}" class="navbar-brand responsive-logo">
-                    <img :src="'/img/BoS-Logo.svg'" width="40" height="40" class="d-inline-block align-top" alt="">
+                    <img :src="'/img/BoS-Logo.svg'" width="40" height="40" class="d-inline-block align-top" alt="BoS-Logo">
                 </router-link>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                        aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -16,7 +17,8 @@
                             <router-link :to="{name: 'topics'}" class="nav-link" href="#">Gallerie</router-link>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="test" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn BoS</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="test" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Learn BoS</a>
                             <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                                 <router-link :to="{name: 'live'}" class="dropdown-item">BoS Live</router-link>
                                 <router-link :to="{name: 'snippets'}" class="dropdown-item">Snippets</router-link>
@@ -60,23 +62,14 @@
                 </ul>
             </li>
         </ul>-->
-        <div class="row justify-content-center">
-            <div id="Inhalt" class="col-md-9 col-md-offset-1" style="padding-bottom:75px;">
-                <main class="py-4">
-                    <router-view></router-view>
-                </main>
-            </div>
-        </div>
 
-        <footer class="container-fluid text-center no-padding">
-            <a href="#home" title="To Top">
-                <span class="glyphicon glyphicon-chevron-up"></span>
-            </a>
-            <p>Ein Projekt der Web&amp;Mobile Gruppe der Fachbereiche IEM/MND
-                | <a href="https://www.thm.de/site/impressum.html" title="Impressum">Impressum</a>
-                | <a href="https://www.thm.de/site/datenschutz.html" title="Datenschutz">Datenschutz</a>
-            </p>
-        </footer>
+        <main>
+            <div class="container">
+                <router-view></router-view>
+            </div>
+        </main>
+
+        <galleryfooter></galleryfooter>
     </div>
 </template>
 <script>
