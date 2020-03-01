@@ -1,14 +1,27 @@
 <template>
     <div class="container-fluid">
         <h2>Gallery </h2>
-        <div class="left">
+        <div>
+            <p>Module</p>
             <ul>
-                <a  v-for="filtername in filters" v-on:click="filter($event,filtername)" href="#">
-                    <li>{{filtername}}</li>
-                </a>
+                <li  v-for="filtername in filters.modules">
+                    <input type="checkbox" v-bind:value="filtername" :id="filtername" v-model="modulfilter"  v-on:change="filterPictures()">
+                    <label :for="filtername" >{{filtername}}</label><br>
+                </li>
+
             </ul>
         </div>
-        <div class="right">
+        <div>
+            <p>Semester</p>
+            <ul>
+                <li  v-for="filtername in filters.classes">
+                    <input type="checkbox" v-bind:value="filtername" :id="filtername" v-model="classfilter"  v-on:change="filterPictures()">
+                    <label :for="filtername" >{{filtername}}</label><br>
+                </li>
+            </ul>
+        </div>
+        <div >
+            <p>Sortieren nach:</p>
             <ul>
                 <a v-on:click="sort($event,sortOptions[0])" href="#">
                     <li>alphabetisch</li>
@@ -20,7 +33,7 @@
         </div>
         <div class="row">
                 <div  v-for="(image, index) in filtered" v-if="(index % 5 == 0)" class="column">
-                    <img  height="42" width="42" v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename " />{{image.THMModule}},{{image.Filename}},{{image.Timestamp}}
+                    <img  height="42" width="42" v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename " />{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}}
                 </div>
         </div>
     </div>
@@ -35,9 +48,13 @@
                 topic: null,
                 pictures : null,
                 filtered: null,
-                filters: null,
+                filters: [],
                 gallery: null,
-                sortOptions: ["alphabetical","date"]
+                modulfilter : [],
+                classfilter : [],
+                sortOptions: ["alphabetical","date"],
+                filterType: ["modules","classes"]
+
             };
         },
         created() {
@@ -55,31 +72,54 @@
                      .then(response => {
                          this.pictures = response.data;
                          this.loading = false;
-                         //console.log(this.pictures);
-                         //console.log(this.topic);
                          let topic = this.topic;
                          this.filtered = response.data[topic];
                          this.gallery  = this.filtered;
                      });
 
-                    axios.post('/api/pictures/filter', {
+                    axios.post('/api/pictures/filter/modules', {
                         gallery: this.topic,
                     })
                     .then(response => {
-                       this.filters = response.data;
+                       this.filters.modules = response.data;
                     });
 
-
+                axios.post('/api/pictures/filter/classes', {
+                    gallery: this.topic,
+                })
+                    .then(response => {
+                        this.filters.classes = response.data;
+                    });
             },
-            filter(event,filter){
-                event.preventDefault();
-                this.filtered = this.gallery.filter(function (el) {
-                    return el.THMModule === filter
-                });
+            filterPictures(){
+                if(typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && this.classfilter.length === 0){
+                    this.filtered = this.gallery;
+                    return;
+                }
+                let moduleImages = this.gallery;
+                if(typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0){
+                    moduleImages = [];
+                    for (let i=0; i<this.modulfilter.length; i++) {
+                        let images = this.gallery.filter(function (el) {
+                            return el.THMModule === this.modulfilter[i];
+                        }.bind(this));
+                        moduleImages.push(...images);
+                    }
+                }
+                this.filtered = moduleImages;
+                var moduleandclass = [];
+                if(typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+                    for (let i = 0; i < this.classfilter.length; i++) {
+                        let images = moduleImages.filter(function (el) {
+                            return el.Class === this.classfilter[i];
+                        }.bind(this));
+                        moduleandclass.push(...images);
+                    }
+                    this.filtered = moduleandclass;
+                }
             },
             sort(event,name){
                 event.preventDefault();
-                console.log(name);
                 if(name === "alphabetical"){
                     this.filtered = this.filtered.sort(function (a,b) {
                         if(a.Filename < b.Filename) { return -1; }

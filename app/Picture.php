@@ -41,5 +41,8 @@ class Picture extends Model
         return  DB::table('pictures')->select('THMModule')->where("Gallery", "=", $sGallery )->distinct()->pluck("THMModule")->toArray();
     }
 
+    public static  function  getClassNames( $sGallery ) {
+        return  DB::table('pictures')->select('Class')->where("Gallery", "=", $sGallery )->distinct()->pluck("Class")->toArray();
+    }
 
 }

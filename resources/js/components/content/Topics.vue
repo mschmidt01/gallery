@@ -5,7 +5,7 @@
 
             <div v-for="topic in topics">
                 <router-link :to="{name: 'gallery', params: {name: topic.name}}">
-                    <img v-bind:src="'/img/gallery/' +  topic.randomPicture " />
+                    <img  height="100" width="100" v-bind:src="'/img/gallery/' +  topic.randomPicture " />
                     <div><p></p><strong>Name:</strong> {{ topic.name }}
                     ({{ topic.count }})</div>
                 </router-link>

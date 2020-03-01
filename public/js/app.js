@@ -2102,6 +2102,27 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2138,9 +2159,12 @@ __webpack_require__.r(__webpack_exports__);
       topic: null,
       pictures: null,
       filtered: null,
-      filters: null,
+      filters: [],
       gallery: null,
-      sortOptions: ["alphabetical", "date"]
+      modulfilter: [],
+      classfilter: [],
+      sortOptions: ["alphabetical", "date"],
+      filterType: ["modules", "classes"]
     };
   },
   created: function created() {
@@ -2159,28 +2183,70 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ordered').then(function (response) {
         _this.pictures = response.data;
-        _this.loading = false; //console.log(this.pictures);
-        //console.log(this.topic);
-
+        _this.loading = false;
         var topic = _this.topic;
         _this.filtered = response.data[topic];
         _this.gallery = _this.filtered;
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter/modules', {
         gallery: this.topic
       }).then(function (response) {
-        _this.filters = response.data;
+        _this.filters.modules = response.data;
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter/classes', {
+        gallery: this.topic
+      }).then(function (response) {
+        _this.filters.classes = response.data;
       });
     },
-    filter: function filter(event, _filter) {
-      event.preventDefault();
-      this.filtered = this.gallery.filter(function (el) {
-        return el.THMModule === _filter;
-      });
+    filterPictures: function filterPictures() {
+      var _this2 = this;
+
+      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && this.classfilter.length === 0) {
+        this.filtered = this.gallery;
+        return;
+      }
+
+      var moduleImages = this.gallery;
+
+      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
+        moduleImages = [];
+
+        var _loop = function _loop(i) {
+          var _moduleImages;
+
+          var images = _this2.gallery.filter(function (el) {
+            return el.THMModule === this.modulfilter[i];
+          }.bind(_this2));
+
+          (_moduleImages = moduleImages).push.apply(_moduleImages, _toConsumableArray(images));
+        };
+
+        for (var i = 0; i < this.modulfilter.length; i++) {
+          _loop(i);
+        }
+      }
+
+      this.filtered = moduleImages;
+      var moduleandclass = [];
+
+      if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+        var _loop2 = function _loop2(_i) {
+          var images = moduleImages.filter(function (el) {
+            return el.Class === this.classfilter[_i];
+          }.bind(_this2));
+          moduleandclass.push.apply(moduleandclass, _toConsumableArray(images));
+        };
+
+        for (var _i = 0; _i < this.classfilter.length; _i++) {
+          _loop2(_i);
+        }
+
+        this.filtered = moduleandclass;
+      }
     },
     sort: function sort(event, name) {
       event.preventDefault();
-      console.log(name);
 
       if (name === "alphabetical") {
         this.filtered = this.filtered.sort(function (a, b) {
@@ -6687,28 +6753,131 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _c("h2", [_vm._v("Gallery ")]),
     _vm._v(" "),
-    _c("div", { staticClass: "left" }, [
+    _c("div", [
+      _c("p", [_vm._v("Module")]),
+      _vm._v(" "),
       _c(
         "ul",
-        _vm._l(_vm.filters, function(filtername) {
-          return _c(
-            "a",
-            {
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.filter($event, filtername)
+        _vm._l(_vm.filters.modules, function(filtername) {
+          return _c("li", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.modulfilter,
+                  expression: "modulfilter"
                 }
+              ],
+              attrs: { type: "checkbox", id: filtername },
+              domProps: {
+                value: filtername,
+                checked: Array.isArray(_vm.modulfilter)
+                  ? _vm._i(_vm.modulfilter, filtername) > -1
+                  : _vm.modulfilter
+              },
+              on: {
+                change: [
+                  function($event) {
+                    var $$a = _vm.modulfilter,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = filtername,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.modulfilter = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.modulfilter = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.modulfilter = $$c
+                    }
+                  },
+                  function($event) {
+                    return _vm.filterPictures()
+                  }
+                ]
               }
-            },
-            [_c("li", [_vm._v(_vm._s(filtername))])]
-          )
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: filtername } }, [
+              _vm._v(_vm._s(filtername))
+            ]),
+            _c("br")
+          ])
         }),
         0
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "right" }, [
+    _c("div", [
+      _c("p", [_vm._v("Semester")]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        _vm._l(_vm.filters.classes, function(filtername) {
+          return _c("li", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.classfilter,
+                  expression: "classfilter"
+                }
+              ],
+              attrs: { type: "checkbox", id: filtername },
+              domProps: {
+                value: filtername,
+                checked: Array.isArray(_vm.classfilter)
+                  ? _vm._i(_vm.classfilter, filtername) > -1
+                  : _vm.classfilter
+              },
+              on: {
+                change: [
+                  function($event) {
+                    var $$a = _vm.classfilter,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = filtername,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.classfilter = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.classfilter = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.classfilter = $$c
+                    }
+                  },
+                  function($event) {
+                    return _vm.filterPictures()
+                  }
+                ]
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: filtername } }, [
+              _vm._v(_vm._s(filtername))
+            ]),
+            _c("br")
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("p", [_vm._v("Sortieren nach:")]),
+      _vm._v(" "),
       _c("ul", [
         _c(
           "a",
@@ -6758,6 +6927,8 @@ var render = function() {
               }),
               _vm._v(
                 _vm._s(image.THMModule) +
+                  "," +
+                  _vm._s(image.Class) +
                   "," +
                   _vm._s(image.Filename) +
                   "," +
@@ -7499,7 +7670,11 @@ var render = function() {
                   },
                   [
                     _c("img", {
-                      attrs: { src: "/img/gallery/" + topic.randomPicture }
+                      attrs: {
+                        height: "100",
+                        width: "100",
+                        src: "/img/gallery/" + topic.randomPicture
+                      }
                     }),
                     _vm._v(" "),
                     _c("div", [
@@ -23751,8 +23926,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
