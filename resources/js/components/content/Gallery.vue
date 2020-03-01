@@ -31,10 +31,8 @@
                 </a>
             </ul>
         </div>
-        <div class="row">
-                <div  v-for="(image, index) in filtered" v-if="(index % 5 == 0)" class="column">
-                    <img  height="42" width="42" v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename " />{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}}
-                </div>
+        <div class="row" v-for="(image, index) in filtered">
+                    <img  height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename " />{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}}
         </div>
     </div>
 </template>
