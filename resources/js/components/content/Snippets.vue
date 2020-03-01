@@ -12,11 +12,7 @@
 
             <div v-for="value in items" v-bind:id="value.title">
                 <h2>{{ value.title }}</h2>
-                <pre>
-                    <code class="javascript">
-{{value.code}}
-                    </code>
-                </pre>
+                <pre v-highlightjs="value.code"><code class="javascript"></code></pre>
             </div>
         </section>
     </div>

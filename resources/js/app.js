@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
+import VueHighlightJS from 'vue-highlightjs'
+
 
 Vue.use(VueRouter)
 Vue.use(VueLazyload)
+Vue.use(VueHighlightJS)
 
 import App from './components/App'
 import Project from './components/content/Project'

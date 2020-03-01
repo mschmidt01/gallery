@@ -11,18 +11,19 @@
 
             <div class="row">
                 <div class="col-md-6">
-                <pre>
-<code>for( x=1; x&lt;6;  x++ ) {
-    for( y=x; y&lt;6; y++ ) {
-        farbe2( x, y, BLUE )
-        if( x == y ) {
-            form2( x, y, "tlu" )
-        } else {
-            form2( x, y, "s" )
+                    <pre v-highlightjs>
+                        <code class="javascript">
+    for( x=1; x&lt;6;  x++ ) {
+        for( y=x; y&lt;6; y++ ) {
+            farbe2( x, y, BLUE )
+            if( x == y ) {
+                form2( x, y, "tlu" )
+            } else {
+                form2( x, y, "s" )
+            }
         }
     }
-}</code>
-                    </pre>
+                    </code></pre>
                 </div>
                 <div class="col-md-6">
                     <img :src="'/img/BoS.png'" alt="BoS Screen" style="height:242px;" class="mx-auto d-block">
