@@ -6,20 +6,22 @@ Vue.use(VueRouter)
 Vue.use(VueLazyload)
 
 import App from './components/App'
-import Project from './components/Project'
-import Quiz from './components/Quiz'
-import Pattern from './components/Pattern'
-import Live from './components/Live'
-import Snippets from './components/Snippets'
-import Questions from './components/Questions'
-import Functions from './components/Functions'
-import Topics from './components/Topics'
-import About from './components/About'
-import Statistics from './components/Statistics'
-import Gallery from './components/Gallery'
+import Project from './components/content/Project'
+import Quiz from './components/content/Quiz'
+import Pattern from './components/content/Pattern'
+import Live from './components/content/Live'
+import Snippets from './components/content/Snippets'
+import Questions from './components/content/Questions'
+import Functions from './components/content/Functions'
+import Topics from './components/content/Topics'
+import About from './components/content/About'
+import Statistics from './components/content/Statistics'
+import Gallery from './components/content/Gallery'
 
 import Galleryfooter from "./components/galleryfooter";
+import Gallerynav from "./components/Gallerynav";
 Vue.component('galleryfooter', Galleryfooter);
+Vue.component('gallerynav', Gallerynav);
 
 const router = new VueRouter({
     mode: 'history',
@@ -77,6 +79,10 @@ const router = new VueRouter({
             path: '/gallery',
             name: 'gallery',
             component: Gallery
+        },
+        {
+            path: '/',
+            redirect: '/project'
         }
     ],
 });
