@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <h1 class="title">Code-Snippets</h1>
         <section>
             <p>Hier sind einige Beispiele für die Live-Version zusammengestellt. Die Programmiersprache ist JavaScript.
@@ -13,7 +13,7 @@
             <div v-for="value in items" v-bind:id="value.title">
                 <h2>{{ value.title }}</h2>
                 <pre>
-                    <code>
+                    <code class="javascript">
 {{value.code}}
                     </code>
                 </pre>

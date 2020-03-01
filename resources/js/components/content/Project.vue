@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <h1 class="title">BoS Project</h1>
         <section>
             <div>
