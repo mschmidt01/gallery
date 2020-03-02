@@ -1,72 +1,103 @@
 <template>
-    <div class="row">
-        <div class="col-md-9 col-md-offset-1">
-            <h3>Implementierung der BoS-Funktionen in JS</h3>
-            in der Tabelle sind f&uuml;r BoS-Live alle BoS-Funktionen
-            mit ihrem aktuellen Implementierungsstand aufgef&uuml;hrt.
-            Dabei bedeutet: <br>
-            <span class="glyphicon glyphicon-ok"></span> implememtiert,
-            <span class="glyphicon glyphicon-time"></span> in Arbeit,
-            <span class="glyphicon glyphicon-remove-sign"></span> nicht geplant,
-            <span class="glyphicon glyphicon-question-sign"></span> unklar
 
+    <div>
+        <h1 class="title">Über BoS</h1>
+        <section>
+            <h2>Q&A</h2>
+            <p>
+                <strong>Hat die Bewertung der Bilder Einfluss auf Noten?</strong><br>
+                Nein.
+            </p>
+            <p>
+                <strong>Wie kann man weitere Bilder einbauen?</strong><br>
+                Email an <a href="mailto:Stephan.Euler@mnd.thm.de">Stephan.Euler@mnd.thm.de</a>
+            </p>
+        </section>
+        <section>
+            <h2>Implementierte BoS-Funktionen in JS</h2>
+            <p>in der Tabelle sind f&uuml;r BoS-Live alle BoS-Funktionen
+                mit ihrem aktuellen Implementierungsstand aufgef&uuml;hrt.
+                Dabei bedeutet:</p>
+            <p>
+                <i class="fas fa-check"></i> implementiert,
+                <i class="fas fa-hourglass-half"></i> in Arbeit,
+                <i class="fas fa-times"></i> nicht geplant,
+                <i class="fas fa-question"></i> unklar.
+            </p>
 
-            <table  class="table table-bordered table-hover table-condensed">
+            <table class="table table-bordered table-hover table-condensed">
                 <thead>
-                <tr><th>Funktion </th><th>Beschreibung </th><th>Status</th></tr>
+                <tr>
+                    <th>Funktion</th>
+                    <th>Beschreibung</th>
+                    <th>Status</th>
+                </tr>
                 </thead>
-                <tr><td>abfragen(  ) </td><td> holt die &auml;lteste Eingabe </td>
-                    <td class="text-center"><span class="glyphicon glyphicon-question-sign"></span></td></tr>
-                <tr><td>farbe( int, int ) </td><td> wie farbe2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>farbe2( int, int, int ) </td><td> Farbe f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>farben( int ) </td><td> Alle Symbole erhalten neue Farbe</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>flaeche( int ) </td><td> Die gesamte Fl&auml;che wird gef&auml;rbt</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>form( int, String ) </td><td> wie form2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>form2( int, int, String ) </td><td> Form f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>formen( String ) </td><td> Alle Symbole erhalten neue Form</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>grau( int, int ) </td><td> wie grau2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>grau2( int, int, int ) </td><td> Grauwert f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>groesse( int, int ) </td><td> neue Gr&ouml;&szlig;e f&uuml;r das Brett</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></td></tr>
-                <tr><td>hintergrund( int, int ) </td><td> wie hintergrund2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>hintergrund2( int, int, int ) </td><td> Hintergrundfarbe f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-time"></span></td></tr>
-                <tr><td>loeschen(  ) </td><td> l&ouml;scht (fast) alle Farb-Einstellungen</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-time"></span></td></tr>
-                <tr><td>rahmen( int ) </td><td> Farbe des Rahmens</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-time"></span></td></tr>
-                <tr><td>statusText( String ) </td><td> Text f&uuml;r die Statuszeile</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>symbolGroesse( int, double ) </td><td> wie symbolGroesse2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>symbolGroesse2( int, int, double ) </td><td> Gr&ouml;&szlig;e f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>text( int, String ) </td><td> wie text2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>text2( int, int, String ) </td><td> Text f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></span></td></tr>
-                <tr><td>textFarbe( int, int ) </td><td> wie textFarbe2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>textFarbe2( int, int, int ) </td><td> Textfarbe f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-ok"></span></td></tr>
-                <tr><td>zeichen( int, char ) </td><td> wie zeichen2</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
-                <tr><td>zeichen2( int, int, char ) </td><td> Ein Zeichen (char) als Text f&uuml;r angegebenes Symbol</td>
-                    <td class="text-center"><span class="glyphicon glyphicon-remove-sign"></span></td></tr>
+                <tr v-for="value in functions">
+                    <td>{{value.name}}</td>
+                    <td>{{value.description}}</td>
+                    <td class="text-center"><i v-bind:class="value.icon"></i></td>
+                </tr>
             </table>
-        </div>
+        </section>
     </div>
 </template>
+
 <script>
-    export default {}
+    export default {
+        data: function () {
+            return {
+                functions: [
+                    {name: 'abfragen()', description: 'holt die älteste Eingabe', icon: 'fas fa-question'},
+                    {name: 'farbe(int, int)', description: 'wie farbe2', icon: 'fas fa-times'},
+                    {name: 'farbe2(int, int, int)', description: 'Farbe für angegebenes Symbol', icon: 'fas fa-check'},
+                    {name: 'farben(int)', description: 'Alle Symbole erhalten neue Farbe', icon: 'fas fa-check'},
+                    {name: 'flaeche(int)', description: 'Die gesamte Fläche wird gefärbt', icon: 'fas fa-check'},
+                    {name: 'form(int, String)', description: 'wie form2', icon: 'fas fa-times'},
+                    {name: 'form2(int, int, String)', description: 'Form für angegebenes Symbol', icon: 'fas fa-check'},
+                    {name: 'formen(String)', description: 'Alle Symbole erhalten neue Form', icon: 'fas fa-check'},
+                    {name: 'grau(int, int)', description: 'wie grau2', icon: 'fas fa-times'},
+                    {
+                        name: 'grau2(int, int, int)',
+                        description: 'Grauwert für angegebenes Symbol',
+                        icon: 'fas fa-times'
+                    },
+                    {name: 'groesse(int, int)', description: 'neue Größe für das Brett', icon: 'fas fa-check'},
+                    {name: 'hintergrund(int, int)', description: 'wie hintergrund2', icon: 'fas fa-times'},
+                    {
+                        name: 'hintergrund2(int, int, int)',
+                        description: 'Hintergrundfarbe für angegebenes Symbol',
+                        icon: 'fas fa-hourglass-half'
+                    },
+                    {
+                        name: 'loeschen()',
+                        description: 'löscht (fast) alle Farb-Einstellungen',
+                        icon: 'fas fa-hourglass-half'
+                    },
+                    {name: 'rahmen(int)', description: 'Farbe des Rahmens', icon: 'fas fa-hourglass-half'},
+                    {name: 'statusText(String)', description: 'Text für die Statuszeile', icon: 'fas fa-check'},
+                    {name: 'symbolGroesse(int, double)', description: 'wie symbolGroesse2', icon: 'fas fa-times'},
+                    {
+                        name: 'symbolGroesse2(int, int, double)',
+                        description: 'Größe für angegebenes Symbol',
+                        icon: 'fas fa-check'
+                    },
+                    {name: 'text(int, String)', description: 'wie text2', icon: 'fas fa-times'},
+                    {name: 'text2(int, int, String)', description: 'Text für angegebenes Symbol', icon: 'fas fa-check'},
+                    {name: 'textFarbe(int, int)', description: 'wie textFarbe2', icon: 'fas fa-times'},
+                    {
+                        name: 'textFarbe2(int, int, int)',
+                        description: 'Textfarbe für angegebenes Symbol',
+                        icon: 'fas fa-check'
+                    },
+                    {name: 'zeichen(int, char)', description: 'wie zeichen2', icon: 'fas fa-times'},
+                    {
+                        name: 'zeichen2(int, int, char)',
+                        description: 'Ein Zeichen (char) als Text für angegebenes Symbol',
+                        icon: 'fas fa-times'
+                    },
+                ]
+            }
+        }
+    }
 </script>

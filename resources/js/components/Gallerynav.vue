@@ -16,7 +16,7 @@
                         <router-link :to="{name: 'topics'}" class="nav-link" href="#">Gallerie</router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="test" role="button" data-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">Learn BoS</a>
                         <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                             <router-link :to="{name: 'live'}" class="dropdown-item">BoS Live</router-link>
@@ -25,8 +25,13 @@
                             <router-link :to="{name: 'quiz'}" class="dropdown-item">Quiz</router-link>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <router-link :to="{name: 'functions'}" class="nav-link" href="#">Informationen</router-link>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">Informationen</a>
+                        <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+                            <router-link :to="{name: 'functions'}" class="dropdown-item">Über BoS</router-link>
+                            <router-link :to="{name: 'statistics'}" class="dropdown-item">Über Website</router-link>
+                        </div>
                     </li>
                 </ul>
                 <button class="btn login" type="button"><i class=" fas fa-sign-in-alt "></i> Login</button>

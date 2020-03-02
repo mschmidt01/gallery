@@ -14,10 +14,8 @@ import Quiz from './components/content/Quiz'
 import Pattern from './components/content/Pattern'
 import Live from './components/content/Live'
 import Snippets from './components/content/Snippets'
-import Questions from './components/content/Questions'
 import Functions from './components/content/Functions'
 import Topics from './components/content/Topics'
-import About from './components/content/About'
 import Statistics from './components/content/Statistics'
 import Gallery from './components/content/Gallery'
 
@@ -55,20 +53,11 @@ const router = new VueRouter({
             component: Snippets
         },
         {
-            path: '/questions',
-            name: 'questions',
-            component: Questions
-        },
-        {
             path: '/functions',
             name: 'functions',
             component: Functions
         },
         {
-            path: '/about',
-            name: 'about',
-            component: About
-        },{
             path: '/statistics',
             name: 'statistics',
             component: Statistics
