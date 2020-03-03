@@ -34,7 +34,9 @@
                         </div>
                     </li>
                 </ul>
-                <button class="btn login" type="button"><i class=" fas fa-sign-in-alt "></i> Login</button>
+                <router-link :to="{name: 'login'}">
+                    <button class="btn login" type="button"><i class=" fas fa-sign-in-alt "></i> Login</button>
+                </router-link>
             </div>
         </nav>
     </header>
@@ -48,56 +50,70 @@
 
 <style scoped>
     /*Navigation*/
-    .navbar-dark .navbar-nav .nav-link{
-        color:white;
+    .navbar-dark .navbar-nav .nav-link {
+        color: white;
     }
-    .navbar-dark .navbar-nav .nav-link:hover{
-        color:blue;
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: blue;
     }
-    .navbar-dark .navbar-nav .nav-link:active{
-        color:blue;
+
+    .navbar-dark .navbar-nav .nav-link:active {
+        color: blue;
     }
-    .navbar-dark .navbar-nav .nav-link:focus{
-        color:blue;
+
+    .navbar-dark .navbar-nav .nav-link:focus {
+        color: blue;
     }
-    .dropdown-item:active{
-        background-color:blue;
-        color:white;
+
+    .dropdown-item:active {
+        background-color: blue;
+        color: white;
     }
-    .dropdown-item:hover{
-        background-color:blue;
-        color:white;
+
+    .dropdown-item:hover {
+        background-color: blue;
+        color: white;
     }
-    .dropdown-item:focus{
-        background-color:blue;
-        color:white;
+
+    .dropdown-item:focus {
+        background-color: blue;
+        color: white;
     }
-    nav{
-        min-height:80px;
+
+    nav {
+        min-height: 80px;
     }
-    .login{
-        width:100px;
-        color:white;
-        border:1px solid blue;
+
+    .login {
+        width: 100px;
+        color: white;
+        border: 1px solid blue;
     }
-    .login:hover{
-        color:blue;
+
+    .login:hover {
+        color: blue;
     }
-    .login:active{
-        color:blue;
+
+    .login:active {
+        color: blue;
     }
-    i{
-        color:blue;
+
+    i {
+        color: blue;
     }
-    .dropdown-menu{
-        border-top:3px solid blue;
-        color:#fff;
-        border-radius:0;
+
+    .dropdown-menu {
+        border-top: 3px solid blue;
+        color: #fff;
+        border-radius: 0;
     }
-    .dropdown-menu a{
-        color:white;
+
+    .dropdown-menu a {
+        color: white;
     }
-    @media(min-width:768px){
+
+    @media (min-width: 768px) {
         /*.nav>li.dropdown.open{
             position:static;
         }
@@ -108,30 +124,33 @@
             left:0;
             right:0;
         }*/
-        .dropdown-menu>li{
-            display:table-cell;
+        .dropdown-menu > li {
+            display: table-cell;
         }
-        .dropdown-menu{
-            left:50%;
-            right:auto;
-            transform:translate(-50%,0);
-            margin-top:18px;
+
+        .dropdown-menu {
+            left: 50%;
+            right: auto;
+            transform: translate(-50%, 0);
+            margin-top: 18px;
         }
     }
-    @media(max-width:768px){
-        .responsive-logo{
-            margin-left:auto;
-            margin-right:auto;
-            padding-left:56px;
+
+    @media (max-width: 768px) {
+        .responsive-logo {
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 56px;
         }
-        .dropdown-menu{
-            text-align:center;
-            border-left:1px solid #ffffff20;
-            border-right:1px solid #ffffff20;
-            border-bottom:1px solid #ffffff20;
-            max-width:200px;
-            margin-left:auto!important;
-            margin-right:auto!important;
+
+        .dropdown-menu {
+            text-align: center;
+            border-left: 1px solid #ffffff20;
+            border-right: 1px solid #ffffff20;
+            border-bottom: 1px solid #ffffff20;
+            max-width: 200px;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
     }
 
