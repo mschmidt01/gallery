@@ -18,6 +18,7 @@ import Functions from './components/content/Functions'
 import Topics from './components/content/Topics'
 import Statistics from './components/content/Statistics'
 import Gallery from './components/content/Gallery'
+import Login from './components/content/Login'
 
 import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
@@ -31,6 +32,11 @@ const router = new VueRouter({
             path: '/project',
             name: 'project',
             component: Project
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
         },
         {
             path: '/quiz',
