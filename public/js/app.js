@@ -2200,6 +2200,18 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2213,6 +2225,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       gallery: null,
       modulfilter: [],
       classfilter: [],
+      starfilter: [],
       sortOptions: ["alphabetical", "date"],
       filterType: ["modules", "classes"]
     };
@@ -2231,13 +2244,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this = this;
 
       this.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ordered').then(function (response) {
-        _this.pictures = response.data;
-        _this.loading = false;
-        var topic = _this.topic;
-        _this.filtered = response.data[topic];
-        _this.gallery = _this.filtered;
-      });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter/modules', {
         gallery: this.topic
       }).then(function (response) {
@@ -2248,13 +2254,19 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }).then(function (response) {
         _this.filters.classes = response.data;
       });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ordered').then(function (response) {
+        _this.pictures = response.data;
+        _this.loading = false;
+        var topic = _this.topic;
+        _this.filtered = response.data[topic];
+        _this.gallery = _this.filtered;
+      });
     },
     filterPictures: function filterPictures() {
       var _this2 = this;
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && this.classfilter.length === 0) {
+      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0) {
         this.filtered = this.gallery;
-        return;
       }
 
       var moduleImages = this.gallery;
@@ -2278,21 +2290,49 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }
 
       this.filtered = moduleImages;
-      var moduleandclass = [];
 
       if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+        var bucket = [];
+
         var _loop2 = function _loop2(_i) {
-          var images = moduleImages.filter(function (el) {
+          var _bucket;
+
+          var images = _this2.filtered.filter(function (el) {
             return el.Class === this.classfilter[_i];
           }.bind(_this2));
-          moduleandclass.push.apply(moduleandclass, _toConsumableArray(images));
+
+          (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
         };
 
         for (var _i = 0; _i < this.classfilter.length; _i++) {
           _loop2(_i);
         }
 
-        this.filtered = moduleandclass;
+        this.filtered = bucket;
+      }
+
+      if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
+        var bucket = [];
+
+        var _loop3 = function _loop3(_i2) {
+          var _bucket2;
+
+          var images = _this2.filtered.filter(function (el) {
+            if (el.Votes === 0) {
+              return false;
+            }
+
+            return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i2]) < 1;
+          }.bind(_this2));
+
+          (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
+        };
+
+        for (var _i2 = 0; _i2 < this.starfilter.length; _i2++) {
+          _loop3(_i2);
+        }
+
+        this.filtered = bucket;
       }
     },
     sort: function sort(event, name) {
@@ -31967,6 +32007,65 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", [
+        _c("p", [_vm._v("Sterne")]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(5, function(index) {
+            return _c("li", { key: index }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.starfilter,
+                    expression: "starfilter"
+                  }
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  value: index,
+                  checked: Array.isArray(_vm.starfilter)
+                    ? _vm._i(_vm.starfilter, index) > -1
+                    : _vm.starfilter
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.starfilter,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = index,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.starfilter = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.starfilter = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.starfilter = $$c
+                      }
+                    },
+                    function($event) {
+                      return _vm.filterPictures()
+                    }
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c("label", [_vm._v(_vm._s(index))]),
+              _c("br")
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [
         _c("p", [_vm._v("Sortieren nach:")]),
         _vm._v(" "),
         _c("ul", [
@@ -32015,6 +32114,12 @@ var render = function() {
               _vm._s(image.Filename) +
               "," +
               _vm._s(image.Timestamp) +
+              "," +
+              _vm._s(image.Votes) +
+              "," +
+              _vm._s(image.Rating) +
+              "," +
+              _vm._s(image.Rating / image.Votes) +
               "\n    "
           )
         ])
