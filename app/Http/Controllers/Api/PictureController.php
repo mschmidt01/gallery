@@ -27,9 +27,8 @@ class PictureController extends Controller
     public function getCountVotes(){
         return Picture::getCountVotes();
     }
+
     public function getPicturesForRating($rating){
         return Picture::getPicturesForRating($rating);
     }
-
-    //
 }

@@ -2,6 +2,17 @@
     <div class="container-fluid">
         <h2>Gallery </h2>
         <div>
+            <p>Themen</p>
+            <ul>
+                <li v-for="topic in filters.topics">
+                    <input type="checkbox" v-bind:value="topic" :id="topic" v-model="topicfilter"
+                           v-on:change="filterPictures()">
+                    <label :for="topic">{{topic}}</label><br>
+                </li>
+
+            </ul>
+        </div>
+        <div>
             <p>Module</p>
             <ul>
                 <li v-for="filtername in filters.modules">
@@ -44,7 +55,7 @@
             </ul>
         </div>
         <div class="row" v-for="(image, index) in filtered">
-            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
+            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
         </div>
     </div>
 </template>
@@ -61,6 +72,7 @@
                 filtered: null,
                 filters: [],
                 gallery: null,
+                topicfilter: [],
                 modulfilter: [],
                 classfilter: [],
                 starfilter: [],
@@ -71,9 +83,7 @@
         },
         created() {
             this.topic = this.$route.params.name;
-            if (this.topic === undefined) {
-                this.topic = "Buchstaben";
-            }
+            this.topicfilter[0] =  this.topic;
             this.fetchData();
         },
         methods: {
@@ -93,6 +103,12 @@
                     .then(response => {
                         this.filters.classes = response.data;
                     });
+                axios.get('/api/pictures/filter/topics', {
+                    gallery: this.topic,
+                })
+                    .then(response => {
+                        this.filters.topics = response.data;
+                    });
 
                 axios.get('/api/pictures/ordered')
                     .then(response => {
@@ -104,20 +120,34 @@
                     });
             },
             filterPictures() {
-                if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0) {
-                    this.filtered = this.gallery;
+                if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0
+                    && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0
+                        && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0
+                            && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
+                    this.filtered = this.pictures;
                 }
-                let moduleImages = this.gallery;
+
+                if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+                    var bucket = [];
+                    for (let i = 0; i < this.topicfilter.length; i++) {
+                        console.log(this.topicfilter[i]);
+                        console.log(this.pictures[this.topicfilter[i]]);
+                        let images = this.pictures[this.topicfilter[i]];
+                        bucket.push(...images);
+                    }
+                    this.filtered = bucket;
+                }
+
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
-                    moduleImages = [];
+                    var bucket = [];
                     for (let i = 0; i < this.modulfilter.length; i++) {
-                        let images = this.gallery.filter(function (el) {
+                        let images = this.filtered.filter(function (el) {
                             return el.THMModule === this.modulfilter[i];
                         }.bind(this));
-                        moduleImages.push(...images);
+                        bucket.push(...images);
                     }
                 }
-                this.filtered = moduleImages;
+                this.filtered = bucket;
 
                 if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
                     var bucket = [];

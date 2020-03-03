@@ -2214,6 +2214,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2225,6 +2236,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       filtered: null,
       filters: [],
       gallery: null,
+      topicfilter: [],
       modulfilter: [],
       classfilter: [],
       starfilter: [],
@@ -2234,11 +2246,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   created: function created() {
     this.topic = this.$route.params.name;
-
-    if (this.topic === undefined) {
-      this.topic = "Buchstaben";
-    }
-
+    this.topicfilter[0] = this.topic;
     this.fetchData();
   },
   methods: {
@@ -2256,6 +2264,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }).then(function (response) {
         _this.filters.classes = response.data;
       });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/filter/topics', {
+        gallery: this.topic
+      }).then(function (response) {
+        _this.filters.topics = response.data;
+      });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ordered').then(function (response) {
         _this.pictures = response.data;
         _this.loading = false;
@@ -2267,47 +2280,61 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     filterPictures: function filterPictures() {
       var _this2 = this;
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0) {
-        this.filtered = this.gallery;
+      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
+        this.filtered = this.pictures;
       }
 
-      var moduleImages = this.gallery;
+      if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+        var bucket = [];
+
+        for (var i = 0; i < this.topicfilter.length; i++) {
+          var _bucket;
+
+          console.log(this.topicfilter[i]);
+          console.log(this.pictures[this.topicfilter[i]]);
+          var images = this.pictures[this.topicfilter[i]];
+
+          (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
+        }
+
+        this.filtered = bucket;
+      }
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
-        moduleImages = [];
+        var bucket = [];
 
-        var _loop = function _loop(i) {
-          var _moduleImages;
+        var _loop = function _loop(_i) {
+          var _bucket2;
 
-          var images = _this2.gallery.filter(function (el) {
-            return el.THMModule === this.modulfilter[i];
+          var images = _this2.filtered.filter(function (el) {
+            return el.THMModule === this.modulfilter[_i];
           }.bind(_this2));
 
-          (_moduleImages = moduleImages).push.apply(_moduleImages, _toConsumableArray(images));
+          (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
         };
 
-        for (var i = 0; i < this.modulfilter.length; i++) {
-          _loop(i);
+        for (var _i = 0; _i < this.modulfilter.length; _i++) {
+          _loop(_i);
         }
       }
 
-      this.filtered = moduleImages;
+      this.filtered = bucket;
 
       if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
         var bucket = [];
 
-        var _loop2 = function _loop2(_i) {
-          var _bucket;
+        var _loop2 = function _loop2(_i2) {
+          var _bucket3;
 
           var images = _this2.filtered.filter(function (el) {
-            return el.Class === this.classfilter[_i];
+            return el.Class === this.classfilter[_i2];
           }.bind(_this2));
 
-          (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
+          (_bucket3 = bucket).push.apply(_bucket3, _toConsumableArray(images));
         };
 
-        for (var _i = 0; _i < this.classfilter.length; _i++) {
-          _loop2(_i);
+        for (var _i2 = 0; _i2 < this.classfilter.length; _i2++) {
+          _loop2(_i2);
         }
 
         this.filtered = bucket;
@@ -2316,22 +2343,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
         var bucket = [];
 
-        var _loop3 = function _loop3(_i2) {
-          var _bucket2;
+        var _loop3 = function _loop3(_i3) {
+          var _bucket4;
 
           var images = _this2.filtered.filter(function (el) {
             if (el.Votes === 0) {
               return false;
             }
 
-            return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i2]) < 1;
+            return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i3]) < 1;
           }.bind(_this2));
 
-          (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
+          (_bucket4 = bucket).push.apply(_bucket4, _toConsumableArray(images));
         };
 
-        for (var _i2 = 0; _i2 < this.starfilter.length; _i2++) {
-          _loop3(_i2);
+        for (var _i3 = 0; _i3 < this.starfilter.length; _i3++) {
+          _loop3(_i3);
         }
 
         this.filtered = bucket;
@@ -31974,6 +32001,65 @@ var render = function() {
       _c("h2", [_vm._v("Gallery ")]),
       _vm._v(" "),
       _c("div", [
+        _c("p", [_vm._v("Themen")]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(_vm.filters.topics, function(topic) {
+            return _c("li", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.topicfilter,
+                    expression: "topicfilter"
+                  }
+                ],
+                attrs: { type: "checkbox", id: topic },
+                domProps: {
+                  value: topic,
+                  checked: Array.isArray(_vm.topicfilter)
+                    ? _vm._i(_vm.topicfilter, topic) > -1
+                    : _vm.topicfilter
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.topicfilter,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = topic,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.topicfilter = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.topicfilter = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.topicfilter = $$c
+                      }
+                    },
+                    function($event) {
+                      return _vm.filterPictures()
+                    }
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: topic } }, [_vm._v(_vm._s(topic))]),
+              _c("br")
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [
         _c("p", [_vm._v("Module")]),
         _vm._v(" "),
         _c(
@@ -32196,7 +32282,9 @@ var render = function() {
             }
           }),
           _vm._v(
-            _vm._s(image.THMModule) +
+            _vm._s(image.Gallery) +
+              "," +
+              _vm._s(image.THMModule) +
               "," +
               _vm._s(image.Class) +
               "," +
