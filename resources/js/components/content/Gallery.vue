@@ -12,6 +12,7 @@
 
             </ul>
         </div>
+        <p>Filter:</p>
         <div>
             <p>Module</p>
             <ul>
@@ -68,6 +69,7 @@
                 loading: false,
                 error: null,
                 topic: null,
+                topics: [],
                 pictures: null,
                 filtered: null,
                 filters: [],
@@ -84,12 +86,14 @@
         created() {
             this.topic = this.$route.params.name;
             this.topicfilter[0] =  this.topic;
+            this.starfilter[0] = this.$route.params.stars;
+            console.log(this.$route.params.stars);
             this.fetchData();
         },
         methods: {
             fetchData() {
                 this.loading = true;
-
+                let self = this;
                 axios.post('/api/pictures/filter/modules', {
                     gallery: this.topic,
                 })
@@ -104,19 +108,30 @@
                         this.filters.classes = response.data;
                     });
                 axios.get('/api/pictures/filter/topics', {
-                    gallery: this.topic,
                 })
                     .then(response => {
                         this.filters.topics = response.data;
+                        if(typeof this.topic === 'undefined' ){
+                            this.topicfilter = response.data ;
+                        }
                     });
-
                 axios.get('/api/pictures/ordered')
                     .then(response => {
-                        this.pictures = response.data;
                         this.loading = false;
                         let topic = this.topic;
+                        self.pictures = $.map(response.data, function(value, key) {
+                            return { [key]: value };
+                        });
                         this.filtered = response.data[topic];
                         this.gallery = this.filtered;
+                        if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+                            var bucket = [];
+                            for (let i = 0; i < this.topicfilter.length; i++) {
+                                let images = self.pictures[i][this.topicfilter[i]];
+                                bucket.push(...images);
+                            }
+                            this.filtered = bucket;
+                        }
                     });
             },
             filterPictures() {
@@ -124,20 +139,17 @@
                     && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0
                         && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0
                             && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
-                    this.filtered = this.pictures;
+                    this.filtered = [];
+                   return false;
                 }
-
                 if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
                     var bucket = [];
                     for (let i = 0; i < this.topicfilter.length; i++) {
-                        console.log(this.topicfilter[i]);
-                        console.log(this.pictures[this.topicfilter[i]]);
-                        let images = this.pictures[this.topicfilter[i]];
+                        let images = this.pictures[i][this.topicfilter[i]];
                         bucket.push(...images);
                     }
                     this.filtered = bucket;
                 }
-
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
                     var bucket = [];
                     for (let i = 0; i < this.modulfilter.length; i++) {

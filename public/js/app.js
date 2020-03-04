@@ -2164,6 +2164,9 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
 //
 //
 //
@@ -2232,6 +2235,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       loading: false,
       error: null,
       topic: null,
+      topics: [],
       pictures: null,
       filtered: null,
       filters: [],
@@ -2247,6 +2251,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   created: function created() {
     this.topic = this.$route.params.name;
     this.topicfilter[0] = this.topic;
+    this.starfilter[0] = this.$route.params.stars;
+    console.log(this.$route.params.stars);
     this.fetchData();
   },
   methods: {
@@ -2254,6 +2260,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this = this;
 
       this.loading = true;
+      var self = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/pictures/filter/modules', {
         gallery: this.topic
       }).then(function (response) {
@@ -2264,24 +2271,40 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }).then(function (response) {
         _this.filters.classes = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/filter/topics', {
-        gallery: this.topic
-      }).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
         _this.filters.topics = response.data;
+
+        if (typeof _this.topic === 'undefined') {
+          _this.topicfilter = response.data;
+        }
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ordered').then(function (response) {
-        _this.pictures = response.data;
         _this.loading = false;
         var topic = _this.topic;
+        self.pictures = $.map(response.data, function (value, key) {
+          return _defineProperty({}, key, value);
+        });
         _this.filtered = response.data[topic];
         _this.gallery = _this.filtered;
+
+        if (typeof _this.topicfilter !== 'undefined' && _this.topicfilter.length > 0) {
+          var bucket = [];
+
+          for (var i = 0; i < _this.topicfilter.length; i++) {
+            var images = self.pictures[i][_this.topicfilter[i]];
+            bucket.push.apply(bucket, _toConsumableArray(images));
+          }
+
+          _this.filtered = bucket;
+        }
       });
     },
     filterPictures: function filterPictures() {
       var _this2 = this;
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
-        this.filtered = this.pictures;
+        this.filtered = [];
+        return false;
       }
 
       if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
@@ -2290,9 +2313,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         for (var i = 0; i < this.topicfilter.length; i++) {
           var _bucket;
 
-          console.log(this.topicfilter[i]);
-          console.log(this.pictures[this.topicfilter[i]]);
-          var images = this.pictures[this.topicfilter[i]];
+          var images = this.pictures[i][this.topicfilter[i]];
 
           (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
         }
@@ -3180,26 +3201,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      picturecount: 0,
+      votingcount: 0,
+      countbystars: []
+    };
   },
   created: function created() {
     this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
+      var _this = this;
+
       this.error = this.topics = null;
       this.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/counts').then(function (response) {
-        console.log(response);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/count').then(function (response) {
+        _this.picturecount = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/counts').then(function (response) {
-        console.log(response);
+        _this.votingcount = response.data;
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/1/count').then(function (response) {
+        _this.countbystars.push({
+          stars: 1,
+          value: response.data
+        });
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/2/count').then(function (response) {
-        console.log(response);
+        _this.countbystars.push({
+          stars: 2,
+          value: response.data
+        });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/3/count').then(function (response) {
+        _this.countbystars.push({
+          stars: 3,
+          value: response.data
+        });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/4/count').then(function (response) {
+        _this.countbystars.push({
+          stars: 4,
+          value: response.data
+        });
+      });
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/5/count').then(function (response) {
+        _this.countbystars.push({
+          stars: 5,
+          value: response.data
+        });
       });
     }
   }
@@ -32059,6 +32120,8 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _c("p", [_vm._v("Filter:")]),
+      _vm._v(" "),
       _c("div", [
         _c("p", [_vm._v("Module")]),
         _vm._v(" "),
@@ -32905,92 +32968,128 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", { staticClass: "title" }, [_vm._v("Über die Website")]),
+    _vm._v(" "),
+    _c("section", [
+      _c("h2", [_vm._v("Statistiken")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6 col-md-offset-1" }, [
+          _c("table", { staticClass: "table table-bordered table-hover" }, [
+            _c("tr", [
+              _c("td", [_vm._v("Bilder")]),
+              _c("td", [_vm._v(_vm._s(_vm.picturecount) + " ")])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", [_vm._v("Bewertungen")]),
+              _c("td", [_vm._v(_vm._s(_vm.votingcount) + " ")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.countbystars, function(count) {
+              return _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: { name: "gallery", params: { stars: count.stars } }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(count.stars) +
+                          " Sterne (" +
+                          _vm._s(count.value) +
+                          ")"
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", { staticClass: "title" }, [_vm._v("Über die Website")]),
-      _vm._v(" "),
-      _c("section", [
-        _c("h2", [_vm._v("Statistiken")]),
+    return _c("section", [
+      _c("div", [
+        _c("h2", [_vm._v("Technologien & Umsetzung")]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 col-md-offset-1" }, [
-            _c("table", { staticClass: "table table-bordered table-hover" }, [
-              _c("tr", [_c("td", [_vm._v("Bilder")]), _c("td")]),
-              _vm._v(" "),
-              _c("tr", [_c("td", [_vm._v("Bewertungen")]), _c("td")])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("section", [
-        _c("div", [
-          _c("h2", [_vm._v("Technologien & Umsetzung")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Diese Web-Applikation nutzt mehrere freie Bibliotheken und Module, die nachfolgend aufgeführt\n                sind."
+        _c("p", [
+          _vm._v(
+            "Diese Web-Applikation nutzt mehrere freie Bibliotheken und Module, die nachfolgend aufgeführt\n                sind."
+          )
+        ]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://jquery.com",
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("jQuery")]
             )
           ]),
           _vm._v(" "),
-          _c("ul", [
-            _c("li", [
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href: "https://jquery.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer"
-                  }
-                },
-                [_vm._v("jQuery")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href: "https://getbootstrap.com",
-                    target: "_blank",
-                    rel: "noopener noreferrer"
-                  }
-                },
-                [_vm._v("Bootstrap")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href:
-                      "https://www-coding.de/so-gehts-eigenes-captcha-mit-php/",
-                    rel: "noopener noreferrer"
-                  }
-                },
-                [_vm._v("Captcha-Modul\n                    von WWW Coding")]
-              )
-            ])
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://getbootstrap.com",
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("Bootstrap")]
+            )
           ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Bei der Realisierung haben mitgewirkt:")]),
-          _vm._v(" "),
-          _c("ul", [
-            _c("li", [
-              _vm._v(
-                "Ibrahim Nasim: erste Version mit Datenbank, Bewertung und Filterung"
-              )
-            ])
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: {
+                  href:
+                    "https://www-coding.de/so-gehts-eigenes-captcha-mit-php/",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [_vm._v("Captcha-Modul\n                    von WWW Coding")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", [_vm._v("Bei der Realisierung haben mitgewirkt:")]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [
+            _vm._v(
+              "Ibrahim Nasim: erste Version mit Datenbank, Bewertung und Filterung"
+            )
           ])
         ])
       ])

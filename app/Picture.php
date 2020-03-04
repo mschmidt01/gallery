@@ -25,8 +25,12 @@ class Picture extends Model
         return  DB::table('pictures')->sum('votes');
     }
 
+    public static function getTotalPictureCount(){
+        return  DB::table('pictures')->select("*")->count();
+    }
+
      public static  function  getPicturesForRating( $rating ) {
-       return DB::table('pictures')->select('*')->where("Votes", ">", "0")->whereRaw("2*abs( Rating / Votes - $rating ) < 1")->get();
+       return DB::table('pictures')->select('*')->where("Votes", ">", "0")->whereRaw("2*abs( Rating / Votes - $rating ) < 1")->count();
     }
 
     public static  function  getPictureCountByTopic( $sTopic ) {

@@ -8,9 +8,16 @@
                 <div class="col-md-6 col-md-offset-1">
                     <table  class="table table-bordered table-hover">
 
-                        <tr><td>Bilder</td><td> </td></tr>
-                        <tr><td>Bewertungen</td><td> </td></tr>
+                        <tr><td>Bilder</td><td>{{picturecount}} </td></tr>
+                        <tr><td>Bewertungen</td><td>{{votingcount}} </td></tr>
                     </table>
+
+                    <ul>
+                        <li v-for="count in countbystars" >
+                            <router-link :to="{name: 'gallery', params: {stars: count.stars}}">
+                                {{count.stars}} Sterne ({{count.value}})</router-link>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -39,7 +46,9 @@
     export default {
         data() {
             return {
-
+                picturecount: 0,
+                votingcount: 0,
+                countbystars: [],
             };
         },
         created() {
@@ -50,19 +59,39 @@
                 this.error = this.topics = null;
                 this.loading = true;
                 axios
-                    .get('/api/pictures/ratings/counts')
+                    .get('/api/pictures/count')
                     .then(response => {
-                        console.log(response)
+                        this.picturecount = response.data;
                     });
                 axios
                     .get('/api/pictures/ratings/voting/counts')
                     .then(response => {
-                        console.log(response)
+                        this.votingcount = response.data;
+                    });
+                axios
+                    .get('/api/pictures/ratings/voting/1/count')
+                    .then(response => {
+                        this.countbystars.push({stars: 1, value:  response.data});
                     });
                 axios
                     .get('/api/pictures/ratings/voting/2/count')
                     .then(response => {
-                        console.log(response)
+                        this.countbystars.push({stars: 2, value:  response.data});
+                    });
+                axios
+                    .get('/api/pictures/ratings/voting/3/count')
+                    .then(response => {
+                        this.countbystars.push({stars: 3, value:  response.data});
+                    });
+                axios
+                    .get('/api/pictures/ratings/voting/4/count')
+                    .then(response => {
+                        this.countbystars.push({stars: 4, value:  response.data});
+                    });
+                axios
+                    .get('/api/pictures/ratings/voting/5/count')
+                    .then(response => {
+                        this.countbystars.push({stars: 5, value:  response.data});
                     });
             }
         }

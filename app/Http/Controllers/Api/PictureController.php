@@ -20,6 +20,11 @@ class PictureController extends Controller
         return Picture::getRatings();
     }
 
+    public function getTotalPictureCount(){
+        return Picture::getTotalPictureCount();
+    }
+
+
     public function getRatingsCount(){
         return Picture::getRatingsCount();
     }
