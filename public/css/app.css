@@ -17347,3 +17347,152 @@ a {
 
 /*MediaQueries*/
 
+/**
+ * Custom variables like colors, etc.
+ * 
+ * @author Larissa Schneider
+ */
+
+/* Color scheme */
+
+/* Breakpoints */
+
+/* Navigation */
+
+/* Links */
+
+/**
+ * Custom adaptations to the design.
+ *
+ * @author Larissa Schneider
+ */
+
+/* Navigation */
+
+header nav.navbar {
+  padding: 0 1rem;
+  min-height: 72px;
+}
+
+@media (max-width: 768px) {
+  header nav.navbar {
+    padding: 0;
+  }
+}
+
+header nav.navbar a.navbar-brand {
+  margin: 1rem 2rem 1rem 0;
+  /* ToDo: Better Logo */
+  /*
+  background-color: rgb(149, 149, 149);
+  padding: 0.3rem;
+  border-radius: 50%;
+  */
+}
+
+@media (max-width: 768px) {
+  header nav.navbar #navigation {
+    border-top: 3px solid #22857b;
+  }
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item {
+  height: 80px;
+  min-width: 160px;
+  flex-basis: 0;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item:hover {
+  background-color: #464b4f;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown a.dropdown-toggle::after {
+  margin-left: 0.5em;
+  vertical-align: middle;
+  margin-top: 0.25rem;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown .dropdown-menu {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border-top: 3px solid #22857b;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown .dropdown-menu a.dropdown-item {
+  color: white;
+  padding: 1rem;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown .dropdown-menu a.dropdown-item:hover {
+  background-color: #464b4f;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link {
+  color: white;
+  padding: 0 1rem;
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link:hover {
+  color: white;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link:active {
+  color: white;
+}
+
+header nav.navbar a.login-button:hover {
+  text-decoration: none;
+  background-color: #22857b;
+}
+
+header nav.navbar a.login-button:hover button.login,
+header nav.navbar a.login-button:hover i {
+  color: #212529 !important;
+}
+
+header nav.navbar a.login-button button.login {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: baseline;
+          align-items: baseline;
+  color: white;
+  border: 1px solid #22857b;
+  border-radius: 0 !important;
+  -webkit-transition: none;
+  transition: none;
+}
+
+header nav.navbar a.login-button button.login i {
+  line-height: unset;
+  margin-right: 0.5rem;
+  color: #22857b;
+}
+
+header nav.navbar button.navbar-toggler {
+  border: 1px solid #22857b;
+  border-radius: 0 !important;
+  padding: 0.25rem;
+}
+
+header nav.navbar button.navbar-toggler:hover {
+  background-color: #22857b;
+}
+
+header nav.navbar button.navbar-toggler:hover span.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+header nav.navbar button.navbar-toggler span.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(34, 133, 123, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+

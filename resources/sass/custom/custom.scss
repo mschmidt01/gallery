@@ -1,0 +1,141 @@
+/**
+ * Custom adaptations to the design.
+ *
+ * @author Larissa Schneider
+ */
+
+/* Navigation */
+header {
+  nav.navbar {
+    padding: 0 1rem;
+    min-height: 72px;
+
+    @media (max-width: $medium) {
+      padding: 0;
+    }
+
+    a.navbar-brand {
+      margin: 1rem 2rem 1rem 0;
+
+      /* ToDo: Better Logo */
+      /*
+      background-color: rgb(149, 149, 149);
+      padding: 0.3rem;
+      border-radius: 50%;
+      */
+    }
+
+    #navigation {
+
+      @media (max-width: $medium) {
+        border-top: 3px solid $navigation-accent;
+      }
+
+      ul.navbar-nav {
+        li.nav-item {
+          height: 80px;
+          min-width: 160px;
+          flex-basis: 0;
+          -webkit-box-flex: 0;
+          flex-grow: 0;
+
+          &:hover {
+            background-color: $navigation-link-bg-hover;
+          }
+
+          &.dropdown {
+            a.dropdown-toggle {
+              &::after {
+                margin-left: 0.5em;
+                vertical-align: middle;
+                margin-top: 0.25rem;
+              }
+            }
+
+            .dropdown-menu {
+              margin: 0;
+              padding: 0;
+              border-radius: 0;
+              border-top: 3px solid $navigation-accent;
+
+              a.dropdown-item {
+                color: white;
+                padding: 1rem;
+
+                &:hover {
+                  background-color: $navigation-link-bg-hover;
+                }
+              }
+            }
+          }
+
+          a.nav-link {
+            color: $navigation-link-color;
+            padding: 0 1rem;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+              color: $navigation-link-hover;
+            }
+
+            &:active {
+              color: $navigation-link-active;
+            }
+          }
+        }
+      }
+    }
+
+    a.login-button {
+      &:hover {
+        text-decoration: none;
+        background-color: $navigation-accent;
+
+        button.login,
+        i {
+          color: $navigation-bg !important;
+        }
+      }
+
+      button.login {
+        display: flex;
+        align-items: baseline;
+        color: white;
+        border: 1px solid $navigation-accent;
+        border-radius: 0 !important;
+        transition: none;
+
+        i {
+          line-height: unset;
+          margin-right: 0.5rem;
+          color: $navigation-accent;
+        }
+      }
+    }
+
+    button.navbar-toggler {
+      border: 1px solid $navigation-accent;
+      border-radius: 0 !important;
+      padding: 0.25rem;
+
+      &:hover {
+        background-color: $navigation-accent;
+
+        span.navbar-toggler-icon {
+          $navigation-bg-rgb: unquote("rgba(#{red($navigation-bg)}, #{green($navigation-bg)}, #{blue($navigation-bg)}, 1)");
+
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='#{$navigation-bg-rgb}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+      }
+
+      span.navbar-toggler-icon {
+        $navigation-accent-rgb: unquote("rgba(#{red($navigation-accent)}, #{green($navigation-accent)}, #{blue($navigation-accent)}, 1)");
+
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='#{$navigation-accent-rgb}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+    }
+  }
+}

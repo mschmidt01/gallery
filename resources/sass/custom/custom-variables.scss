@@ -1,0 +1,27 @@
+/**
+ * Custom variables like colors, etc.
+ * 
+ * @author Larissa Schneider
+ */
+
+/* Color scheme */
+$abbey: #464b4f;
+$shark: #212529;
+$congoBrown: #563143;
+$elm: #22857b;
+
+/* Breakpoints */
+$medium: 768px;
+
+/* Navigation */
+$navigation-bg: $shark;
+$navigation-link-color: white;
+$navigation-link-hover: white;
+$navigation-link-active: white;
+$navigation-link-bg-hover: $abbey;
+$navigation-accent: $elm;
+
+/* Links */
+$link-color: white;
+$link-hover: white;
+$link-active: white;

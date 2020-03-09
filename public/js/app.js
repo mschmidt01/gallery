@@ -3365,7 +3365,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Navigation*/\n.navbar-dark .navbar-nav .nav-link[data-v-7a27d688] {\n    color: white;\n}\n.navbar-dark .navbar-nav .nav-link[data-v-7a27d688]:hover {\n    color: blue;\n}\n.navbar-dark .navbar-nav .nav-link[data-v-7a27d688]:active {\n    color: blue;\n}\n.navbar-dark .navbar-nav .nav-link[data-v-7a27d688]:focus {\n    color: blue;\n}\n.dropdown-item[data-v-7a27d688]:active {\n    background-color: blue;\n    color: white;\n}\n.dropdown-item[data-v-7a27d688]:hover {\n    background-color: blue;\n    color: white;\n}\n.dropdown-item[data-v-7a27d688]:focus {\n    background-color: blue;\n    color: white;\n}\nnav[data-v-7a27d688] {\n    min-height: 80px;\n}\n.login[data-v-7a27d688] {\n    width: 100px;\n    color: white;\n    border: 1px solid blue;\n}\n.login[data-v-7a27d688]:hover {\n    color: blue;\n}\n.login[data-v-7a27d688]:active {\n    color: blue;\n}\ni[data-v-7a27d688] {\n    color: blue;\n}\n.dropdown-menu[data-v-7a27d688] {\n    border-top: 3px solid blue;\n    color: #fff;\n    border-radius: 0;\n}\n.dropdown-menu a[data-v-7a27d688] {\n    color: white;\n}\n@media (min-width: 768px) {\n    /*.nav>li.dropdown.open{\n        position:static;\n    }\n    .nav>li.dropdown.open.dropdown-menu{\n        display:table;\n        width:100%;\n        text-align:center;\n        left:0;\n        right:0;\n    }*/\n.dropdown-menu > li[data-v-7a27d688] {\n        display: table-cell;\n}\n.dropdown-menu[data-v-7a27d688] {\n        left: 50%;\n        right: auto;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        margin-top: 18px;\n}\n}\n@media (max-width: 768px) {\n.responsive-logo[data-v-7a27d688] {\n        margin-left: auto;\n        margin-right: auto;\n        padding-left: 56px;\n}\n.dropdown-menu[data-v-7a27d688] {\n        text-align: center;\n        border-left: 1px solid #ffffff20;\n        border-right: 1px solid #ffffff20;\n        border-bottom: 1px solid #ffffff20;\n        max-width: 200px;\n        margin-left: auto !important;\n        margin-right: auto !important;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Navigation*/\n\n/*\n.navbar-dark .navbar-nav .nav-link {\n    color: white;\n}\n.navbar-dark .navbar-nav .nav-link:hover {\n    color: blue;\n}\n\n.navbar-dark .navbar-nav .nav-link:active {\n    color: blue;\n}\n\n.navbar-dark .navbar-nav .nav-link:focus {\n    color: blue;\n}\n\n.dropdown-item:active {\n    background-color: blue;\n    color: white;\n}\n\n.dropdown-item:hover {\n    background-color: blue;\n    color: white;\n}\n\n.dropdown-item:focus {\n    background-color: blue;\n    color: white;\n}\n\nnav {\n    min-height: 80px;\n}\n\n.login {\n    width: 100px;\n    color: white;\n    border: 1px solid blue;\n}\n\n.login:hover {\n    color: blue;\n}\n\n.login:active {\n    color: blue;\n}\n\ni {\n    color: blue;\n}\n\n.dropdown-menu {\n    border-top: 3px solid blue;\n    color: #fff;\n    border-radius: 0;\n}\n\n.dropdown-menu a {\n    color: white;\n}\n*/\n@media (min-width: 768px) {\n    /*.nav>li.dropdown.open{\n        position:static;\n    }\n    .nav>li.dropdown.open.dropdown-menu{\n        display:table;\n        width:100%;\n        text-align:center;\n        left:0;\n        right:0;\n    }*/\n.dropdown-menu > li[data-v-7a27d688] {\n        display: table-cell;\n}\n.dropdown-menu[data-v-7a27d688] {\n        left: 50%;\n        right: auto;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        margin-top: 18px;\n}\n}\n@media (max-width: 768px) {\n  /*\n    .responsive-logo {\n        margin-left: auto;\n        margin-right: auto;\n        padding-left: 56px;\n    }\n    */\n.dropdown-menu[data-v-7a27d688] {\n        text-align: center;\n        border-left: 1px solid #ffffff20;\n        border-right: 1px solid #ffffff20;\n        border-bottom: 1px solid #ffffff20;\n        max-width: 200px;\n        margin-left: auto !important;\n        margin-right: auto !important;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -31878,16 +31878,20 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("router-link", { attrs: { to: { name: "login" } } }, [
-              _c(
-                "button",
-                { staticClass: "btn login", attrs: { type: "button" } },
-                [
-                  _c("i", { staticClass: " fas fa-sign-in-alt " }),
-                  _vm._v(" Login")
-                ]
-              )
-            ])
+            _c(
+              "router-link",
+              { staticClass: "login-button", attrs: { to: { name: "login" } } },
+              [
+                _c(
+                  "button",
+                  { staticClass: "btn login", attrs: { type: "button" } },
+                  [
+                    _c("i", { staticClass: " fas fa-sign-in-alt " }),
+                    _vm._v(" Login")
+                  ]
+                )
+              ]
+            )
           ],
           1
         )
@@ -49357,8 +49361,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

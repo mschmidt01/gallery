@@ -34,7 +34,7 @@
                         </div>
                     </li>
                 </ul>
-                <router-link :to="{name: 'login'}">
+                <router-link :to="{name: 'login'}" class="login-button">
                     <button class="btn login" type="button"><i class=" fas fa-sign-in-alt "></i> Login</button>
                 </router-link>
             </div>
@@ -50,10 +50,11 @@
 
 <style scoped>
     /*Navigation*/
+
+    /*
     .navbar-dark .navbar-nav .nav-link {
         color: white;
     }
-
     .navbar-dark .navbar-nav .nav-link:hover {
         color: blue;
     }
@@ -112,6 +113,7 @@
     .dropdown-menu a {
         color: white;
     }
+    */
 
     @media (min-width: 768px) {
         /*.nav>li.dropdown.open{
@@ -137,11 +139,13 @@
     }
 
     @media (max-width: 768px) {
+      /*
         .responsive-logo {
             margin-left: auto;
             margin-right: auto;
             padding-left: 56px;
         }
+        */
 
         .dropdown-menu {
             text-align: center;
