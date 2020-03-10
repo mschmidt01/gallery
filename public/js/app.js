@@ -1979,8 +1979,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Gallerynav"
+  name: "Gallerynav",
+  data: function data() {
+    var currentPath = window.location.pathname;
+    var learnChild,
+        informationChild = false;
+
+    if (currentPath === "/snippets" || currentPath === "/live" || currentPath === "/pattern" || currentPath === "/quiz") {
+      learnChild = true;
+    } else if (currentPath === "/functions" || currentPath === "/statistics") {
+      informationChild = true;
+    }
+
+    return {
+      learnChild: learnChild,
+      informationChild: informationChild
+    };
+  },
+  methods: {
+    setLearnChildTrue: function setLearnChildTrue() {
+      this.learnChild = true;
+      this.informationChild = false;
+      this.$refs.learnDropdown.classList.remove("show");
+    },
+    setInformationChildTrue: function setInformationChildTrue() {
+      this.learnChild = false;
+      this.informationChild = true;
+      this.$refs.informationDropdown.classList.remove("show");
+    },
+    resetParents: function resetParents() {
+      this.learnChild = false;
+      this.informationChild = false;
+    },
+    InlineButtonClickHandler: function InlineButtonClickHandler(event) {
+      console.log("CHILD CLICKED!");
+      this.$emit('childClicked');
+    }
+  }
 });
 
 /***/ }),
@@ -3365,7 +3427,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*Navigation*/\n\n/*\n.navbar-dark .navbar-nav .nav-link {\n    color: white;\n}\n.navbar-dark .navbar-nav .nav-link:hover {\n    color: blue;\n}\n\n.navbar-dark .navbar-nav .nav-link:active {\n    color: blue;\n}\n\n.navbar-dark .navbar-nav .nav-link:focus {\n    color: blue;\n}\n\n.dropdown-item:active {\n    background-color: blue;\n    color: white;\n}\n\n.dropdown-item:hover {\n    background-color: blue;\n    color: white;\n}\n\n.dropdown-item:focus {\n    background-color: blue;\n    color: white;\n}\n\nnav {\n    min-height: 80px;\n}\n\n.login {\n    width: 100px;\n    color: white;\n    border: 1px solid blue;\n}\n\n.login:hover {\n    color: blue;\n}\n\n.login:active {\n    color: blue;\n}\n\ni {\n    color: blue;\n}\n\n.dropdown-menu {\n    border-top: 3px solid blue;\n    color: #fff;\n    border-radius: 0;\n}\n\n.dropdown-menu a {\n    color: white;\n}\n*/\n@media (min-width: 768px) {\n    /*.nav>li.dropdown.open{\n        position:static;\n    }\n    .nav>li.dropdown.open.dropdown-menu{\n        display:table;\n        width:100%;\n        text-align:center;\n        left:0;\n        right:0;\n    }*/\n.dropdown-menu > li[data-v-7a27d688] {\n        display: table-cell;\n}\n.dropdown-menu[data-v-7a27d688] {\n        left: 50%;\n        right: auto;\n        -webkit-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        margin-top: 18px;\n}\n}\n@media (max-width: 768px) {\n  /*\n    .responsive-logo {\n        margin-left: auto;\n        margin-right: auto;\n        padding-left: 56px;\n    }\n    */\n.dropdown-menu[data-v-7a27d688] {\n        text-align: center;\n        border-left: 1px solid #ffffff20;\n        border-right: 1px solid #ffffff20;\n        border-bottom: 1px solid #ffffff20;\n        max-width: 200px;\n        margin-left: auto !important;\n        margin-right: auto !important;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*Navigation*/\r\n\r\n/*\r\n    .navbar-dark .navbar-nav .nav-link {\r\n        color: white;\r\n    }\r\n    .navbar-dark .navbar-nav .nav-link:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:active {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:focus {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-item:active {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:hover {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:focus {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    nav {\r\n        min-height: 80px;\r\n    }\r\n\r\n    .login {\r\n        width: 100px;\r\n        color: white;\r\n        border: 1px solid blue;\r\n    }\r\n\r\n    .login:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .login:active {\r\n        color: blue;\r\n    }\r\n\r\n    i {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-menu {\r\n        border-top: 3px solid blue;\r\n        color: #fff;\r\n        border-radius: 0;\r\n    }\r\n\r\n    .dropdown-menu a {\r\n        color: white;\r\n    }\r\n    */\n@media (min-width: 768px) {\r\n  /*.nav>li.dropdown.open{\r\n            position:static;\r\n        }\r\n        .nav>li.dropdown.open.dropdown-menu{\r\n            display:table;\r\n            width:100%;\r\n            text-align:center;\r\n            left:0;\r\n            right:0;\r\n        }\r\n        .dropdown-menu > li {\r\n            display: table-cell;\r\n        }\r\n\r\n        .dropdown-menu {\r\n            left: 50%;\r\n            right: auto;\r\n            transform: translate(-50%, 0);\r\n            margin-top: 18px;\r\n        }\r\n        */\n}\n@media (max-width: 768px) {\r\n  /*\r\n        .responsive-logo {\r\n            margin-left: auto;\r\n            margin-right: auto;\r\n            padding-left: 56px;\r\n        }\r\n        \r\n\r\n        .dropdown-menu {\r\n            text-align: center;\r\n            border-left: 1px solid #ffffff20;\r\n            border-right: 1px solid #ffffff20;\r\n            border-bottom: 1px solid #ffffff20;\r\n            max-width: 200px;\r\n            margin-left: auto !important;\r\n            margin-right: auto !important;\r\n        }\r\n        */\n}\r\n", ""]);
 
 // exports
 
@@ -31760,7 +31822,12 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "nav-link",
-                        attrs: { to: { name: "topics" }, href: "#" }
+                        attrs: { to: { name: "topics" }, href: "#" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.resetParents()
+                          }
+                        }
                       },
                       [_vm._v("Gallerie")]
                     )
@@ -31768,113 +31835,164 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("li", { staticClass: "nav-item dropdown" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link dropdown-toggle",
-                      attrs: {
-                        href: "#",
-                        role: "button",
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
+                _c(
+                  "li",
+                  {
+                    staticClass: "nav-item dropdown",
+                    class: { "active-parent": _vm.learnChild },
+                    on: {
+                      childClicked: function($event) {
+                        return _vm.setLearnChildTrue()
                       }
-                    },
-                    [_vm._v("Learn BoS")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "dropdown-menu bg-dark",
-                      attrs: { "aria-labelledby": "dropdownMenuButton" }
-                    },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "live" } }
-                        },
-                        [_vm._v("BoS Live")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "snippets" } }
-                        },
-                        [_vm._v("Snippets")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "pattern" } }
-                        },
-                        [_vm._v("Trainer")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "quiz" } }
-                        },
-                        [_vm._v("Quiz")]
-                      )
-                    ],
-                    1
-                  )
-                ]),
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [_vm._v("Learn BoS")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        ref: "learnDropdown",
+                        staticClass: "dropdown-menu bg-dark",
+                        attrs: { "aria-labelledby": "dropdownMenuButton" }
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "live" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setLearnChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("BoS Live")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "snippets" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setLearnChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("Snippets")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "pattern" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setLearnChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("Trainer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "quiz" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setLearnChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("Quiz")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                ),
                 _vm._v(" "),
-                _c("li", { staticClass: "nav-item dropdown" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link dropdown-toggle",
-                      attrs: {
-                        href: "#",
-                        role: "button",
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
-                      }
-                    },
-                    [_vm._v("Informationen")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "dropdown-menu bg-dark",
-                      attrs: { "aria-labelledby": "dropdownMenuButton" }
-                    },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "functions" } }
-                        },
-                        [_vm._v("Über BoS")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "dropdown-item",
-                          attrs: { to: { name: "statistics" } }
-                        },
-                        [_vm._v("Über Website")]
-                      )
-                    ],
-                    1
-                  )
-                ])
+                _c(
+                  "li",
+                  {
+                    staticClass: "nav-item dropdown",
+                    class: { "active-parent": _vm.informationChild }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [_vm._v("Informationen")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        ref: "informationDropdown",
+                        staticClass: "dropdown-menu bg-dark",
+                        attrs: { "aria-labelledby": "dropdownMenuButton" }
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "functions" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setInformationChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("Über BoS")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "statistics" } },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.setInformationChildTrue()
+                              }
+                            }
+                          },
+                          [_vm._v("Über Website")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                )
               ]
             ),
             _vm._v(" "),
@@ -31886,8 +32004,8 @@ var render = function() {
                   "button",
                   { staticClass: "btn login", attrs: { type: "button" } },
                   [
-                    _c("i", { staticClass: " fas fa-sign-in-alt " }),
-                    _vm._v(" Login")
+                    _c("i", { staticClass: "fas fa-sign-in-alt" }),
+                    _vm._v(" Login\n        ")
                   ]
                 )
               ]

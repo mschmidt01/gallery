@@ -17433,6 +17433,10 @@ header nav.navbar #navigation ul.navbar-nav li.nav-item:hover {
   background-color: #464b4f;
 }
 
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown.active-parent {
+  background-color: #464b4f;
+}
+
 header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown a.dropdown-toggle::after {
   margin-left: 0.5em;
   vertical-align: middle;
@@ -17462,6 +17466,10 @@ header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown .dropdown-menu 
   background-color: #464b4f;
 }
 
+header nav.navbar #navigation ul.navbar-nav li.nav-item.dropdown .dropdown-menu a.dropdown-item.router-link-active {
+  background-color: #464b4f;
+}
+
 header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link {
   color: white;
   padding: 0 1rem;
@@ -17480,6 +17488,10 @@ header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link:hover {
 
 header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link:active {
   color: white;
+}
+
+header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link.router-link-active {
+  background-color: #464b4f;
 }
 
 @media (max-width: 768px) {

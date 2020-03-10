@@ -61,6 +61,10 @@ header {
           }
 
           &.dropdown {
+            &.active-parent {
+              background-color: $navigation-link-bg-hover;
+            }
+
             a.dropdown-toggle {
               &::after {
                 margin-left: 0.5em;
@@ -87,6 +91,10 @@ header {
                 &:hover {
                   background-color: $navigation-link-bg-hover;
                 }
+
+                &.router-link-active {
+                  background-color: $navigation-link-bg-hover;
+                }
               }
             }
           }
@@ -105,6 +113,10 @@ header {
 
             &:active {
               color: $navigation-link-active;
+            }
+
+            &.router-link-active {
+              background-color: $navigation-link-bg-hover;
             }
           }
         }
