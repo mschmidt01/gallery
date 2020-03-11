@@ -38,9 +38,9 @@
             <p>Sterne</p>
             <ul>
                 <li v-for="index in 5" :key="index">
-                    <input type="checkbox" v-bind:value="index"  v-model="starfilter"
+                    <input type="checkbox" v-bind:value="index" v-model="starfilter"
                            v-on:change="filterPictures()">
-                    <label >{{index}}</label><br>
+                    <label>{{index}}</label><br>
                 </li>
             </ul>
         </div>
@@ -85,9 +85,12 @@
         },
         created() {
             this.topic = this.$route.params.name;
-            this.topicfilter[0] =  this.topic;
-            this.starfilter[0] = this.$route.params.stars;
-            console.log(this.$route.params.stars);
+            if (typeof this.$route.params.name !== 'undefined') {
+                this.topicfilter[0] = this.topic;
+            }
+            if (typeof this.$route.params.stars !== 'undefined') {
+                this.starfilter[0] = this.$route.params.stars;
+            }
             this.fetchData();
         },
         methods: {
@@ -107,20 +110,19 @@
                     .then(response => {
                         this.filters.classes = response.data;
                     });
-                axios.get('/api/pictures/filter/topics', {
-                })
+                axios.get('/api/pictures/filter/topics', {})
                     .then(response => {
                         this.filters.topics = response.data;
-                        if(typeof this.topic === 'undefined' ){
-                            this.topicfilter = response.data ;
+                        if (typeof this.topic === 'undefined') {
+                            this.topicfilter = response.data;
                         }
                     });
                 axios.get('/api/pictures/ordered')
                     .then(response => {
                         this.loading = false;
                         let topic = this.topic;
-                        self.pictures = $.map(response.data, function(value, key) {
-                            return { [key]: value };
+                        self.pictures = $.map(response.data, function (value, key) {
+                            return {[key]: value};
                         });
                         this.filtered = response.data[topic];
                         this.gallery = this.filtered;
@@ -137,20 +139,28 @@
             filterPictures() {
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0
                     && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0
-                        && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0
-                            && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
+                    && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0
+                    && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
                     this.filtered = [];
-                   return false;
+                    return false;
                 }
                 if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+                    console.log("topic filter set");
                     var bucket = [];
-                    for (let i = 0; i < this.topicfilter.length; i++) {
-                        let images = this.pictures[i][this.topicfilter[i]];
-                        bucket.push(...images);
+                    for (var i = 0; i < this.topicfilter.length; i++) {
+                        var topic = this.topicfilter[i];
+                        for (var y = 0; y < this.pictures.length; y++) {
+                            if (topic in this.pictures[y]) {
+                                let images = this.pictures[y][topic];
+                                bucket.push(...images);
+                            }
+                        }
+                        this.filtered = bucket;
                     }
-                    this.filtered = bucket;
                 }
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
+                    console.log("modul filter set");
+
                     var bucket = [];
                     for (let i = 0; i < this.modulfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -158,10 +168,12 @@
                         }.bind(this));
                         bucket.push(...images);
                     }
+                    this.filtered = bucket;
                 }
-                this.filtered = bucket;
 
                 if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+                    console.log("class filter set");
+
                     var bucket = [];
                     for (let i = 0; i < this.classfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -173,18 +185,21 @@
                 }
 
                 if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
+                    console.log("star filter set");
+
                     var bucket = [];
                     for (let i = 0; i < this.starfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
-                            if(el.Votes === 0){
+                            if (el.Votes === 0) {
                                 return false;
                             }
-                            return 2*Math.abs( el.Rating / el.Votes - this.starfilter[i] ) < 1;
+                            return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[i]) < 1;
                         }.bind(this));
                         bucket.push(...images);
                     }
                     this.filtered = bucket;
                 }
+                console.log(this.filtered);
             },
             sort(event, name) {
                 event.preventDefault();

@@ -2250,9 +2250,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.topic = this.$route.params.name;
-    this.topicfilter[0] = this.topic;
-    this.starfilter[0] = this.$route.params.stars;
-    console.log(this.$route.params.stars);
+
+    if (typeof this.$route.params.name !== 'undefined') {
+      this.topicfilter[0] = this.topic;
+    }
+
+    if (typeof this.$route.params.stars !== 'undefined') {
+      this.starfilter[0] = this.$route.params.stars;
+    }
+
     this.fetchData();
   },
   methods: {
@@ -2308,20 +2314,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+        console.log("topic filter set");
         var bucket = [];
 
         for (var i = 0; i < this.topicfilter.length; i++) {
-          var _bucket;
+          var topic = this.topicfilter[i];
 
-          var images = this.pictures[i][this.topicfilter[i]];
+          for (var y = 0; y < this.pictures.length; y++) {
+            if (topic in this.pictures[y]) {
+              var _bucket;
 
-          (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
+              var images = this.pictures[y][topic];
+
+              (_bucket = bucket).push.apply(_bucket, _toConsumableArray(images));
+            }
+          }
+
+          this.filtered = bucket;
         }
-
-        this.filtered = bucket;
       }
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
+        console.log("modul filter set");
         var bucket = [];
 
         var _loop = function _loop(_i) {
@@ -2337,11 +2351,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         for (var _i = 0; _i < this.modulfilter.length; _i++) {
           _loop(_i);
         }
+
+        this.filtered = bucket;
       }
 
-      this.filtered = bucket;
-
       if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+        console.log("class filter set");
         var bucket = [];
 
         var _loop2 = function _loop2(_i2) {
@@ -2362,6 +2377,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
+        console.log("star filter set");
         var bucket = [];
 
         var _loop3 = function _loop3(_i3) {
@@ -2384,6 +2400,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.filtered = bucket;
       }
+
+      console.log(this.filtered);
     },
     sort: function sort(event, name) {
       event.preventDefault();
