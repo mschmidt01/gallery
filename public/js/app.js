@@ -2303,6 +2303,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.filtered = bucket;
         }
+
+        self.filterPictures();
       });
     },
     filterPictures: function filterPictures() {
@@ -2378,6 +2380,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
         console.log("star filter set");
+        console.log(this.filtered);
         var bucket = [];
 
         var _loop3 = function _loop3(_i3) {
@@ -2402,6 +2405,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       console.log(this.filtered);
+      vm.$forceUpdate();
     },
     sort: function sort(event, name) {
       event.preventDefault();
@@ -3251,31 +3255,31 @@ __webpack_require__.r(__webpack_exports__);
         _this.votingcount = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/1/count').then(function (response) {
-        _this.countbystars.push({
+        _this.$set(_this.countbystars, 0, {
           stars: 1,
           value: response.data
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/2/count').then(function (response) {
-        _this.countbystars.push({
+        _this.$set(_this.countbystars, 1, {
           stars: 2,
           value: response.data
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/3/count').then(function (response) {
-        _this.countbystars.push({
+        _this.$set(_this.countbystars, 2, {
           stars: 3,
           value: response.data
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/4/count').then(function (response) {
-        _this.countbystars.push({
+        _this.$set(_this.countbystars, 3, {
           stars: 4,
           value: response.data
         });
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/pictures/ratings/voting/5/count').then(function (response) {
-        _this.countbystars.push({
+        _this.$set(_this.countbystars, 4, {
           stars: 5,
           value: response.data
         });

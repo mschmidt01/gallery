@@ -134,6 +134,7 @@
                             }
                             this.filtered = bucket;
                         }
+                        self.filterPictures();
                     });
             },
             filterPictures() {
@@ -186,7 +187,7 @@
 
                 if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
                     console.log("star filter set");
-
+                    console.log(this.filtered);
                     var bucket = [];
                     for (let i = 0; i < this.starfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -200,6 +201,7 @@
                     this.filtered = bucket;
                 }
                 console.log(this.filtered);
+                vm.$forceUpdate();
             },
             sort(event, name) {
                 event.preventDefault();
