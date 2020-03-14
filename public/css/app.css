@@ -17361,6 +17361,8 @@ a {
 
 /* Links */
 
+/* Headline */
+
 /**
  * Custom adaptations to the design.
  *
@@ -17382,8 +17384,12 @@ header nav.navbar {
 
 header nav.navbar a.navbar-brand {
   margin: 1rem 2rem 1rem 0;
-  padding: 0.3rem;
+  padding: 0.5rem;
   border-radius: 50%;
+}
+
+header nav.navbar a.navbar-brand:hover {
+  background-color: #464b4f;
 }
 
 @media (max-width: 768px) {
@@ -17411,7 +17417,7 @@ header nav.navbar a.navbar-brand {
 }
 
 header nav.navbar #navigation ul.navbar-nav li.nav-item {
-  height: 80px;
+  height: 88px;
   min-width: 160px;
   flex-basis: 0;
   -webkit-box-flex: 0;
@@ -17541,5 +17547,21 @@ header nav.navbar button.navbar-toggler:hover span.navbar-toggler-icon {
 
 header nav.navbar button.navbar-toggler span.navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(62, 146, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Headlines */
+
+.title::after {
+  background-color: #3e92cc;
+}
+
+/* Links */
+
+a {
+  color: #009cf9;
+}
+
+a:hover {
+  color: #3e92cc;
 }
 

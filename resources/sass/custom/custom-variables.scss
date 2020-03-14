@@ -7,9 +7,8 @@
 /* Color scheme */
 $abbey: #464b4f;
 $shark: #212529;
-$congoBrown: #563143;
 $shakespear: #3e92cc;
-$elm: #22857b;
+
 
 /* Breakpoints */
 $medium: 768px;
@@ -23,6 +22,9 @@ $navigation-link-bg-hover: $abbey;
 $navigation-accent: $shakespear;
 
 /* Links */
-$link-color: white;
-$link-hover: white;
-$link-active: white;
+$link-color: #4c323e;
+$link-hover: #7d606e;
+$link-active: #4c323e;
+
+/* Headline */
+$headline-accent: $shakespear;

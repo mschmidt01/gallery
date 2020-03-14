@@ -16,10 +16,12 @@ header {
 
     a.navbar-brand {
       margin: 1rem 2rem 1rem 0;
-
-      //background-color: white;
-      padding: 0.3rem;
+      padding: 0.5rem;
       border-radius: 50%;
+
+      &:hover {
+        background-color: $navigation-link-bg-hover;
+      }
 
       @media (max-width: $medium) {
         margin-left: 1rem;
@@ -42,7 +44,7 @@ header {
         }
 
         li.nav-item {
-          height: 80px;
+          height: 88px;
           min-width: 160px;
           flex-basis: 0;
           -webkit-box-flex: 0;
@@ -177,5 +179,19 @@ header {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='#{$navigation-accent-rgb}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
       }
     }
+  }
+}
+
+/* Headlines */
+.title::after{
+  background-color: $headline-accent;
+}
+
+/* Links */
+a {
+  color: #009cf9;
+
+  &:hover {
+    color: #3e92cc;
   }
 }
