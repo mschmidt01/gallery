@@ -17,12 +17,9 @@ header {
     a.navbar-brand {
       margin: 1rem 2rem 1rem 0;
 
-      /* ToDo: Better Logo */
-      /*
-      background-color: rgb(149, 149, 149);
+      //background-color: white;
       padding: 0.3rem;
       border-radius: 50%;
-      */
 
       @media (max-width: $medium) {
         margin-left: 1rem;

@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;"><circle cx="50" cy="50" r="46.853" style="fill:none;stroke:#00f;stroke-width:4px;"/><rect x="16.888" y="16.888" width="66.224" height="66.224" style="fill:none;stroke:#f00;stroke-width:4px;"/><path d="M50,16.888l33.112,66.224l-66.224,0l33.112,-66.224Z" style="fill:none;stroke:#ff0;stroke-width:4px;"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" 
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" 
+  xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+  <circle cx="50" cy="50" r="46.853" style="fill:none;stroke:#3e92cc;stroke-width:4px;"/>
+  <rect x="16.888" y="16.888" width="66.224" height="66.224" style="fill:none;stroke:#D62B19;stroke-width:4px;"/>
+  <path d="M50,16.888l33.112,66.224l-66.224,0l33.112,-66.224Z" style="fill:none;stroke:#FFC21A;stroke-width:4px;"/>
+</svg>
