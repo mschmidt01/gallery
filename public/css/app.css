@@ -17558,15 +17558,15 @@ header nav.navbar button.navbar-toggler span.navbar-toggler-icon {
 /* Links */
 
 a {
-  color: #793757;
+  color: #8d1952;
 }
 
 a:hover {
-  color: #8d1952;
+  color: #a7472a;
 }
 
 a:active {
-  color: #8d1952;
+  color: #a7472a;
 }
 
 a:not(.nav-link):not(.dropdown-item) {
@@ -17576,12 +17576,12 @@ a:not(.nav-link):not(.dropdown-item) {
 /* Login */
 
 form.login-form button.login-button {
-  background-color: #793757;
-  border-color: #793757;
+  background-color: #8d1952;
+  border-color: #8d1952;
 }
 
 form.login-form button.login-button:hover {
-  background-color: #8d1952;
-  border-color: #8d1952;
+  background-color: #a7472a;
+  border-color: #a7472a;
 }
 
