@@ -17558,10 +17558,30 @@ header nav.navbar button.navbar-toggler span.navbar-toggler-icon {
 /* Links */
 
 a {
-  color: #009cf9;
+  color: #793757;
 }
 
 a:hover {
-  color: #3e92cc;
+  color: #8d1952;
+}
+
+a:active {
+  color: #8d1952;
+}
+
+a:not(.nav-link):not(.dropdown-item) {
+  font-weight: bold;
+}
+
+/* Login */
+
+form.login-form button.login-button {
+  background-color: #793757;
+  border-color: #793757;
+}
+
+form.login-form button.login-button:hover {
+  background-color: #8d1952;
+  border-color: #8d1952;
 }
 

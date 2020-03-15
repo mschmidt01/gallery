@@ -189,9 +189,30 @@ header {
 
 /* Links */
 a {
-  color: #009cf9;
+  color: $link-color;
 
   &:hover {
-    color: #3e92cc;
+    color: $link-hover;
+  }
+
+  &:active {
+    color: $link-hover;
+  }
+
+  &:not(.nav-link):not(.dropdown-item) {
+    font-weight: bold;
+  }
+}
+
+/* Login */
+form.login-form {
+  button.login-button {
+    background-color: $link-color;
+    border-color: $link-color;
+
+    &:hover {
+      background-color: $link-hover;
+    border-color: $link-hover;
+    } 
   }
 }

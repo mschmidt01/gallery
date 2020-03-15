@@ -3446,7 +3446,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.login-form[data-v-768ef710]{\n    max-width: 400px;\n}\n.login-button[data-v-768ef710] {\n    color: #fff;\n    background-color: blue;\n    border-color: blue;\n}\n", ""]);
+exports.push([module.i, "\n.login-form[data-v-768ef710]{\n    max-width: 400px;\n}\n.login-button[data-v-768ef710] {\n    color: #fff;\n    /*\n    background-color: blue;\n    border-color: blue;\n    */\n}\n", ""]);
 
 // exports
 
