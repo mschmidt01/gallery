@@ -10,6 +10,7 @@ $shark: #212529;
 $shakespear: #3e92cc;
 $merlot: #8d191f;
 $mexicanRed: #aa2738;
+$lightningYellow: #ffc21a;
 
 /* Breakpoints */
 $medium: 768px;
@@ -32,5 +33,11 @@ $headline-accent: $shakespear;
 
 /* Code */
 $code-bg: $shark;
-$code-directive: #FFC21A;
+$code-directive: $lightningYellow;
 $code-variable: $shakespear;
+
+/* Cookie-Consent */
+$overlay-bg: rgba(0, 0, 0, 0.5);
+$consent-bg: white;
+$conset-accent: $shakespear;
+

@@ -1,17 +1,18 @@
 <template>
-    <div>
-        <gallerynav></gallerynav>
+  <div>
+    <cookie-notice></cookie-notice>
+    <gallerynav></gallerynav>
 
-        <main>
-            <div class="container">
-                <router-view></router-view>
-            </div>
-        </main>
+    <main>
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </main>
 
-        <galleryfooter></galleryfooter>
-    </div>
+    <galleryfooter></galleryfooter>
+  </div>
 </template>
 
 <script>
-    export default {}
+export default {};
 </script>

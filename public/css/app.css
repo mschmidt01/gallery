@@ -17365,6 +17365,8 @@ a {
 
 /* Code */
 
+/* Cookie-Consent */
+
 /**
  * Custom adaptations to the design.
  *
@@ -17575,16 +17577,18 @@ a:not(.nav-link):not(.dropdown-item) {
   font-weight: bold;
 }
 
-/* Login */
+/* Buttons */
 
-form.login-form button.login-button {
+.btn {
   background-color: #8d191f;
   border-color: #8d191f;
+  color: white;
 }
 
-form.login-form button.login-button:hover {
+.btn:hover {
   background-color: #aa2738;
   border-color: #aa2738;
+  color: white;
 }
 
 /* Code */
@@ -17594,10 +17598,51 @@ code.hljs {
 }
 
 code.hljs span.hljs-keyword {
-  color: #FFC21A;
+  color: #ffc21a;
 }
 
 code.hljs span.hljs-string {
   color: #3e92cc;
+}
+
+/* Cookie-Notice */
+
+#cookie-notice {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999999;
+  display: none;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+#cookie-notice.show {
+  display: -webkit-box !important;
+  display: flex !important;
+}
+
+#cookie-notice #notice-container {
+  background: white;
+  padding: 2rem;
+  max-width: 36rem;
+}
+
+#cookie-notice #notice-container p#cookie-headline {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#cookie-notice #notice-container .separator {
+  max-width: 8rem;
+  border-top: #3e92cc 3px solid;
+  padding-bottom: 1rem;
+}
+
+#cookie-notice #notice-container input#cookie-submit {
+  margin: 2rem 0;
 }
 

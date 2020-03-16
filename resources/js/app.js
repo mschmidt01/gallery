@@ -22,10 +22,13 @@ import Login from './components/content/Login'
 
 import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
-import Skeleton from "./components/content/skeleton"
+import Skeleton from "./components/content/skeleton";
+import CookieNotice from "./components/CookieNotice";
+
 Vue.component('galleryfooter', Galleryfooter);
 Vue.component('gallerynav', Gallerynav);
-Vue.component('skeleton-box', Skeleton)
+Vue.component('skeleton-box', Skeleton);
+Vue.component('cookie-notice', CookieNotice);
 
 const router = new VueRouter({
     mode: 'history',
