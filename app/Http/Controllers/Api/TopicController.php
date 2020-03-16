@@ -23,6 +23,6 @@ class TopicController extends Controller
     }
 
     public function getTotalTopicsCount(){
-        return  count(Picture::getTopics());
+        return count(Picture::getTopics());
     }
 }
