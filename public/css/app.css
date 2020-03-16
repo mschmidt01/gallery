@@ -17363,6 +17363,8 @@ a {
 
 /* Headline */
 
+/* Code */
+
 /**
  * Custom adaptations to the design.
  *
@@ -17583,5 +17585,19 @@ form.login-form button.login-button {
 form.login-form button.login-button:hover {
   background-color: #aa2738;
   border-color: #aa2738;
+}
+
+/* Code */
+
+code.hljs {
+  background: #212529;
+}
+
+code.hljs span.hljs-keyword {
+  color: #FFC21A;
+}
+
+code.hljs span.hljs-string {
+  color: #3e92cc;
 }
 

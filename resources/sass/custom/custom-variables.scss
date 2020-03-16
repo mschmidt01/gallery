@@ -7,9 +7,9 @@
 /* Color scheme */
 $abbey: #464b4f;
 $shark: #212529;
-$azureRadiance: #009cf9;
 $shakespear: #3e92cc;
-
+$merlot: #8d191f;
+$mexicanRed: #aa2738;
 
 /* Breakpoints */
 $medium: 768px;
@@ -23,9 +23,14 @@ $navigation-link-bg-hover: $abbey;
 $navigation-accent: $shakespear;
 
 /* Links */
-$link-color: #8d191f;
-$link-hover: #aa2738;
+$link-color: $merlot;
+$link-hover: $mexicanRed;
 $link-active: $shakespear;
 
 /* Headline */
 $headline-accent: $shakespear;
+
+/* Code */
+$code-bg: $shark;
+$code-directive: #FFC21A;
+$code-variable: $shakespear;

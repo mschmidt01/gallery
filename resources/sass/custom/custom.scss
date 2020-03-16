@@ -216,3 +216,18 @@ form.login-form {
     } 
   }
 }
+
+/* Code */
+code.hljs {
+  background: $code-bg;
+  
+  span {
+    &.hljs-keyword {
+      color: $code-directive;
+    }
+
+    &.hljs-string {
+      color: $code-variable;
+    }
+  }
+}
