@@ -1,8 +1,17 @@
 <template>
     <div class="container-fluid">
-        <h2>Themen </h2>
+        <h2>Themen </h2> 
+         <template v-if="loading">
+             <div v-for="count in topicCount">
+                 <skeleton-box
+                width="100px"
+                height="100px"
+            />
+            <skeleton-box width="200px"/>
+             </div>
+         </template>
+        <slot v-else/>
         <ul v-if="topics">
-
             <div v-for="topic in topics">
                 <router-link :to="{name: 'gallery', params: {name: topic.name}}">
                     <img  height="100" width="100" v-bind:src="'/img/gallery/' +  topic.randomPicture " />
@@ -20,6 +29,7 @@
             return {
                 loading: false,
                 topics: null,
+                topicCount: null,
                 error: null,
             };
         },
@@ -29,7 +39,14 @@
         methods: {
             fetchData() {
                 this.error = this.topics = null;
+                this.topicCount = 3;
                 this.loading = true;
+                axios
+                    .get('/api/topics/count')
+                    .then(response => {
+                        this.loading = true;
+                        this.topicCount = response.data;
+                    });
                 axios
                     .get('/api/topics')
                     .then(response => {
