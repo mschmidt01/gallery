@@ -71,27 +71,27 @@
                 axios
                     .get('/api/pictures/ratings/voting/1/count')
                     .then(response => {
-                        this.countbystars.push({stars: 1, value:  response.data});
+                        this.$set(this.countbystars, 0, {stars: 1, value:  response.data});
                     });
                 axios
                     .get('/api/pictures/ratings/voting/2/count')
                     .then(response => {
-                        this.countbystars.push({stars: 2, value:  response.data});
+                        this.$set(this.countbystars, 1, {stars: 2, value:  response.data});
                     });
                 axios
                     .get('/api/pictures/ratings/voting/3/count')
                     .then(response => {
-                        this.countbystars.push({stars: 3, value:  response.data});
+                        this.$set(this.countbystars, 2, {stars: 3, value:  response.data});
                     });
                 axios
                     .get('/api/pictures/ratings/voting/4/count')
                     .then(response => {
-                        this.countbystars.push({stars: 4, value:  response.data});
+                        this.$set(this.countbystars, 3, {stars: 4, value:  response.data});
                     });
                 axios
                     .get('/api/pictures/ratings/voting/5/count')
                     .then(response => {
-                        this.countbystars.push({stars: 5, value:  response.data});
+                        this.$set(this.countbystars, 4, {stars: 5, value:  response.data});
                     });
             }
         }
