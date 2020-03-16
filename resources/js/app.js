@@ -22,8 +22,10 @@ import Login from './components/content/Login'
 
 import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
+import Skeleton from "./components/content/skeleton"
 Vue.component('galleryfooter', Galleryfooter);
 Vue.component('gallerynav', Gallerynav);
+Vue.component('skeleton-box', Skeleton)
 
 const router = new VueRouter({
     mode: 'history',

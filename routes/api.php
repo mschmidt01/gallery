@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('Api')->group(function () {
     Route::get('/topics', 'TopicController@getTopics');
+    Route::get('/topics/count', 'TopicController@getTotalTopicsCount');
     Route::get('/pictures/count', 'PictureController@getTotalPictureCount');
     Route::get('/pictures/ordered', 'PictureController@getPicturesOrderdByTopic');
     Route::get('/pictures/ratings/counts', 'PictureController@getRatingsCount');
