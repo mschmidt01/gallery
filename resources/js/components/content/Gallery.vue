@@ -96,16 +96,21 @@
         },
         methods: {
             setRating: function(id,rating) {
-                token = this.recaptcha();
+                this.recaptcha(id,rating);
 
             },
-            async recaptcha() {
+            async recaptcha(id,rating) {
                 // (optional) Wait until recaptcha has been loaded.
                 await this.$recaptchaLoaded();
 
                 // Execute reCAPTCHA with action "login".
-                const token = await this.$recaptcha('star-rating');
-                return token;
+                const token = await this.$recaptcha('starrating');
+                console.log(token);
+                axios.post('/api/pictures/vote', {
+                    token: token,
+                    imagid: id,
+                    rating: rating,
+                })
                 // Do stuff with the received token.
             },
             fetchData() {

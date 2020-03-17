@@ -48,4 +48,9 @@ class Picture extends Model
     public static  function  getClassNames( $sGallery ) {
         return  DB::table('pictures')->select('Class')->where("Gallery", "=", $sGallery )->distinct()->pluck("Class")->toArray();
     }
+
+    public static  function  ratePicture( $sPictureId, $rating ) {
+        DB::statement("UPDATE Pictures SET Rating = Rating+$rating WHERE PID=$sPictureId");
+        DB::statement("UPDATE Pictures SET Votes = Votes+1 WHERE PID =$sPictureId");
+    }
 }

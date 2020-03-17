@@ -30,3 +30,4 @@ Route::namespace('Api')->group(function () {
 
 Route::post('/pictures/filter/modules', 'GalleryController@getModuleFilters');
 Route::post('/pictures/filter/classes', 'GalleryController@getClassFilters');
+Route::post('/pictures/vote', 'GalleryController@ratePicture');

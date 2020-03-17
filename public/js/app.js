@@ -2280,9 +2280,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     setRating: function setRating(id, rating) {
-      token = this.recaptcha();
+      this.recaptcha(id, rating);
     },
-    recaptcha: function recaptcha() {
+    recaptcha: function recaptcha(id, rating) {
       var token;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function recaptcha$(_context) {
         while (1) {
@@ -2293,13 +2293,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             case 2:
               _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('star-rating'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('starrating'));
 
             case 4:
               token = _context.sent;
-              return _context.abrupt("return", token);
+              console.log(token);
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
+                token: token,
+                imagid: id,
+                rating: rating
+              }); // Do stuff with the received token.
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }
