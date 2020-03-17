@@ -96,7 +96,17 @@
         },
         methods: {
             setRating: function(id,rating) {
-                console.log(id);
+                token = this.recaptcha();
+
+            },
+            async recaptcha() {
+                // (optional) Wait until recaptcha has been loaded.
+                await this.$recaptchaLoaded();
+
+                // Execute reCAPTCHA with action "login".
+                const token = await this.$recaptcha('star-rating');
+                return token;
+                // Do stuff with the received token.
             },
             fetchData() {
                 this.loading = true;
