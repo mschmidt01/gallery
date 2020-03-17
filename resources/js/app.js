@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 import VueHighlightJS from 'vue-highlightjs'
+import StarRating from 'vue-star-rating'
 
 
 Vue.use(VueRouter)
@@ -19,11 +20,12 @@ import Topics from './components/content/Topics'
 import Statistics from './components/content/Statistics'
 import Gallery from './components/content/Gallery'
 import Login from './components/content/Login'
-
 import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
 Vue.component('galleryfooter', Galleryfooter);
 Vue.component('gallerynav', Gallerynav);
+Vue.component('star-rating', StarRating);
+
 
 const router = new VueRouter({
     mode: 'history',

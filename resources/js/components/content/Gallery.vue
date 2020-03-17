@@ -57,6 +57,7 @@
         </div>
         <div class="row" v-for="(image, index) in filtered">
             <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
+                <star-rating @rating-selected="setRating(image.PID,$event)"></star-rating>
         </div>
     </div>
 </template>
@@ -94,6 +95,9 @@
             this.fetchData();
         },
         methods: {
+            setRating: function(id,rating) {
+                console.log(id);
+            },
             fetchData() {
                 this.loading = true;
                 let self = this;
