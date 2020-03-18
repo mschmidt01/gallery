@@ -17,10 +17,10 @@ class Picture extends Model
         return Picture::all()->groupBy('Gallery')->toArray();
     }
 
-
     public static function getRatingsCount(){
         return  DB::table('pictures')->select('rating')->count();
     }
+
     public static function getCountVotes(){
         return  DB::table('pictures')->sum('votes');
     }

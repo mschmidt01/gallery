@@ -2245,6 +2245,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2257,6 +2259,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       filtered: null,
       filters: [],
       gallery: null,
+      comments: [],
       topicfilter: [],
       modulfilter: [],
       classfilter: [],
@@ -2280,11 +2283,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     setRating: function setRating(id, rating) {
-      this.recaptcha(id, rating);
+      this.rateAndValidate(id, rating);
     },
-    recaptcha: function recaptcha(id, rating) {
+    commentPicture: function commentPicture(id) {
+      var text = document.getElementById("comment_" + id).value;
+      this.rateAndComment(id, text);
+    },
+    rateAndValidate: function rateAndValidate(id, rating) {
       var token;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function recaptcha$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function rateAndValidate$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -2297,16 +2304,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             case 4:
               token = _context.sent;
-              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
                 token: token,
                 imagid: id,
                 rating: rating
               }); // Do stuff with the received token.
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    rateAndComment: function rateAndComment(id, text) {
+      var token;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function rateAndComment$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
+
+            case 2:
+              _context2.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
+
+            case 4:
+              token = _context2.sent;
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
+                token: token,
+                imagid: id,
+                text: text
+              }); // Do stuff with the received token.
+
+            case 6:
+            case "end":
+              return _context2.stop();
           }
         }
       }, null, this);
@@ -33424,7 +33458,23 @@ var render = function() {
                   return _vm.setRating(image.PID, $event)
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "text", id: "comment_" + image.PID }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.commentPicture(image.PID)
+                  }
+                }
+              },
+              [_vm._v("Kommentieren")]
+            )
           ],
           1
         )

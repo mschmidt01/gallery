@@ -58,6 +58,8 @@
         <div class="row" v-for="(image, index) in filtered">
             <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
                 <star-rating @rating-selected="setRating(image.PID,$event)"></star-rating>
+                <input type="text" :id="'comment_' + image.PID" >
+                <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
         </div>
     </div>
 </template>
@@ -75,6 +77,7 @@
                 filtered: null,
                 filters: [],
                 gallery: null,
+                comments: [],
                 topicfilter: [],
                 modulfilter: [],
                 classfilter: [],
@@ -96,20 +99,36 @@
         },
         methods: {
             setRating: function(id,rating) {
-                this.recaptcha(id,rating);
+                this.rateAndValidate(id,rating);
 
             },
-            async recaptcha(id,rating) {
+            commentPicture: function(id) {
+                let text = document.getElementById("comment_" + id).value;
+                this.rateAndComment(id,text);
+            },
+            async rateAndValidate(id,rating) {
                 // (optional) Wait until recaptcha has been loaded.
                 await this.$recaptchaLoaded();
 
                 // Execute reCAPTCHA with action "login".
                 const token = await this.$recaptcha('starrating');
-                console.log(token);
                 axios.post('/api/pictures/vote', {
                     token: token,
                     imagid: id,
                     rating: rating,
+                })
+                // Do stuff with the received token.
+            },
+            async rateAndComment(id,text) {
+                // (optional) Wait until recaptcha has been loaded.
+                await this.$recaptchaLoaded();
+
+                // Execute reCAPTCHA with action "login".
+                const token = await this.$recaptcha('comment');
+                axios.post('/api/pictures/comment', {
+                    token: token,
+                    imagid: id,
+                    text: text,
                 })
                 // Do stuff with the received token.
             },
