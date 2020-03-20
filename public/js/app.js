@@ -2247,6 +2247,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2287,7 +2292,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     commentPicture: function commentPicture(id) {
       var text = document.getElementById("comment_" + id).value;
-      this.rateAndComment(id, text);
+      this.commentAndValidate(id, text);
     },
     rateAndValidate: function rateAndValidate(id, rating) {
       var token;
@@ -2308,18 +2313,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 token: token,
                 imagid: id,
                 rating: rating
-              }); // Do stuff with the received token.
+              });
+              this.fetchData(); // Do stuff with the received token.
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }
         }
       }, null, this);
     },
-    rateAndComment: function rateAndComment(id, text) {
+    commentAndValidate: function commentAndValidate(id, text) {
       var token;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function rateAndComment$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function commentAndValidate$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -2336,9 +2342,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 token: token,
                 imagid: id,
                 text: text
-              }); // Do stuff with the received token.
+              });
+              this.fetchData(); // Do stuff with the received token.
 
-            case 6:
+            case 7:
             case "end":
               return _context2.stop();
           }
@@ -33434,25 +33441,21 @@ var render = function() {
                 src: "/img/gallery/" + image.Path + "/" + image.Filename
               }
             }),
-            _vm._v(
-              _vm._s(image.Gallery) +
-                "," +
-                _vm._s(image.THMModule) +
-                "," +
-                _vm._s(image.Class) +
-                "," +
-                _vm._s(image.Filename) +
-                "," +
-                _vm._s(image.Timestamp) +
-                "," +
-                _vm._s(image.Votes) +
-                "," +
-                _vm._s(image.Rating) +
-                "," +
-                _vm._s(image.Rating / image.Votes) +
-                "\n            "
-            ),
+            _vm._v("\n            Kommentare:\n            "),
+            _vm._l(image.comments, function(comment) {
+              return _c("div", [
+                _c("p", [_vm._v(_vm._s(comment.Text))]),
+                _vm._v(" "),
+                _c("br")
+              ])
+            }),
+            _vm._v(" "),
             _c("star-rating", {
+              attrs: {
+                "round-start-rating": false,
+                rating: image.Rating / image.Votes,
+                "show-rating": false
+              },
               on: {
                 "rating-selected": function($event) {
                   return _vm.setRating(image.PID, $event)
@@ -33476,7 +33479,7 @@ var render = function() {
               [_vm._v("Kommentieren")]
             )
           ],
-          1
+          2
         )
       })
     ],

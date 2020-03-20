@@ -56,8 +56,13 @@
             </ul>
         </div>
         <div class="row" v-for="(image, index) in filtered">
-            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
-                <star-rating @rating-selected="setRating(image.PID,$event)"></star-rating>
+            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/><!-- Debugging{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},Bewertung:{{image.Rating/image.Votes}}-->
+                Kommentare:
+                <div v-for="comment in image.comments">
+                    <p>{{comment.Text}}</p>
+                    <br>
+                </div>
+                <star-rating :round-start-rating="false" :rating="image.Rating/image.Votes" :show-rating="false" @rating-selected="setRating(image.PID,$event)"></star-rating>
                 <input type="text" :id="'comment_' + image.PID" >
                 <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
         </div>
@@ -104,7 +109,7 @@
             },
             commentPicture: function(id) {
                 let text = document.getElementById("comment_" + id).value;
-                this.rateAndComment(id,text);
+                this.commentAndValidate(id,text);
             },
             async rateAndValidate(id,rating) {
                 // (optional) Wait until recaptcha has been loaded.
@@ -116,10 +121,11 @@
                     token: token,
                     imagid: id,
                     rating: rating,
-                })
+                });
+                this.fetchData();
                 // Do stuff with the received token.
             },
-            async rateAndComment(id,text) {
+            async commentAndValidate(id,text) {
                 // (optional) Wait until recaptcha has been loaded.
                 await this.$recaptchaLoaded();
 
@@ -129,7 +135,8 @@
                     token: token,
                     imagid: id,
                     text: text,
-                })
+                });
+                this.fetchData();
                 // Do stuff with the received token.
             },
             fetchData() {

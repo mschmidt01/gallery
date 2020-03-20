@@ -36,4 +36,6 @@ class PictureController extends Controller
     public function getPicturesForRating($rating){
         return Picture::getPicturesForRating($rating);
     }
+
+
 }
