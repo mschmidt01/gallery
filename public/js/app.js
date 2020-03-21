@@ -1968,9 +1968,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "cookie-notice",
   data: function data() {
+    var cookieArray = document.cookie.replace(" ", "").split(";");
+    var consentSet, matomoConsent;
+
+    if (cookieArray.includes("matomo=true") || cookieArray.includes("matomo=false")) {
+      consentSet = true;
+
+      if (cookieArray.includes("matomo=true")) {
+        matomoConsent = true;
+      } else {
+        matomoConsent = false;
+      }
+    } else {
+      consentSet = false;
+    }
+
     return {
-      consentSet: false,
-      matomoConsent: false
+      consentSet: consentSet,
+      matomoConsent: matomoConsent
     };
   },
   methods: {
@@ -1978,8 +1993,13 @@ __webpack_require__.r(__webpack_exports__);
       /**
        * ToDo: Set cookie
        */
-      console.log("Submitted consent");
-      console.log(this.matomoConsent);
+      if (this.matomoConsent) {
+        document.cookie = "matomo=true";
+      } else {
+        document.cookie = "matomo=false";
+      }
+
+      this.consentSet = true;
       this.$refs.cookieNotice.classList.remove("show");
     }
   }
@@ -31977,89 +31997,95 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      ref: "cookieNotice",
-      staticClass: "show",
-      attrs: { id: "cookie-notice" }
-    },
-    [
-      _c("div", { attrs: { id: "notice-container" } }, [
-        _c("p", { attrs: { id: "cookie-headline" } }, [
-          _vm._v("Diese Website verwendet Cookies")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "separator" }),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Cookies werden zur Benutzerführung und Webanalyse verwendet und helfen dabei, diese Website zur verbessern."
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { attrs: { id: "cookie-options" } }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "matomo-container" } }, [
+  return !_vm.consentSet
+    ? _c(
+        "div",
+        {
+          ref: "cookieNotice",
+          staticClass: "show",
+          attrs: { id: "cookie-notice" }
+        },
+        [
+          _c("div", { attrs: { id: "notice-container" } }, [
+            _c("p", { attrs: { id: "cookie-headline" } }, [
+              _vm._v("Diese Website verwendet Cookies")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "separator" }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Cookies werden zur Benutzerführung und Webanalyse verwendet und helfen dabei, diese Website zur verbessern."
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "cookie-options" } }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "matomo-container" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.matomoConsent,
+                      expression: "matomoConsent"
+                    }
+                  ],
+                  attrs: { type: "checkbox", id: "matomo-cookies" },
+                  domProps: {
+                    checked: Array.isArray(_vm.matomoConsent)
+                      ? _vm._i(_vm.matomoConsent, null) > -1
+                      : _vm.matomoConsent
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.matomoConsent,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.matomoConsent = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.matomoConsent = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.matomoConsent = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "essentiell-cookies" } }, [
+                  _vm._v("Web-Analytics")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.matomoConsent,
-                  expression: "matomoConsent"
-                }
-              ],
-              attrs: { type: "checkbox", id: "matomo-cookies" },
-              domProps: {
-                checked: Array.isArray(_vm.matomoConsent)
-                  ? _vm._i(_vm.matomoConsent, null) > -1
-                  : _vm.matomoConsent
+              staticClass: "btn",
+              attrs: {
+                id: "cookie-submit",
+                type: "submit",
+                value: "Bestätigen"
               },
               on: {
-                change: function($event) {
-                  var $$a = _vm.matomoConsent,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.matomoConsent = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.matomoConsent = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.matomoConsent = $$c
-                  }
+                click: function($event) {
+                  return _vm.submitConsent()
                 }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "essentiell-cookies" } }, [
-              _vm._v("Web-Analytics")
-            ])
+            _vm._m(1)
           ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "btn",
-          attrs: { id: "cookie-submit", type: "submit", value: "Bestätigen" },
-          on: {
-            click: function($event) {
-              return _vm.submitConsent()
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm._m(1)
-      ])
-    ]
-  )
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {

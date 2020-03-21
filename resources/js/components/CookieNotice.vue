@@ -1,5 +1,5 @@
 <template>
-  <div id="cookie-notice" class="show" ref="cookieNotice">
+  <div v-if="!consentSet" id="cookie-notice" class="show" ref="cookieNotice">
     <div id="notice-container">
       <p id="cookie-headline">Diese Website verwendet Cookies</p>      
       <div class="separator"></div>
@@ -31,18 +31,40 @@
 export default {
   name: "cookie-notice",
   data: function() {
-    return {
-      consentSet: false,
-      matomoConsent: false
+    const cookieArray = document.cookie.replace(" ", "").split(";");
+    
+    let consentSet, matomoConsent;
+
+    if(cookieArray.includes("matomo=true") || cookieArray.includes("matomo=false")) {
+      consentSet = true;
+
+      if(cookieArray.includes("matomo=true")) {
+        matomoConsent = true;
+      } else {
+        matomoConsent = false;
+      }
+    } else {
+      consentSet = false;
     }
+
+    return {
+      consentSet,
+      matomoConsent
+    };
   },
   methods: {
     submitConsent() {
       /**
        * ToDo: Set cookie
        */
-      console.log("Submitted consent");
-      console.log(this.matomoConsent);
+
+      if(this.matomoConsent) {
+        document.cookie = "matomo=true";
+      } else {
+        document.cookie = "matomo=false";
+      }
+
+      this.consentSet = true;
 
       this.$refs.cookieNotice.classList.remove("show");
     }
