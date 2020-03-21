@@ -127,6 +127,10 @@ header {
         margin: 1rem 0;
       }
 
+      button.login {
+        background-color: transparent;
+      }
+
       &:hover {
         text-decoration: none;
         background-color: $navigation-accent;
@@ -209,6 +213,7 @@ a {
   background-color: $link-color;
   border-color: $link-color;
   color: white;
+  border-radius: 0;
 
   &:hover {
     background-color: $link-hover;
@@ -262,10 +267,7 @@ code.hljs {
       border-top: $conset-accent 3px solid;
       padding-bottom: 1rem;
     }
-
-    #cookie-options {
-    }
-
+    
     input#cookie-submit {
       margin: 2rem 0;
     }

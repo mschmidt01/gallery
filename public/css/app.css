@@ -17506,6 +17506,10 @@ header nav.navbar #navigation ul.navbar-nav li.nav-item a.nav-link.router-link-a
   }
 }
 
+header nav.navbar a.login-button button.login {
+  background-color: transparent;
+}
+
 header nav.navbar a.login-button:hover {
   text-decoration: none;
   background-color: #3e92cc;
@@ -17513,7 +17517,7 @@ header nav.navbar a.login-button:hover {
 
 header nav.navbar a.login-button:hover button.login,
 header nav.navbar a.login-button:hover i {
-  color: #212529 !important;
+  color: #343a40 !important;
 }
 
 header nav.navbar a.login-button button.login {
@@ -17546,7 +17550,7 @@ header nav.navbar button.navbar-toggler:hover {
 }
 
 header nav.navbar button.navbar-toggler:hover span.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(52, 58, 64, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 header nav.navbar button.navbar-toggler span.navbar-toggler-icon {
@@ -17583,6 +17587,7 @@ a:not(.nav-link):not(.dropdown-item) {
   background-color: #8d191f;
   border-color: #8d191f;
   color: white;
+  border-radius: 0;
 }
 
 .btn:hover {
