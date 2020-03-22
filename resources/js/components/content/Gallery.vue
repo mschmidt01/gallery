@@ -56,7 +56,15 @@
             </ul>
         </div>
         <div class="row" v-for="(image, index) in filtered">
-            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},{{image.Rating/image.Votes}}
+            <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/><!-- Debugging{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},Bewertung:{{image.Rating/image.Votes}}-->
+                Kommentare:
+                <div v-for="comment in image.comments">
+                    <p>{{comment.Text}}</p>
+                    <br>
+                </div>
+                <star-rating :round-start-rating="false" :rating="image.Rating/image.Votes" :show-rating="false" @rating-selected="setRating(image.PID,$event)"></star-rating>
+                <input type="text" :id="'comment_' + image.PID" >
+                <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
         </div>
     </div>
 </template>
@@ -74,6 +82,7 @@
                 filtered: null,
                 filters: [],
                 gallery: null,
+                comments: [],
                 topicfilter: [],
                 modulfilter: [],
                 classfilter: [],
@@ -94,6 +103,42 @@
             this.fetchData();
         },
         methods: {
+            setRating: function(id,rating) {
+                this.rateAndValidate(id,rating);
+
+            },
+            commentPicture: function(id) {
+                let text = document.getElementById("comment_" + id).value;
+                this.commentAndValidate(id,text);
+            },
+            async rateAndValidate(id,rating) {
+                // (optional) Wait until recaptcha has been loaded.
+                await this.$recaptchaLoaded();
+
+                // Execute reCAPTCHA with action "login".
+                const token = await this.$recaptcha('starrating');
+                axios.post('/api/pictures/vote', {
+                    token: token,
+                    imagid: id,
+                    rating: rating,
+                });
+                this.fetchData();
+                // Do stuff with the received token.
+            },
+            async commentAndValidate(id,text) {
+                // (optional) Wait until recaptcha has been loaded.
+                await this.$recaptchaLoaded();
+
+                // Execute reCAPTCHA with action "login".
+                const token = await this.$recaptcha('comment');
+                axios.post('/api/pictures/comment', {
+                    token: token,
+                    imagid: id,
+                    text: text,
+                });
+                this.fetchData();
+                // Do stuff with the received token.
+            },
             fetchData() {
                 this.loading = true;
                 let self = this;

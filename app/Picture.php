@@ -8,19 +8,20 @@ use Illuminate\Support\Facades\DB;
 class Picture extends Model
 {
     protected $table = 'pictures';
+    protected $primaryKey = 'PID';
 
     public static function getTopics(){
         return  DB::table('pictures')->select('gallery')->distinct()->pluck("gallery")->toArray();
     }
 
     public static function getPicturesOrderdByTopic(){
-        return Picture::all()->groupBy('Gallery')->toArray();
+        return Picture::with('comments')->get()->groupBy('Gallery');
     }
-
 
     public static function getRatingsCount(){
         return  DB::table('pictures')->select('rating')->count();
     }
+
     public static function getCountVotes(){
         return  DB::table('pictures')->sum('votes');
     }
@@ -48,4 +49,14 @@ class Picture extends Model
     public static  function  getClassNames( $sGallery ) {
         return  DB::table('pictures')->select('Class')->where("Gallery", "=", $sGallery )->distinct()->pluck("Class")->toArray();
     }
+
+    public static  function  ratePicture( $sPictureId, $rating ) {
+        DB::statement("UPDATE Pictures SET Rating = Rating+$rating WHERE PID=$sPictureId");
+        DB::statement("UPDATE Pictures SET Votes = Votes+1 WHERE PID =$sPictureId");
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment', "PID");
+    }
+
 }
