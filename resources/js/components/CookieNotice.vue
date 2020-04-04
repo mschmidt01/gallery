@@ -19,9 +19,9 @@
       <input v-on:click="submitConsent()" class="btn" id="cookie-submit" type="submit" value="Bestätigen" />
 
       <div>
-        <a href="https://www.thm.de/site/impressum.html" title="Impressum">Impressum</a>
+        <router-link title="Impressum" :to="{name: 'impressum'}">Impressum</router-link>
         <span class="link-separator">|</span>
-        <a href="https://www.thm.de/site/datenschutz.html" title="Datenschutz">Datenschutz</a>
+        <router-link title="Datenschutz" :to="{name: 'privacypolicy'}">Datenschutz</router-link>
       </div>
     </div>
   </div>

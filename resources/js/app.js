@@ -24,6 +24,8 @@ import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
 import Skeleton from "./components/content/skeleton";
 import CookieNotice from "./components/CookieNotice";
+import Impressum from "./components/content/Impressum";
+import PrivacyPolicy from "./components/content/PrivacyPolicy";
 
 Vue.component('galleryfooter', Galleryfooter);
 Vue.component('gallerynav', Gallerynav);
@@ -83,6 +85,16 @@ const router = new VueRouter({
             path: '/gallery',
             name: 'gallery',
             component: Gallery
+        },
+        {
+          path: '/impressum',
+          name: 'impressum',
+          component: Impressum
+        },
+        {
+          path: '/privacypolicy',
+          name: 'privacypolicy',
+          component: PrivacyPolicy
         },
         {
             path: '/',
