@@ -1,36 +1,37 @@
 <template>
+    <div>
+        <h1 class="title">BoS Live</h1>
+        <section>
+            <p>
+                Dies ist eine Testseite mit einer ersten Web-Version von BoS.
+                Bereits implementiert:
+                <code>form2</code>,
+                <code>farbe2</code>,
+                <code>formen</code>,
+                <code>farben</code>,
+                <code>text2</code>,
+                <code>groesse</code>, ...
+                (siehe auch <router-link to="/functions">Informationen - Über BoS</router-link>).
+            </p>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div id="titel">Plotter</div>
 
+                    <!-- <script>
+                         document.write( '<canvas id="myCanvas"  width="' + width +'" height="' + height +'"   style="border:1px solid #c3c3c3;">' )
+                     </script>-->
+                    <canvas id="myCanvas" width="500px" height="500px">
+                    </canvas>
+                    <br>
+                    <button type="button" class="btn live" v-on:click="loadBoard"> Board</button>
+                    <button type="button" class="btn live" v-on:click="clearBoard"> L&ouml;schen</button>
+                    <button type="button" class="btn live" v-on:click="numberingBoardElements"> Nummerierung</button>
+                    <br>
+                </div>
+                <div class="col-md-6 mb-3">
+                    JavaScript Code
 
-
-
-    <div class="row">
-        Dies ist eine Testseite mit einer ersten Web-Version von BoS
-        <div class="col-sm-6">
-            <div id="titel">Plotter</div>
-
-           <!-- <script>
-                document.write( '<canvas id="myCanvas"  width="' + width +'" height="' + height +'"   style="border:1px solid #c3c3c3;">' )
-            </script>-->
-            Your browser does not support the HTML5 canvas tag.
-            <canvas id="myCanvas"  width="500" height="500"    style="border:1px solid #c3c3c3;">
-            </canvas>
-            <br>
-            <button v-on:click="loadBoard"> Board </button>
-            <button v-on:click="clearBoard"> L&ouml;schen </button>
-            <button  v-on:click="numberingBoardElements"> Nummerierung </button>
-            <br>
-        </div>
-        <div class="col-sm-6">
-            Hier JavaScript Code eintragen.
-            Bereits implementiert:
-            <code>form2</code>,
-            <code>farbe2</code>,
-            <code>formen</code>,
-            <code>farben</code>,
-            <code>text2</code>,
-            <code>groesse</code>, ...
-            (siehe auch <a href="index.php?inhalt=functions">Hilfe - Funktionen</a>)
-            <textarea id="codeView" rows="20" cols="120">
+                    <textarea id="codeView" rows="17">
 // setze Semicolons auf optional
 // jshint asi:true
 
@@ -41,53 +42,58 @@ form2( 2, 4, "s" )
 farbe2( 3, 4, "#0000FF" )
 text2(2,2,"Hallo")
 </textarea>
-            <br>
-           <button  v-on:click="runJS" > JavaScript ausf&uuml;hren</button>
-            <!--  <button onClick='runJava()'> Java </button> -->
-            <button  v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern </button>
-            <input type='text' id='fileNameField' value='snippet.txt' title="Dateiname zum Speichern des Snippets"/>
-            <div id="consoleLog">
+                    <br>
+                    <button type="button" class="btn live-emphasized" v-on:click="runJS">Ausführen</button>
+                    <!--  <button onClick='runJava()'> Java </button> -->
+                    <button type="button" class="btn live" v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern</button>
+                    <input type='text' class="form-control" id='fileNameField' value='snippet.txt'
+                           title="Dateiname zum Speichern des Snippets"/>
+                    <div id="consoleLog">
+                    </div>
+                </div>
             </div>
-        </div>
+
+        </section>
     </div>
 
-  <!--  <script type="application/javascript">
-        $(document).ready(function(){
-            var c=document.getElementById("myCanvas");
-            canvasLeft = c.offsetLeft
-            canvasTop  = c.offsetTop
-            c.addEventListener('click', function( event ){
-                var co = $("canvas").offset();
-                var x = event.pageX - co.top
-                var y = event.pageY - co.left
-                console.log("click " + x + " " + y )
-            }, false);
+    <!--  <script type="application/javascript">
+          $(document).ready(function(){
+              var c=document.getElementById("myCanvas");
+              canvasLeft = c.offsetLeft
+              canvasTop  = c.offsetTop
+              c.addEventListener('click', function( event ){
+                  var co = $("canvas").offset();
+                  var x = event.pageX - co.top
+                  var y = event.pageY - co.left
+                  console.log("click " + x + " " + y )
+              }, false);
 
 
-            logView = document.getElementById("consoleLog");
+              logView = document.getElementById("consoleLog");
 
-            window.onerror = function myErrorHandler(err, url, line) {
-                var message = '<div class="alert alert-danger"><strong>ERROR! </strong>' + err
-                if( ! /line [0-9]+/.test( err ) )  {
-                    message += " line " + line
-                }
-                message +=  '</div>'
-                logView.innerHTML += message
-                return false; // so you still log errors into console
-            }
-            ctx=c.getContext("2d");
-            board()
+              window.onerror = function myErrorHandler(err, url, line) {
+                  var message = '<div class="alert alert-danger"><strong>ERROR! </strong>' + err
+                  if( ! /line [0-9]+/.test( err ) )  {
+                      message += " line " + line
+                  }
+                  message +=  '</div>'
+                  logView.innerHTML += message
+                  return false; // so you still log errors into console
+              }
+              ctx=c.getContext("2d");
+              board()
 
-            editor = CodeMirror.fromTextArea( document.getElementById("codeView"), {
-                lineNumbers: true,
-                mode:  "javascript",
-                gutters: ["CodeMirror-lint-markers"],
-                lint: true
-            });
-        })
-    </script>-->
+              editor = CodeMirror.fromTextArea( document.getElementById("codeView"), {
+                  lineNumbers: true,
+                  mode:  "javascript",
+                  gutters: ["CodeMirror-lint-markers"],
+                  lint: true
+              });
+          })
+      </script>-->
 </template>
 <script>
+
     const live = require('../../live.js');
     const color = require('../../live.js');
 
@@ -100,19 +106,19 @@ text2(2,2,"Hallo")
 
             };
         },
-        mounted: function(){
+        mounted: function () {
             console.log(CodeMirror);
-            var c=document.getElementById("myCanvas");
+            var c = document.getElementById("myCanvas");
             global.canvasLeft = c.offsetLeft
             global.canvasLeft = c.offsetLeft
-            global.canvasTop  = c.offsetTop
-            global.ctx=c.getContext("2d");
+            global.canvasTop = c.offsetTop
+            global.ctx = c.getContext("2d");
             global.logView = document.getElementById("consoleLog");
 
             live.board();
-            this.editor = CodeMirror.fromTextArea( document.getElementById("codeView"), {
+            this.editor = CodeMirror.fromTextArea(document.getElementById("codeView"), {
                 lineNumbers: true,
-                mode:  "javascript",
+                mode: "javascript",
                 gutters: ["CodeMirror-lint-markers"],
                 lint: true
             });
@@ -137,8 +143,54 @@ text2(2,2,"Hallo")
             downloadCode: function (event) {
                 // `this` inside methods points to the Vue instance
                 let fileName = document.getElementById("fileNameField").value
-                live.saveCode(fileName,this.editor);
+                live.saveCode(fileName, this.editor);
             }
         }
     }
 </script>
+
+<style scoped>
+    #myCanvas{
+        width: 100%;
+        height: 400px;
+        border: 1px solid rgb(195, 195, 195);
+    }
+    #codeView{
+        width:100%;
+        height: 400px;
+        border: 1px solid rgb(195, 195, 195);
+
+    }
+    .live {
+        color: blue;
+        border: 1px solid blue;
+    }
+    live:focus {
+        color: white;
+        border: 1px solid blue;
+        background-color: blue;
+    }
+    .live:hover{
+        color: white;
+        border: 1px solid blue;
+        background-color: blue;
+    }
+    .live-emphasized{
+        background-color: blue;
+        color:white;
+    }
+    .live-emphasized:hover{
+        color: blue;
+        border: 1px solid blue;
+        background-color: white;
+    }
+    .live-emphasized:focus{
+        color: blue;
+        border: 1px solid blue;
+        background-color: white;
+    }
+    input{
+        width:auto;
+        display: inline;
+    }
+</style>
