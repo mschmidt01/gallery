@@ -4,7 +4,7 @@
         <div>
             <p>Themen</p>
             <ul>
-                <li v-for="topic in filters.topics">
+                <li v-for="topic in filters.topics" :key="topic.aname">
                     <input type="checkbox" v-bind:value="topic" :id="topic" v-model="topicfilter"
                            v-on:change="filterPictures()">
                     <label :for="topic">{{topic}}</label><br>
@@ -16,7 +16,7 @@
         <div>
             <p>Module</p>
             <ul>
-                <li v-for="filtername in filters.modules">
+                <li v-for="filtername in filters.modules" :key="filtername">
                     <input type="checkbox" v-bind:value="filtername" :id="filtername" v-model="modulfilter"
                            v-on:change="filterPictures()">
                     <label :for="filtername">{{filtername}}</label><br>
@@ -27,7 +27,7 @@
         <div>
             <p>Semester</p>
             <ul>
-                <li v-for="filtername in filters.classes">
+                <li v-for="filtername in filters.classes" :key="filtername">
                     <input type="checkbox" v-bind:value="filtername" :id="filtername" v-model="classfilter"
                            v-on:change="filterPictures()">
                     <label :for="filtername">{{filtername}}</label><br>
@@ -55,10 +55,10 @@
                 </a>
             </ul>
         </div>
-        <div class="row" v-for="(image, index) in filtered">
+        <div class="row" v-for="image in filtered" :key="image.PID">
             <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/><!-- Debugging{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},Bewertung:{{image.Rating/image.Votes}}-->
                 Kommentare:
-                <div v-for="comment in image.comments">
+                <div v-for="comment in image.comments" :key="comment">
                     <p>{{comment.Text}}</p>
                     <br>
                 </div>
@@ -191,7 +191,6 @@
                     return false;
                 }
                 if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
-                    console.log("topic filter set");
                     var bucket = [];
                     for (var i = 0; i < this.topicfilter.length; i++) {
                         var topic = this.topicfilter[i];
@@ -205,8 +204,6 @@
                     }
                 }
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
-                    console.log("modul filter set");
-
                     var bucket = [];
                     for (let i = 0; i < this.modulfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -218,8 +215,6 @@
                 }
 
                 if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
-                    console.log("class filter set");
-
                     var bucket = [];
                     for (let i = 0; i < this.classfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -231,8 +226,6 @@
                 }
 
                 if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
-                    console.log("star filter set");
-                    console.log(this.filtered);
                     var bucket = [];
                     for (let i = 0; i < this.starfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -245,7 +238,6 @@
                     }
                     this.filtered = bucket;
                 }
-                console.log(this.filtered);
                 vm.$forceUpdate();
             },
             sort(event, name) {

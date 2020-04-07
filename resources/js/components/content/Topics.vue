@@ -9,7 +9,7 @@
     </template>
     <slot v-else />
     <ul v-if="topics">
-      <div v-for="topic in topics" :key="topic">
+      <div v-for="topic in topics" :key="topic.name">
         <router-link :to="{name: 'gallery', params: {name: topic.name}}">
           <img height="100" width="100" v-bind:src="'/img/gallery/' +  topic.randomPicture " />
           <div>
@@ -43,7 +43,6 @@ export default {
       this.topicCount = 3;
       this.loading = true;
       axios.get("/api/topics/count").then(response => {
-        this.loading = true;
         this.topicCount = response.data;
       });
       axios.get("/api/topics").then(response => {
