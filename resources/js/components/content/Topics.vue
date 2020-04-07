@@ -1,20 +1,24 @@
 <template>
-    <div class="container-fluid">
-        <h2>Themen </h2>
-        <ul v-if="topics">
+    <div>
+        <h1 class="title">Themen</h1>
+        <section>
+            <div class="row" v-if="topics">
 
-            <div v-for="topic in topics">
-                <router-link :to="{name: 'gallery', params: {name: topic.name}}">
-                    <img  height="100" width="100" v-bind:src="'/img/gallery/' +  topic.randomPicture " />
-                    <div><p></p><strong>Name:</strong> {{ topic.name }}
-                    ({{ topic.count }})</div>
-                </router-link>
+                <div class="col-md" v-for="topic in topics">
+                    <router-link :to="{name: 'gallery', params: {name: topic.name}}">
+                        <div v-bind:style="{backgroundImage: 'url(/img/gallery/' +  topic.randomPicture}"></div>
+                        <div><p></p><strong>Name:</strong> {{ topic.name }}
+                            ({{ topic.count }})
+                        </div>
+                    </router-link>
+                </div>
             </div>
-        </ul>
+        </section>
     </div>
 </template>
 <script>
     import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -36,14 +40,28 @@
                         this.loading = false;
                         this.topics = response.data;
                     });
-               /* axios
-                    .get('/api/pictures/ordered')
-                    .then(response => {
-                        this.loading = false;
-                        this.pictures = response.data;
-                        console.log(this.pictures)
-                    });*/
+                /* axios
+                     .get('/api/pictures/ordered')
+                     .then(response => {
+                         this.loading = false;
+                         this.pictures = response.data;
+                         console.log(this.pictures)
+                     });*/
             }
         }
     }
 </script>
+<style>
+    .row {
+        text-align: center;
+    }
+
+    .col-md > a > div:first-child {
+        height: 150px;
+        background-size: cover;
+        max-width: 150px;
+
+        position: relative;
+        margin: 0 auto;
+    }
+</style>
