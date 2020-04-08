@@ -66,7 +66,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .row {
         text-align: center;
     }
