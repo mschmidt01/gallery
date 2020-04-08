@@ -3096,6 +3096,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3243,7 +3258,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.row {\n    text-align: center;\n}\n.col-md > a > div:first-child {\n    height: 150px;\n    background-size: cover;\n    max-width: 150px;\n\n    position: relative;\n    margin: 0 auto;\n}\n", ""]);
+exports.push([module.i, "\n.row {\n    text-align: center;\n}\n\n/*.col-md > a > div:first-child {\n    height: 150px;\n    background-size: cover;\n    max-width: 150px;\n\n    position: relative;\n    margin: 0 auto;\n}*/\n.card-img-top {\n    width: 100%;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.card{\n    min-width: 200px;\n    margin: 0 auto; /* Added */\n    float: none; /* Added */\n}\n.watch{\n    background-color: blue;\n    color:white;\n}\n.watch:hover{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\n", ""]);
 
 // exports
 
@@ -34086,38 +34101,53 @@ var render = function() {
             _vm._l(_vm.topics, function(topic) {
               return _c(
                 "div",
-                { staticClass: "col-md" },
+                { staticClass: "col-sm-6 col-lg-3 d-flex align-items-stretch" },
                 [
                   _c(
-                    "router-link",
+                    "div",
                     {
-                      attrs: {
-                        to: { name: "gallery", params: { name: topic.name } }
-                      }
+                      staticClass: "card mb-4 shadow-sm",
+                      staticStyle: { width: "18rem" }
                     },
                     [
-                      _c("div", {
-                        style: {
-                          backgroundImage:
-                            "url(/img/gallery/" + topic.randomPicture
-                        }
+                      _c("img", {
+                        staticClass: "card-img-top",
+                        attrs: { src: "/img/gallery/" + topic.randomPicture }
                       }),
                       _vm._v(" "),
-                      _c("div", [
-                        _c("p"),
-                        _c("strong", [_vm._v("Name:")]),
-                        _vm._v(
-                          " " +
-                            _vm._s(topic.name) +
-                            "\n                        (" +
-                            _vm._s(topic.count) +
-                            ")\n                    "
-                        )
-                      ])
+                      _c(
+                        "div",
+                        { staticClass: "card-body" },
+                        [
+                          _c("h5", { staticClass: "card-title" }, [
+                            _vm._v(_vm._s(topic.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "card-text text-center" }, [
+                            _c("small", [
+                              _vm._v("Anzahl: " + _vm._s(topic.count))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn watch",
+                              attrs: {
+                                to: {
+                                  name: "gallery",
+                                  params: { name: topic.name }
+                                }
+                              }
+                            },
+                            [_vm._v("Anschauen")]
+                          )
+                        ],
+                        1
+                      )
                     ]
                   )
-                ],
-                1
+                ]
               )
             }),
             0
