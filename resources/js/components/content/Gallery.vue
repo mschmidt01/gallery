@@ -8,8 +8,8 @@
             </button>
             <div id="filter-panel" class="collapse w-100 container p-3">
                 <div class="row">
-                    <div class="col-2"><strong>Topic</strong></div>
-                    <div class="col-10">
+                    <div class="col-md-2 "><strong>Topic</strong></div>
+                    <div class="col-md-10 ">
                         <div class=" form-check form-check-inline" v-for="topic in filters.topics">
                             <input class="form-check-input" type="checkbox" v-bind:value="topic" :id="topic"
                                    v-model="topicfilter"
@@ -19,8 +19,8 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-2"><strong>Modul</strong></div>
-                    <div class="col-10">
+                    <div class="col-md-2"><strong>Modul</strong></div>
+                    <div class="col-md-10">
                         <div class=" form-check form-check-inline" v-for="filtername in filters.modules">
                             <input class="form-check-input" type="checkbox" v-bind:value="filtername" :id="filtername"
                                    v-model="modulfilter"
@@ -30,8 +30,8 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-2"><strong>Semester</strong></div>
-                    <div class="col-10">
+                    <div class="col-md-2"><strong>Semester</strong></div>
+                    <div class="col-md-10">
                         <div class=" form-check form-check-inline" v-for="semester in filters.classes">
                             <input class="form-check-input" type="checkbox" v-bind:value="semester" :id="semester"
                                    v-model="classfilter"
@@ -41,8 +41,8 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-2"><strong>Sterne</strong></div>
-                    <div class="col-10">
+                    <div class="col-md-2"><strong>Sterne</strong></div>
+                    <div class="col-md-10">
                         <div class=" form-check form-check-inline" v-for="index in 5">
                             <input class="form-check-input" type="checkbox" v-bind:value="index" :id="index"
                                    v-model="starfilter"
@@ -53,8 +53,8 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-2"><span class="inline-block align-center"><strong>Sortierung</strong></span></div>
-                    <div class="col-10">
+                    <div class="col-md-2"><span class="inline-block align-center"><strong>Sortierung</strong></span></div>
+                    <div class="col-md-10">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary" v-on:click="sort($event,sortOptions[0])">
                                 Alphabet

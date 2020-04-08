@@ -33102,7 +33102,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              { staticClass: "col-md-10 " },
               _vm._l(_vm.filters.topics, function(topic) {
                 return _c(
                   "div",
@@ -33173,7 +33173,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              { staticClass: "col-md-10" },
               _vm._l(_vm.filters.modules, function(filtername) {
                 return _c(
                   "div",
@@ -33244,7 +33244,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              { staticClass: "col-md-10" },
               _vm._l(_vm.filters.classes, function(semester) {
                 return _c(
                   "div",
@@ -33315,7 +33315,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              { staticClass: "col-md-10" },
               _vm._l(5, function(index) {
                 return _c(
                   "div",
@@ -33387,7 +33387,7 @@ var render = function() {
           _c("div", { staticClass: "row pt-3" }, [
             _vm._m(4),
             _vm._v(" "),
-            _c("div", { staticClass: "col-10" }, [
+            _c("div", { staticClass: "col-md-10" }, [
               _c(
                 "div",
                 {
@@ -33504,7 +33504,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2 " }, [
       _c("strong", [_vm._v("Topic")])
     ])
   },
@@ -33512,7 +33512,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2" }, [
       _c("strong", [_vm._v("Modul")])
     ])
   },
@@ -33520,7 +33520,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2" }, [
       _c("strong", [_vm._v("Semester")])
     ])
   },
@@ -33528,7 +33528,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2" }, [
       _c("strong", [_vm._v("Sterne")])
     ])
   },
@@ -33536,7 +33536,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
+    return _c("div", { staticClass: "col-md-2" }, [
       _c("span", { staticClass: "inline-block align-center" }, [
         _c("strong", [_vm._v("Sortierung")])
       ])
