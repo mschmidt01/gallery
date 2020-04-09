@@ -2323,6 +2323,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2341,10 +2368,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classfilter: [],
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
-      filterType: ["modules", "classes"]
+      filterType: ["modules", "classes"],
+      showPictureAmount: 0
     };
   },
   created: function created() {
+    var _this = this;
+
+    this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
+    window.addEventListener('scroll', function () {
+      var offset = document.documentElement.scrollTop || document.body.scrollTop;
+      _this.showPictureAmount = (window.innerHeight + offset) * 12 / 66;
+      console.log(_this.showPictureAmount);
+    });
     this.topic = this.$route.params.name;
 
     if (typeof this.$route.params.name !== 'undefined') {
@@ -2424,52 +2460,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, null, this);
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       var self = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
         gallery: this.topic
       }).then(function (response) {
-        _this.filters.modules = response.data;
+        _this2.filters.modules = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
         gallery: this.topic
       }).then(function (response) {
-        _this.filters.classes = response.data;
+        _this2.filters.classes = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
-        _this.filters.topics = response.data;
+        _this2.filters.topics = response.data;
 
-        if (typeof _this.topic === 'undefined') {
-          _this.topicfilter = response.data;
+        if (typeof _this2.topic === 'undefined') {
+          _this2.topicfilter = response.data;
         }
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/ordered').then(function (response) {
-        _this.loading = false;
-        var topic = _this.topic;
+        _this2.loading = false;
+        var topic = _this2.topic;
         self.pictures = $.map(response.data, function (value, key) {
           return _defineProperty({}, key, value);
         });
-        _this.filtered = response.data[topic];
-        _this.gallery = _this.filtered;
+        _this2.filtered = response.data[topic];
+        _this2.gallery = _this2.filtered;
 
-        if (typeof _this.topicfilter !== 'undefined' && _this.topicfilter.length > 0) {
+        if (typeof _this2.topicfilter !== 'undefined' && _this2.topicfilter.length > 0) {
           var bucket = [];
 
-          for (var i = 0; i < _this.topicfilter.length; i++) {
-            var images = self.pictures[i][_this.topicfilter[i]];
+          for (var i = 0; i < _this2.topicfilter.length; i++) {
+            var images = self.pictures[i][_this2.topicfilter[i]];
             bucket.push.apply(bucket, _toConsumableArray(images));
           }
 
-          _this.filtered = bucket;
+          _this2.filtered = bucket;
         }
 
         self.filterPictures();
       });
     },
     filterPictures: function filterPictures() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
         this.filtered = [];
@@ -2504,9 +2540,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop = function _loop(_i) {
           var _bucket2;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.THMModule === this.modulfilter[_i];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
         };
@@ -2525,9 +2561,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop2 = function _loop2(_i2) {
           var _bucket3;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.Class === this.classfilter[_i2];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket3 = bucket).push.apply(_bucket3, _toConsumableArray(images));
         };
@@ -2547,13 +2583,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop3 = function _loop3(_i3) {
           var _bucket4;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             if (el.Votes === 0) {
               return false;
             }
 
             return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i3]) < 1;
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket4 = bucket).push.apply(_bucket4, _toConsumableArray(images));
         };
@@ -3272,7 +3308,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be]{\n    width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -3348,7 +3384,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.row[data-v-0c7479a5] {\n    text-align: center;\n}\n\n/*.col-md > a > div:first-child {\n    height: 150px;\n    background-size: cover;\n    max-width: 150px;\n\n    position: relative;\n    margin: 0 auto;\n}*/\n.card-img-top[data-v-0c7479a5] {\n    width: 100%;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.card[data-v-0c7479a5]{\n    min-width: 200px;\n    margin: 0 auto; /* Added */\n    float: none; /* Added */\n}\n.watch[data-v-0c7479a5]{\n    background-color: blue;\n    color:white;\n}\n.watch[data-v-0c7479a5]:hover{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\n", ""]);
+exports.push([module.i, "\n.row[data-v-0c7479a5] {\n    text-align: center;\n}\n.card-img-top[data-v-0c7479a5] {\n    width: 100%;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.card[data-v-0c7479a5]{\n    min-width: 200px;\n    margin: 0 auto; /* Added */\n    float: none; /* Added */\n}\n.watch[data-v-0c7479a5]{\n    background-color: blue;\n    color:white;\n}\n.watch[data-v-0c7479a5]:hover{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\n", ""]);
 
 // exports
 
@@ -33072,432 +33108,414 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", { staticClass: "title" }, [_vm._v("Gallery ")]),
-    _vm._v(" "),
-    _c("section", [
-      _c(
-        "button",
-        {
-          staticClass: "w-100 btn filter-button dropdown-toggle",
-          attrs: {
-            type: "button",
-            "data-toggle": "collapse",
-            "data-target": "#filter-panel",
-            "aria-expanded": "false"
-          }
-        },
-        [_vm._v("\n            Filteroptionen\n        ")]
-      ),
+  return _c(
+    "div",
+    {
+      on: {
+        scroll: function($event) {
+          return _vm.alert()
+        }
+      }
+    },
+    [
+      _c("h1", { staticClass: "title" }, [_vm._v("Gallery ")]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "collapse w-100 container p-3",
-          attrs: { id: "filter-panel" }
-        },
-        [
-          _c("div", { staticClass: "row" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-10 " },
-              _vm._l(_vm.filters.topics, function(topic) {
-                return _c(
-                  "div",
-                  { staticClass: " form-check form-check-inline" },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.topicfilter,
-                          expression: "topicfilter"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "checkbox", id: topic },
-                      domProps: {
-                        value: topic,
-                        checked: Array.isArray(_vm.topicfilter)
-                          ? _vm._i(_vm.topicfilter, topic) > -1
-                          : _vm.topicfilter
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$a = _vm.topicfilter,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = topic,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.topicfilter = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.topicfilter = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.topicfilter = $$c
-                            }
-                          },
-                          function($event) {
-                            return _vm.filterPictures()
+      _c("section", [
+        _c(
+          "button",
+          {
+            staticClass: "w-100 btn filter-button dropdown-toggle",
+            attrs: {
+              type: "button",
+              "data-toggle": "collapse",
+              "data-target": "#filter-panel",
+              "aria-expanded": "false"
+            }
+          },
+          [_vm._v("\n            Filteroptionen\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse w-100 container p-3",
+            attrs: { id: "filter-panel" }
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-10 " },
+                _vm._l(_vm.filters.topics, function(topic) {
+                  return _c(
+                    "div",
+                    { staticClass: " form-check form-check-inline" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.topicfilter,
+                            expression: "topicfilter"
                           }
-                        ]
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label",
-                        attrs: { for: topic }
-                      },
-                      [_vm._v(_vm._s(topic))]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pt-3" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-10" },
-              _vm._l(_vm.filters.modules, function(filtername) {
-                return _c(
-                  "div",
-                  { staticClass: " form-check form-check-inline" },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.modulfilter,
-                          expression: "modulfilter"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "checkbox", id: filtername },
-                      domProps: {
-                        value: filtername,
-                        checked: Array.isArray(_vm.modulfilter)
-                          ? _vm._i(_vm.modulfilter, filtername) > -1
-                          : _vm.modulfilter
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$a = _vm.modulfilter,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = filtername,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.modulfilter = $$a.concat([$$v]))
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox", id: topic },
+                        domProps: {
+                          value: topic,
+                          checked: Array.isArray(_vm.topicfilter)
+                            ? _vm._i(_vm.topicfilter, topic) > -1
+                            : _vm.topicfilter
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = _vm.topicfilter,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = topic,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.topicfilter = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.topicfilter = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
                               } else {
-                                $$i > -1 &&
-                                  (_vm.modulfilter = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
+                                _vm.topicfilter = $$c
                               }
-                            } else {
-                              _vm.modulfilter = $$c
+                            },
+                            function($event) {
+                              return _vm.filterPictures()
                             }
-                          },
-                          function($event) {
-                            return _vm.filterPictures()
-                          }
-                        ]
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label",
-                        attrs: { for: filtername }
-                      },
-                      [_vm._v(_vm._s(filtername))]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pt-3" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-10" },
-              _vm._l(_vm.filters.classes, function(semester) {
-                return _c(
-                  "div",
-                  { staticClass: " form-check form-check-inline" },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.classfilter,
-                          expression: "classfilter"
+                          ]
                         }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "checkbox", id: semester },
-                      domProps: {
-                        value: semester,
-                        checked: Array.isArray(_vm.classfilter)
-                          ? _vm._i(_vm.classfilter, semester) > -1
-                          : _vm.classfilter
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$a = _vm.classfilter,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = semester,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.classfilter = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.classfilter = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.classfilter = $$c
-                            }
-                          },
-                          function($event) {
-                            return _vm.filterPictures()
-                          }
-                        ]
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label",
-                        attrs: { for: semester }
-                      },
-                      [_vm._v(_vm._s(semester))]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pt-3" }, [
-            _vm._m(3),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-10" },
-              _vm._l(5, function(index) {
-                return _c(
-                  "div",
-                  { staticClass: " form-check form-check-inline" },
-                  [
-                    _c("input", {
-                      directives: [
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.starfilter,
-                          expression: "starfilter"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "checkbox", id: index },
-                      domProps: {
-                        value: index,
-                        checked: Array.isArray(_vm.starfilter)
-                          ? _vm._i(_vm.starfilter, index) > -1
-                          : _vm.starfilter
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$a = _vm.starfilter,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = index,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 && (_vm.starfilter = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.starfilter = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.starfilter = $$c
-                            }
-                          },
-                          function($event) {
-                            return _vm.filterPictures()
+                          staticClass: "form-check-label",
+                          attrs: { for: topic }
+                        },
+                        [_vm._v(_vm._s(topic))]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pt-3" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-10" },
+                _vm._l(_vm.filters.modules, function(filtername) {
+                  return _c(
+                    "div",
+                    { staticClass: " form-check form-check-inline" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.modulfilter,
+                            expression: "modulfilter"
                           }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox", id: filtername },
+                        domProps: {
+                          value: filtername,
+                          checked: Array.isArray(_vm.modulfilter)
+                            ? _vm._i(_vm.modulfilter, filtername) > -1
+                            : _vm.modulfilter
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = _vm.modulfilter,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = filtername,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.modulfilter = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.modulfilter = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.modulfilter = $$c
+                              }
+                            },
+                            function($event) {
+                              return _vm.filterPictures()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          attrs: { for: filtername }
+                        },
+                        [_vm._v(_vm._s(filtername))]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pt-3" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-10" },
+                _vm._l(_vm.filters.classes, function(semester) {
+                  return _c(
+                    "div",
+                    { staticClass: " form-check form-check-inline" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.classfilter,
+                            expression: "classfilter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox", id: semester },
+                        domProps: {
+                          value: semester,
+                          checked: Array.isArray(_vm.classfilter)
+                            ? _vm._i(_vm.classfilter, semester) > -1
+                            : _vm.classfilter
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = _vm.classfilter,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = semester,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.classfilter = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.classfilter = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.classfilter = $$c
+                              }
+                            },
+                            function($event) {
+                              return _vm.filterPictures()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          attrs: { for: semester }
+                        },
+                        [_vm._v(_vm._s(semester))]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pt-3" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-10" },
+                _vm._l(5, function(index) {
+                  return _c(
+                    "div",
+                    { staticClass: " form-check form-check-inline" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.starfilter,
+                            expression: "starfilter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox", id: index },
+                        domProps: {
+                          value: index,
+                          checked: Array.isArray(_vm.starfilter)
+                            ? _vm._i(_vm.starfilter, index) > -1
+                            : _vm.starfilter
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = _vm.starfilter,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = index,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.starfilter = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.starfilter = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.starfilter = $$c
+                              }
+                            },
+                            function($event) {
+                              return _vm.filterPictures()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          attrs: { for: index }
+                        },
+                        [
+                          _vm._v(_vm._s(index) + " "),
+                          _c("span", { staticClass: "fa fa-star" })
                         ]
-                      }
-                    }),
-                    _vm._v(" "),
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pt-3" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn-group",
+                    attrs: { role: "group", "aria-label": "Basic example" }
+                  },
+                  [
                     _c(
-                      "label",
+                      "button",
                       {
-                        staticClass: "form-check-label",
-                        attrs: { for: index }
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.sort($event, _vm.sortOptions[0])
+                          }
+                        }
                       },
                       [
-                        _vm._v(_vm._s(index) + " "),
-                        _c("span", { staticClass: "fa fa-star" })
+                        _vm._v(
+                          "\n                            Alphabet\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.sort($event, _vm.sortOptions[1])
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Datum\n                        "
+                        )
                       ]
                     )
                   ]
                 )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pt-3" }, [
-            _vm._m(4),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-10" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "btn-group",
-                  attrs: { role: "group", "aria-label": "Basic example" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.sort($event, _vm.sortOptions[0])
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Alphabet\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.sort($event, _vm.sortOptions[1])
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Datum\n                        "
-                      )
-                    ]
-                  )
-                ]
-              )
+              ])
             ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "mt-5" },
-        _vm._l(_vm.filtered, function(image, index) {
-          return _c(
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-5" }, [
+          _c(
             "div",
             { staticClass: "row" },
-            [
-              _c("img", {
-                attrs: {
-                  height: "42",
-                  width: "42",
-                  src: "/img/gallery/" + image.Path + "/" + image.Filename
-                }
-              }),
-              _vm._v(" "),
-              _vm._v("\n                Kommentare:\n                "),
-              _vm._l(image.comments, function(comment) {
-                return _c("div", [
-                  _c("p", [_vm._v(_vm._s(comment.Text))]),
-                  _vm._v(" "),
-                  _c("br")
-                ])
-              }),
-              _vm._v(" "),
-              _c("star-rating", {
-                attrs: {
-                  "round-start-rating": false,
-                  rating: image.Rating / image.Votes,
-                  "show-rating": false
-                },
-                on: {
-                  "rating-selected": function($event) {
-                    return _vm.setRating(image.PID, $event)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "text", id: "comment_" + image.PID }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function($event) {
-                      return _vm.commentPicture(image.PID)
-                    }
-                  }
-                },
-                [_vm._v("Kommentieren")]
-              )
-            ],
-            2
+            _vm._l(_vm.filtered, function(image, index) {
+              return index < _vm.showPictureAmount
+                ? _c("div", { staticClass: "col-lg-1 col-md-2 col-3 py-2" }, [
+                    _c("a", { attrs: { "data-toggle": "modal" } }, [
+                      _c("img", {
+                        staticClass: "gallery-image",
+                        attrs: {
+                          loading: "auto",
+                          src:
+                            "/img/gallery/" +
+                            image.Path +
+                            "/" +
+                            image.Filename.split(".")[0] +
+                            "-thumb.png"
+                        }
+                      })
+                    ])
+                  ])
+                : _vm._e()
+            }),
+            0
           )
-        }),
-        0
-      )
-    ])
-  ])
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {

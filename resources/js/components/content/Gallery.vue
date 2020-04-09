@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-on:scroll="alert()">
         <h1 class="title">Gallery </h1>
         <section>
             <button type="button" class="w-100 btn filter-button dropdown-toggle" data-toggle="collapse"
@@ -67,9 +67,32 @@
                 </div>
             </div>
             <div class="mt-5">
+
+                <!--filename.splice('.')
+                foldewrname + filename[0] + '-thumb.' + filename[1]
+                '/older/name' + 'finame.jpg' + '-thumb'
+
+                for(i = 0; i<filtererd.lenght;i++){
+                   filtered[i].thumb = filename.split('.')[0] + '-tumb' + filename.split('.')[1]
+                }
+
+                col-10 col-sm-4 col-md-3 col-lg-2 m-0 p-2
+
+                -->
+                <div class="row">
+                    <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered" v-if="index<showPictureAmount">
+
+                        <a data-toggle="modal">
+                            <img loading="auto" class="gallery-image" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"/>
+                            <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                        </a>
+                    </div>
+                </div>
+
+                <!--
                 <div class="row" v-for="(image, index) in filtered">
                     <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>
-                    <!-- Debugging{{image.Gallery}},{{image.THMModule}},{{image.Class}},{{image.Filename}},{{image.Timestamp}},{{image.Votes}},{{image.Rating}},Bewertung:{{image.Rating/image.Votes}}-->
+
                     Kommentare:
                     <div v-for="comment in image.comments">
                         <p>{{comment.Text}}</p>
@@ -79,7 +102,7 @@
                                  @rating-selected="setRating(image.PID,$event)"></star-rating>
                     <input type="text" :id="'comment_' + image.PID">
                     <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
-                </div>
+                </div>-->
             </div>
         </section>
 
@@ -137,6 +160,10 @@
     .btn-secondary:hover {
         background-color: #343a40;
     }
+    .gallery-image{
+        width: 100%;
+
+    }
 </style>
 
 <script>
@@ -159,11 +186,18 @@
                 classfilter: [],
                 starfilter: [],
                 sortOptions: ["alphabetical", "date"],
-                filterType: ["modules", "classes"]
+                filterType: ["modules", "classes"],
+                showPictureAmount: 0
 
             };
         },
         created() {
+            this.showPictureAmount = ((window.innerHeight-280)/66)*12;
+            window.addEventListener('scroll', ()=>{
+                let offset = (document.documentElement.scrollTop || document.body.scrollTop);
+                this.showPictureAmount = (window.innerHeight + offset)*12/66;
+                console.log(this.showPictureAmount);
+            });
             this.topic = this.$route.params.name;
             if (typeof this.$route.params.name !== 'undefined') {
                 this.topicfilter[0] = this.topic;
@@ -172,6 +206,7 @@
                 this.starfilter[0] = this.$route.params.stars;
             }
             this.fetchData();
+
         },
         methods: {
             setRating: function (id, rating) {
@@ -249,6 +284,7 @@
                                 bucket.push(...images);
                             }
                             this.filtered = bucket;
+
                         }
                         self.filterPictures();
                     });

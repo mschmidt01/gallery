@@ -70,15 +70,6 @@
     .row {
         text-align: center;
     }
-
-    /*.col-md > a > div:first-child {
-        height: 150px;
-        background-size: cover;
-        max-width: 150px;
-
-        position: relative;
-        margin: 0 auto;
-    }*/
     .card-img-top {
         width: 100%;
         height: 200px;
