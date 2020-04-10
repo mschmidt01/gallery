@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ topic.name }}</h5>
                                 <p class="card-text text-center"><small>Anzahl: {{ topic.count }}</small></p>
-                                <router-link :to="{name: 'gallery', params: {name: topic.name}}" class="btn watch">Anschauen</router-link>
+                                <router-link :to="{name: 'gallery', params: {name: topic.name}}" class="btn btn-blue">Anschauen</router-link>
                             </div>
                         </div>
 
@@ -79,14 +79,5 @@
         min-width: 200px;
         margin: 0 auto; /* Added */
         float: none; /* Added */
-    }
-    .watch{
-        background-color: blue;
-        color:white;
-    }
-    .watch:hover{
-        color: blue;
-        border: 1px solid blue;
-        background-color: white;
     }
 </style>

@@ -17345,5 +17345,28 @@ a {
   margin-top: 1.5rem;
 }
 
+.btn-blue {
+  background-color: blue;
+  color: white;
+}
+
+.btn-blue:hover,
+.btn-blue:focus {
+  background-color: #0000b7;
+  color: white;
+}
+
+.btn-sec {
+  border: 1px solid blue;
+  background-color: white;
+  color: blue;
+}
+
+.btn-sec:hover,
+.btn-sec:focus {
+  background-color: #0000FF1a;
+  color: blue;
+}
+
 /*MediaQueries*/
 

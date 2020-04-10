@@ -53,7 +53,8 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-md-2"><span class="inline-block align-center"><strong>Sortierung</strong></span></div>
+                    <div class="col-md-2"><span class="inline-block align-center"><strong>Sortierung</strong></span>
+                    </div>
                     <div class="col-md-10">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-secondary" v-on:click="sort($event,sortOptions[0])">
@@ -68,29 +69,82 @@
             </div>
             <div class="mt-5">
 
-                <!--filename.splice('.')
-                foldewrname + filename[0] + '-thumb.' + filename[1]
-                '/older/name' + 'finame.jpg' + '-thumb'
-
-                for(i = 0; i<filtererd.lenght;i++){
-                   filtered[i].thumb = filename.split('.')[0] + '-tumb' + filename.split('.')[1]
-                }
-
-                col-10 col-sm-4 col-md-3 col-lg-2 m-0 p-2
-
-                -->
-                <div class="row">
-                    <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered" v-if="index<showPictureAmount">
-
-                        <a data-toggle="modal">
-                            <img loading="auto" class="gallery-image" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"/>
-                            <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
-                        </a>
+                <div v-if="selectedImage" class="modal fade bd-example-modal-lg " id="imageDialog" tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="imageDialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{selectedImage.Filename}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <img width="100%"
+                                             :src="'/img/gallery/' +  selectedImage.Path + '/'+ selectedImage.Filename "
+                                             id="exampleModalLabel"/>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mt-3 mt-lg-0 ">
+                                        <h5>Bewertungen</h5>
+                                        <star-rating class="mb-2 stars" :round-start-rating="false"
+                                                     :rating="selectedImage.Rating/selectedImage.Votes"
+                                                     v-bind:star-size="20"
+                                                     :show-rating="false" active-color="#343A40"
+                                                     inactive-color="#fff"
+                                                     border-color="#343A40" :border-width="2"
+                                                     :rounded-corners="true"></star-rating>
+                                        <div v-if="selectedImage.comments.length>0" class="scroll-container">
+                                            <div v-for="comment in selectedImage.comments">
+                                                <small>{{comment.Text}}</small><br>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h5>Eigene Bewertung abgeben</h5>
+                                        <form>
+                                            <star-rating class="mb-1 stars" :round-start-rating="false" :rating="0"
+                                                         v-bind:star-size="20"
+                                                         :show-rating="false" active-color="#343A40"
+                                                         inactive-color="#fff" border-color="#343A40"
+                                                         :border-width="2"
+                                                         :rounded-corners="true" @rating-selected ="getRating"></star-rating>
+                                            <div class="form-group">
+                                                <label for="'comment_' + selectedImage.PID" class="col-form-label">Kommentar:</label>
+                                                <textarea class="form-control"
+                                                          :id="'comment_' + selectedImage.PID"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sec" data-dismiss="modal">Schließen</button>
+                                <button type="button" class="btn btn-blue"
+                                        v-on:click="commentPicture(selectedImage.PID); setRating(selectedImage.PID)">Bewerten
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!--
-                <div class="row" v-for="(image, index) in filtered">
+                <div class="row">
+                    <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered"
+                         v-if="index<showPictureAmount">
+
+                        <a data-toggle="modal">
+                            <img loading="lazy" class="gallery-image"
+                                 :src="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
+                                 alt="Some Image" @click="openImageDialog(image)"/>
+                            <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <!--<div class="row" v-for="(image, index) in filtered">
                     <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>
 
                     Kommentare:
@@ -160,9 +214,15 @@
     .btn-secondary:hover {
         background-color: #343a40;
     }
-    .gallery-image{
+
+    .gallery-image {
         width: 100%;
 
+    }
+
+    .scroll-container {
+        height: 100px;
+        overflow-y: scroll;
     }
 </style>
 
@@ -187,16 +247,17 @@
                 starfilter: [],
                 sortOptions: ["alphabetical", "date"],
                 filterType: ["modules", "classes"],
-                showPictureAmount: 0
-
+                showPictureAmount: 0,
+                selectedImage: null,
+                rating: 0
             };
         },
         created() {
-            this.showPictureAmount = ((window.innerHeight-280)/66)*12;
-            window.addEventListener('scroll', ()=>{
+            this.showPictureAmount = ((window.innerHeight - 280) / 66) * 12;
+            window.addEventListener('scroll', () => {
                 let offset = (document.documentElement.scrollTop || document.body.scrollTop);
-                this.showPictureAmount = (window.innerHeight + offset)*12/66;
-                console.log(this.showPictureAmount);
+                this.showPictureAmount = (window.innerHeight + offset) * 12 / 66;
+                //console.log(this.showPictureAmount);
             });
             this.topic = this.$route.params.name;
             if (typeof this.$route.params.name !== 'undefined') {
@@ -209,9 +270,16 @@
 
         },
         methods: {
-            setRating: function (id, rating) {
-                this.rateAndValidate(id, rating);
-
+            openImageDialog: function (image) {
+                console.log(image);
+                this.selectedImage = image;
+                $('#imageDialog').modal('show');
+            },
+            setRating: function (id) {
+                this.rateAndValidate(id, this.rating);
+            },
+            getRating: function(rating){
+                this.rating= rating;
             },
             commentPicture: function (id) {
                 let text = document.getElementById("comment_" + id).value;
@@ -219,7 +287,11 @@
             },
             async rateAndValidate(id, rating) {
                 // (optional) Wait until recaptcha has been loaded.
-                await this.$recaptchaLoaded();
+                try {
+                    await this.$recaptchaLoaded();
+                } catch (e) {
+                    console.log(e);
+                }
 
                 // Execute reCAPTCHA with action "login".
                 const token = await this.$recaptcha('starrating');
@@ -233,17 +305,24 @@
             },
             async commentAndValidate(id, text) {
                 // (optional) Wait until recaptcha has been loaded.
-                await this.$recaptchaLoaded();
-
-                // Execute reCAPTCHA with action "login".
-                const token = await this.$recaptcha('comment');
-                axios.post('/api/pictures/comment', {
-                    token: token,
-                    imagid: id,
-                    text: text,
-                });
-                this.fetchData();
-                // Do stuff with the received token.
+                try {
+                    console.log("captcah")
+                    await this.$recaptchaLoaded();
+                    console.log("nach captcah", x)
+                    // Execute reCAPTCHA with action "login".
+                    const token = await this.$recaptcha('comment');
+                    console.log("nachn captcah 2")
+                    axios.post('/api/pictures/comment', {
+                        token: token,
+                        imagid: id,
+                        text: text.replace(/"/g, '\\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                    });
+                    console.log("nachn post")
+                    this.fetchData();
+                    // Do stuff with the received token.
+                } catch (e) {
+                    console.log("das ging nicht", e);
+                }
             },
             fetchData() {
                 this.loading = true;

@@ -23,9 +23,9 @@
                     <canvas id="myCanvas" width="500px" height="500px">
                     </canvas>
                     <br>
-                    <button type="button" class="btn live" v-on:click="loadBoard"> Board</button>
-                    <button type="button" class="btn live" v-on:click="clearBoard"> L&ouml;schen</button>
-                    <button type="button" class="btn live" v-on:click="numberingBoardElements"> Nummerierung</button>
+                    <button type="button" class="btn btn-sec" v-on:click="loadBoard"> Board</button>
+                    <button type="button" class="btn btn-sec" v-on:click="clearBoard"> L&ouml;schen</button>
+                    <button type="button" class="btn btn-sec" v-on:click="numberingBoardElements"> Nummerierung</button>
                     <br>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -43,9 +43,9 @@ farbe2( 3, 4, "#0000FF" )
 text2(2,2,"Hallo")
 </textarea>
                     <br>
-                    <button type="button" class="btn live-emphasized" v-on:click="runJS">Ausführen</button>
+                    <button type="button" class="btn btn-blue" v-on:click="runJS">Ausführen</button>
                     <!--  <button onClick='runJava()'> Java </button> -->
-                    <button type="button" class="btn live" v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern</button>
+                    <button type="button" class="btn btn-sec" v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern</button>
                     <input type='text' class="form-control" id='fileNameField' value='snippet.txt'
                            title="Dateiname zum Speichern des Snippets"/>
                     <div id="consoleLog">
@@ -160,34 +160,6 @@ text2(2,2,"Hallo")
         height: 400px;
         border: 1px solid rgb(195, 195, 195);
 
-    }
-    .live {
-        color: blue;
-        border: 1px solid blue;
-    }
-    live:focus {
-        color: white;
-        border: 1px solid blue;
-        background-color: blue;
-    }
-    .live:hover{
-        color: white;
-        border: 1px solid blue;
-        background-color: blue;
-    }
-    .live-emphasized{
-        background-color: blue;
-        color:white;
-    }
-    .live-emphasized:hover{
-        color: blue;
-        border: 1px solid blue;
-        background-color: white;
-    }
-    .live-emphasized:focus{
-        color: blue;
-        border: 1px solid blue;
-        background-color: white;
     }
     input{
         width:auto;

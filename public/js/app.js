@@ -2350,6 +2350,66 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2369,7 +2429,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
       filterType: ["modules", "classes"],
-      showPictureAmount: 0
+      showPictureAmount: 0,
+      selectedImage: null,
+      rating: 0
     };
   },
   created: function created() {
@@ -2378,8 +2440,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
     window.addEventListener('scroll', function () {
       var offset = document.documentElement.scrollTop || document.body.scrollTop;
-      _this.showPictureAmount = (window.innerHeight + offset) * 12 / 66;
-      console.log(_this.showPictureAmount);
+      _this.showPictureAmount = (window.innerHeight + offset) * 12 / 66; //console.log(this.showPictureAmount);
     });
     this.topic = this.$route.params.name;
 
@@ -2394,8 +2455,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchData();
   },
   methods: {
-    setRating: function setRating(id, rating) {
-      this.rateAndValidate(id, rating);
+    openImageDialog: function openImageDialog(image) {
+      console.log(image);
+      this.selectedImage = image;
+      $('#imageDialog').modal('show');
+    },
+    setRating: function setRating(id) {
+      this.rateAndValidate(id, this.rating);
+    },
+    getRating: function getRating(rating) {
+      this.rating = rating;
     },
     commentPicture: function commentPicture(id) {
       var text = document.getElementById("comment_" + id).value;
@@ -2407,14 +2476,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context.next = 4;
+            case 3:
+              _context.next = 8;
+              break;
+
+            case 5:
+              _context.prev = 5;
+              _context.t0 = _context["catch"](0);
+              console.log(_context.t0);
+
+            case 8:
+              _context.next = 10;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('starrating'));
 
-            case 4:
+            case 10:
               token = _context.sent;
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
                 token: token,
@@ -2423,12 +2502,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 7:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this);
+      }, null, this, [[0, 5]]);
     },
     commentAndValidate: function commentAndValidate(id, text) {
       var token;
@@ -2436,28 +2515,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              _context2.prev = 0;
+              console.log("captcah");
+              _context2.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context2.next = 4;
+            case 4:
+              console.log("nach captcah", x); // Execute reCAPTCHA with action "login".
+
+              _context2.next = 7;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
 
-            case 4:
+            case 7:
               token = _context2.sent;
+              console.log("nachn captcah 2");
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
                 token: token,
                 imagid: id,
-                text: text
+                text: text.replace(/"/g, '\\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;")
               });
+              console.log("nachn post");
               this.fetchData(); // Do stuff with the received token.
 
-            case 7:
+              _context2.next = 17;
+              break;
+
+            case 14:
+              _context2.prev = 14;
+              _context2.t0 = _context2["catch"](0);
+              console.log("das ging nicht", _context2.t0);
+
+            case 17:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this);
+      }, null, this, [[0, 14]]);
     },
     fetchData: function fetchData() {
       var _this2 = this;
@@ -3308,7 +3401,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be]{\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\n    height: 100px;\n    overflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -3327,7 +3420,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#myCanvas[data-v-34cc13ad]{\n    width: 100%;\n    height: 400px;\n    border: 1px solid rgb(195, 195, 195);\n}\n#codeView[data-v-34cc13ad]{\n    width:100%;\n    height: 400px;\n    border: 1px solid rgb(195, 195, 195);\n}\n.live[data-v-34cc13ad] {\n    color: blue;\n    border: 1px solid blue;\n}\nlive[data-v-34cc13ad]:focus {\n    color: white;\n    border: 1px solid blue;\n    background-color: blue;\n}\n.live[data-v-34cc13ad]:hover{\n    color: white;\n    border: 1px solid blue;\n    background-color: blue;\n}\n.live-emphasized[data-v-34cc13ad]{\n    background-color: blue;\n    color:white;\n}\n.live-emphasized[data-v-34cc13ad]:hover{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\n.live-emphasized[data-v-34cc13ad]:focus{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\ninput[data-v-34cc13ad]{\n    width:auto;\n    display: inline;\n}\n", ""]);
+exports.push([module.i, "\n#myCanvas[data-v-34cc13ad]{\n    width: 100%;\n    height: 400px;\n    border: 1px solid rgb(195, 195, 195);\n}\n#codeView[data-v-34cc13ad]{\n    width:100%;\n    height: 400px;\n    border: 1px solid rgb(195, 195, 195);\n}\ninput[data-v-34cc13ad]{\n    width:auto;\n    display: inline;\n}\n", ""]);
 
 // exports
 
@@ -3384,7 +3477,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.row[data-v-0c7479a5] {\n    text-align: center;\n}\n.card-img-top[data-v-0c7479a5] {\n    width: 100%;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.card[data-v-0c7479a5]{\n    min-width: 200px;\n    margin: 0 auto; /* Added */\n    float: none; /* Added */\n}\n.watch[data-v-0c7479a5]{\n    background-color: blue;\n    color:white;\n}\n.watch[data-v-0c7479a5]:hover{\n    color: blue;\n    border: 1px solid blue;\n    background-color: white;\n}\n", ""]);
+exports.push([module.i, "\n.row[data-v-0c7479a5] {\n    text-align: center;\n}\n.card-img-top[data-v-0c7479a5] {\n    width: 100%;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n.card[data-v-0c7479a5]{\n    min-width: 200px;\n    margin: 0 auto; /* Added */\n    float: none; /* Added */\n}\n", ""]);
 
 // exports
 
@@ -33487,6 +33580,178 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "mt-5" }, [
+          _vm.selectedImage
+            ? _c(
+                "div",
+                {
+                  staticClass: "modal fade bd-example-modal-lg ",
+                  attrs: {
+                    id: "imageDialog",
+                    tabindex: "-1",
+                    role: "dialog",
+                    "aria-labelledby": "imageDialog",
+                    "aria-hidden": "true"
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-dialog modal-lg",
+                      attrs: { role: "document" }
+                    },
+                    [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _c("div", { staticClass: "modal-header" }, [
+                          _c("h5", { staticClass: "modal-title" }, [
+                            _vm._v(_vm._s(_vm.selectedImage.Filename))
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(5)
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-body" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-12 col-lg-6" }, [
+                              _c("img", {
+                                attrs: {
+                                  width: "100%",
+                                  src:
+                                    "/img/gallery/" +
+                                    _vm.selectedImage.Path +
+                                    "/" +
+                                    _vm.selectedImage.Filename,
+                                  id: "exampleModalLabel"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-12 col-lg-6 mt-3 mt-lg-0 " },
+                              [
+                                _c("h5", [_vm._v("Bewertungen")]),
+                                _vm._v(" "),
+                                _c("star-rating", {
+                                  staticClass: "mb-2 stars",
+                                  attrs: {
+                                    "round-start-rating": false,
+                                    rating:
+                                      _vm.selectedImage.Rating /
+                                      _vm.selectedImage.Votes,
+                                    "star-size": 20,
+                                    "show-rating": false,
+                                    "active-color": "#343A40",
+                                    "inactive-color": "#fff",
+                                    "border-color": "#343A40",
+                                    "border-width": 2,
+                                    "rounded-corners": true
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.selectedImage.comments.length > 0
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "scroll-container" },
+                                      _vm._l(
+                                        _vm.selectedImage.comments,
+                                        function(comment) {
+                                          return _c("div", [
+                                            _c("small", [
+                                              _vm._v(_vm._s(comment.Text))
+                                            ]),
+                                            _c("br")
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("hr"),
+                                _vm._v(" "),
+                                _c("h5", [_vm._v("Eigene Bewertung abgeben")]),
+                                _vm._v(" "),
+                                _c(
+                                  "form",
+                                  [
+                                    _c("star-rating", {
+                                      staticClass: "mb-1 stars",
+                                      attrs: {
+                                        "round-start-rating": false,
+                                        rating: 0,
+                                        "star-size": 20,
+                                        "show-rating": false,
+                                        "active-color": "#343A40",
+                                        "inactive-color": "#fff",
+                                        "border-color": "#343A40",
+                                        "border-width": 2,
+                                        "rounded-corners": true
+                                      },
+                                      on: { "rating-selected": _vm.getRating }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "col-form-label",
+                                          attrs: {
+                                            for:
+                                              "'comment_' + selectedImage.PID"
+                                          }
+                                        },
+                                        [_vm._v("Kommentar:")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("textarea", {
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          id: "comment_" + _vm.selectedImage.PID
+                                        }
+                                      })
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-footer" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sec",
+                              attrs: { type: "button", "data-dismiss": "modal" }
+                            },
+                            [_vm._v("Schließen")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-blue",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.commentPicture(_vm.selectedImage.PID)
+                                  _vm.setRating(_vm.selectedImage.PID)
+                                }
+                              }
+                            },
+                            [_vm._v("Bewerten\n                            ")]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "row" },
@@ -33497,13 +33762,19 @@ var render = function() {
                       _c("img", {
                         staticClass: "gallery-image",
                         attrs: {
-                          loading: "auto",
+                          loading: "lazy",
                           src:
                             "/img/gallery/" +
                             image.Path +
                             "/" +
                             image.Filename.split(".")[0] +
-                            "-thumb.png"
+                            "-thumb.png",
+                          alt: "Some Image"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.openImageDialog(image)
+                          }
                         }
                       })
                     ])
@@ -33559,6 +33830,23 @@ var staticRenderFns = [
         _c("strong", [_vm._v("Sortierung")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
@@ -33625,7 +33913,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn live",
+              staticClass: "btn btn-sec",
               attrs: { type: "button" },
               on: { click: _vm.loadBoard }
             },
@@ -33635,7 +33923,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn live",
+              staticClass: "btn btn-sec",
               attrs: { type: "button" },
               on: { click: _vm.clearBoard }
             },
@@ -33645,7 +33933,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn live",
+              staticClass: "btn btn-sec",
               attrs: { type: "button" },
               on: { click: _vm.numberingBoardElements }
             },
@@ -33670,7 +33958,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn live-emphasized",
+              staticClass: "btn btn-blue",
               attrs: { type: "button" },
               on: { click: _vm.runJS }
             },
@@ -33680,7 +33968,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn live",
+              staticClass: "btn btn-sec",
               attrs: {
                 type: "button",
                 title: "Speichert das Snippet in eine Datei"
@@ -34403,7 +34691,7 @@ var render = function() {
                           _c(
                             "router-link",
                             {
-                              staticClass: "btn watch",
+                              staticClass: "btn btn-blue",
                               attrs: {
                                 to: {
                                   name: "gallery",
