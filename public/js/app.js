@@ -1983,13 +1983,13 @@ __webpack_require__.r(__webpack_exports__);
     var cookieArray = document.cookie.replace(" ", "").split(";");
     var consentSet, matomoConsent;
 
-    if (cookieArray.includes("matomo=true") || cookieArray.includes("matomo=false")) {
+    if (cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false")) {
       consentSet = true;
 
-      if (cookieArray.includes("matomo=true")) {
-        matomoConsent = true;
-      } else {
+      if (cookieArray.includes("piwik_ignore=true")) {
         matomoConsent = false;
+      } else {
+        matomoConsent = true;
       }
     } else {
       consentSet = false;
@@ -2005,10 +2005,10 @@ __webpack_require__.r(__webpack_exports__);
       /**
        * ToDo: Set cookie
        */
-      if (this.matomoConsent) {
-        document.cookie = "matomo=true";
+      if (!this.matomoConsent) {
+        document.cookie = "piwik_ignore=true";
       } else {
-        document.cookie = "matomo=false";
+        document.cookie = "piwik_ignore=false";
       }
 
       this.consentSet = true;
