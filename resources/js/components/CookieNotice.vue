@@ -12,7 +12,11 @@
         </div>
         <div id="matomo-container">
           <input v-model="matomoConsent" type="checkbox" id="matomo-cookies">
-          <label for="essentiell-cookies">Web-Analytics</label>
+          <label for="matomo-cookies">Web-Analytics</label>
+        </div>
+        <div id="recaptcha-container">
+          <input v-model="recaptchaConsent" type="checkbox" id="recaptcha-cookies">
+          <label for="recaptcha-cookies">ReCAPTCHA v3</label>
         </div>
       </div>
     
@@ -33,9 +37,9 @@ export default {
   data: function() {
     const cookieArray = document.cookie.replace(" ", "").split(";");
     
-    let consentSet, matomoConsent;
+    let consentSet, matomoConsent, recaptchaConsent;
 
-    if(cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false")) {
+    if(cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false") || cookieArray.includes("recaptcha=true") || cookieArray.includes("recaptcha=false")) {
       consentSet = true;
 
       if(cookieArray.includes("piwik_ignore=true")) {
@@ -43,25 +47,35 @@ export default {
       } else {
         matomoConsent = true;
       }
+
+      if(cookieArray.includes("recaptcha=true")) {
+        recaptchaConsent = true;
+      } else {
+        recaptchaConsent = false;
+      }
     } else {
       consentSet = false;
     }
 
     return {
       consentSet,
-      matomoConsent
+      matomoConsent,
+      recaptchaConsent
     };
   },
   methods: {
     submitConsent() {
-      /**
-       * ToDo: Set cookie
-       */
 
       if(!this.matomoConsent) {
         document.cookie = "piwik_ignore=true";
       } else {
         document.cookie = "piwik_ignore=false";
+      }
+
+      if(this.recaptchaConsent) {
+        document.cookie = "recaptcha=true";
+      } else {
+        document.cookie = "recaptcha=false";
       }
 
       this.consentSet = true;

@@ -1977,13 +1977,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "cookie-notice",
   data: function data() {
     var cookieArray = document.cookie.replace(" ", "").split(";");
-    var consentSet, matomoConsent;
+    var consentSet, matomoConsent, recaptchaConsent;
 
-    if (cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false")) {
+    if (cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false") || cookieArray.includes("recaptcha=true") || cookieArray.includes("recaptcha=false")) {
       consentSet = true;
 
       if (cookieArray.includes("piwik_ignore=true")) {
@@ -1991,24 +1995,34 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         matomoConsent = true;
       }
+
+      if (cookieArray.includes("recaptcha=true")) {
+        recaptchaConsent = true;
+      } else {
+        recaptchaConsent = false;
+      }
     } else {
       consentSet = false;
     }
 
     return {
       consentSet: consentSet,
-      matomoConsent: matomoConsent
+      matomoConsent: matomoConsent,
+      recaptchaConsent: recaptchaConsent
     };
   },
   methods: {
     submitConsent: function submitConsent() {
-      /**
-       * ToDo: Set cookie
-       */
       if (!this.matomoConsent) {
         document.cookie = "piwik_ignore=true";
       } else {
         document.cookie = "piwik_ignore=false";
+      }
+
+      if (this.recaptchaConsent) {
+        document.cookie = "recaptcha=true";
+      } else {
+        document.cookie = "recaptcha=false";
       }
 
       this.consentSet = true;
@@ -2395,9 +2409,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var cookieArray = document.cookie.replace(" ", "").split(";");
+    var recaptchaConsent = cookieArray.includes("recaptcha=true") ? true : false;
     return {
       loading: false,
       error: null,
@@ -2413,17 +2456,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classfilter: [],
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
-      filterType: ["modules", "classes"]
+      filterType: ["modules", "classes"],
+      recaptchaConsent: recaptchaConsent
     };
   },
   created: function created() {
     this.topic = this.$route.params.name;
 
-    if (typeof this.$route.params.name !== 'undefined') {
+    if (typeof this.$route.params.name !== "undefined") {
       this.topicfilter[0] = this.topic;
     }
 
-    if (typeof this.$route.params.stars !== 'undefined') {
+    if (typeof this.$route.params.stars !== "undefined") {
       this.starfilter[0] = this.$route.params.stars;
     }
 
@@ -2443,23 +2487,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              if (!this.recaptchaConsent) {
+                _context.next = 7;
+                break;
+              }
+
+              _context.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('starrating'));
+            case 3:
+              _context.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
 
-            case 4:
+            case 5:
               token = _context.sent;
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
                 rating: rating
               });
-              this.fetchData(); // Do stuff with the received token.
 
             case 7:
+              this.fetchData(); // Do stuff with the received token.
+
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -2472,23 +2523,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              if (!this.recaptchaConsent) {
+                _context2.next = 7;
+                break;
+              }
+
+              _context2.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context2.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
+            case 3:
+              _context2.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("comment"));
 
-            case 4:
+            case 5:
               token = _context2.sent;
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
                 text: text
               });
-              this.fetchData(); // Do stuff with the received token.
 
             case 7:
+              this.fetchData(); // Do stuff with the received token.
+
+            case 8:
             case "end":
               return _context2.stop();
           }
@@ -2500,24 +2558,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true;
       var self = this;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/modules", {
         gallery: this.topic
       }).then(function (response) {
         _this.filters.modules = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/classes", {
         gallery: this.topic
       }).then(function (response) {
         _this.filters.classes = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/filter/topics", {}).then(function (response) {
         _this.filters.topics = response.data;
 
-        if (typeof _this.topic === 'undefined') {
+        if (typeof _this.topic === "undefined") {
           _this.topicfilter = response.data;
         }
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/ordered').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/ordered").then(function (response) {
         _this.loading = false;
         var topic = _this.topic;
         self.pictures = $.map(response.data, function (value, key) {
@@ -2526,7 +2584,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.filtered = response.data[topic];
         _this.gallery = _this.filtered;
 
-        if (typeof _this.topicfilter !== 'undefined' && _this.topicfilter.length > 0) {
+        if (typeof _this.topicfilter !== "undefined" && _this.topicfilter.length > 0) {
           var bucket = [];
 
           for (var i = 0; i < _this.topicfilter.length; i++) {
@@ -2543,12 +2601,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     filterPictures: function filterPictures() {
       var _this2 = this;
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
+      if (typeof this.modulfilter !== "undefined" && this.modulfilter.length === 0 && typeof this.classfilter !== "undefined" && this.classfilter.length === 0 && typeof this.starfilter !== "undefined" && this.starfilter.length === 0 && typeof this.topicfilter !== "undefined" && this.topicfilter.length === 0) {
         this.filtered = [];
         return false;
       }
 
-      if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+      if (typeof this.topicfilter !== "undefined" && this.topicfilter.length > 0) {
         console.log("topic filter set");
         var bucket = [];
 
@@ -2569,7 +2627,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
+      if (typeof this.modulfilter !== "undefined" && this.modulfilter.length > 0) {
         console.log("modul filter set");
         var bucket = [];
 
@@ -2590,7 +2648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.filtered = bucket;
       }
 
-      if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+      if (typeof this.classfilter !== "undefined" && this.classfilter.length > 0) {
         console.log("class filter set");
         var bucket = [];
 
@@ -2611,7 +2669,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.filtered = bucket;
       }
 
-      if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
+      if (typeof this.starfilter !== "undefined" && this.starfilter.length > 0) {
         console.log("star filter set");
         console.log(this.filtered);
         var bucket = [];
@@ -33434,8 +33492,52 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "essentiell-cookies" } }, [
+                _c("label", { attrs: { for: "matomo-cookies" } }, [
                   _vm._v("Web-Analytics")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "recaptcha-container" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.recaptchaConsent,
+                      expression: "recaptchaConsent"
+                    }
+                  ],
+                  attrs: { type: "checkbox", id: "recaptcha-cookies" },
+                  domProps: {
+                    checked: Array.isArray(_vm.recaptchaConsent)
+                      ? _vm._i(_vm.recaptchaConsent, null) > -1
+                      : _vm.recaptchaConsent
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.recaptchaConsent,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.recaptchaConsent = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.recaptchaConsent = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.recaptchaConsent = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "recaptcha-cookies" } }, [
+                  _vm._v("ReCAPTCHA v3")
                 ])
               ])
             ]),
@@ -33929,7 +34031,7 @@ var render = function() {
     "div",
     { staticClass: "container-fluid" },
     [
-      _c("h2", [_vm._v("Gallery ")]),
+      _c("h2", [_vm._v("Gallery")]),
       _vm._v(" "),
       _c("div", [
         _c("p", [_vm._v("Themen")]),
@@ -33983,6 +34085,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", { attrs: { for: topic } }, [_vm._v(_vm._s(topic))]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -34046,6 +34149,7 @@ var render = function() {
               _c("label", { attrs: { for: filtername } }, [
                 _vm._v(_vm._s(filtername))
               ]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -34107,6 +34211,7 @@ var render = function() {
               _c("label", { attrs: { for: filtername } }, [
                 _vm._v(_vm._s(filtername))
               ]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -34166,6 +34271,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", [_vm._v(_vm._s(index))]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -34217,7 +34323,8 @@ var render = function() {
                 src: "/img/gallery/" + image.Path + "/" + image.Filename
               }
             }),
-            _vm._v("\n            Kommentare:\n            "),
+            _vm._v(" "),
+            _vm._v("\n    Kommentare:\n    "),
             _vm._l(image.comments, function(comment) {
               return _c("div", [
                 _c("p", [_vm._v(_vm._s(comment.Text))]),
@@ -52006,9 +52113,16 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_highlightjs__WEBPACK_IMPORTED_MODULE_3___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-  siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
-});
+/* Check if consent for ReCAPTCHA is given */
+
+var cookieArray = document.cookie.replace(" ", "").split(";");
+
+if (cookieArray.includes("recaptcha=true")) {
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
+    siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
+  });
+}
+
 
 
 
