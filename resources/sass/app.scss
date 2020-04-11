@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import '../fonts/fonts.css';
 
 // Variables
 //@import 'variables';
@@ -17,6 +17,9 @@
 // gallery css
 //@import '../css/gallery.css';
 @import '../css/custom';
+
+// Monokai
+@import '../css/monokai.min.css';
 
 // Custom variables
 @import './custom/custom-variables';
