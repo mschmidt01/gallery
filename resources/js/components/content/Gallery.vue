@@ -143,36 +143,42 @@ export default {
       this.commentAndValidate(id, text);
     },
     async rateAndValidate(id, rating) {
+      let token = "";
+
       if (this.recaptchaConsent) {
         // (optional) Wait until recaptcha has been loaded.
         await this.$recaptchaLoaded();
 
         // Execute reCAPTCHA with action "login".
-        const token = await this.$recaptcha("starrating");
-        axios.post("/api/pictures/vote", {
-          token: token,
-          imagid: id,
-          rating: rating
-        });
+        token = await this.$recaptcha("starrating");
       }
+      
+      axios.post("/api/pictures/vote", {
+        token: token,
+        imagid: id,
+        rating: rating
+      });
 
       this.fetchData();
       // Do stuff with the received token.
     },
     async commentAndValidate(id, text) {
+      let token = "";
+
       if (this.recaptchaConsent) {
         // (optional) Wait until recaptcha has been loaded.
         await this.$recaptchaLoaded();
 
         // Execute reCAPTCHA with action "login".
-        const token = await this.$recaptcha("comment");
-        axios.post("/api/pictures/comment", {
-          token: token,
-          imagid: id,
-          text: text
-        });
+        token = await this.$recaptcha("comment");
       }
-      
+
+      axios.post("/api/pictures/comment", {
+        token: token,
+        imagid: id,
+        text: text
+      });
+
       this.fetchData();
       // Do stuff with the received token.
     },

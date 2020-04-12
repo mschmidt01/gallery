@@ -1,7 +1,7 @@
 <template>
   <div v-if="!consentSet" id="cookie-notice" class="show" ref="cookieNotice">
     <div id="notice-container">
-      <p id="cookie-headline">Diese Website verwendet Cookies</p>      
+      <p id="cookie-headline">Diese Website verwendet Cookies</p>
       <div class="separator"></div>
       <p>Cookies werden zur Benutzerführung und Webanalyse verwendet und helfen dabei, diese Website zur verbessern.</p>
 
@@ -11,16 +11,22 @@
           <label for="essentiell-cookies">Essenzielle Cookies</label>
         </div>
         <div id="matomo-container">
-          <input v-model="matomoConsent" type="checkbox" id="matomo-cookies">
+          <input v-model="matomoConsent" type="checkbox" id="matomo-cookies" />
           <label for="matomo-cookies">Web-Analytics</label>
         </div>
         <div id="recaptcha-container">
-          <input v-model="recaptchaConsent" type="checkbox" id="recaptcha-cookies">
+          <input v-model="recaptchaConsent" type="checkbox" id="recaptcha-cookies" />
           <label for="recaptcha-cookies">ReCAPTCHA v3</label>
         </div>
       </div>
-    
-      <input v-on:click="submitConsent()" class="btn" id="cookie-submit" type="submit" value="Bestätigen" />
+
+      <input
+        v-on:click="submitConsent()"
+        class="btn"
+        id="cookie-submit"
+        type="submit"
+        value="Bestätigen"
+      />
 
       <div>
         <router-link title="Impressum" :to="{name: 'impressum'}">Impressum</router-link>
@@ -32,30 +38,46 @@
 </template>
 
 <script>
+import { VueReCaptcha } from "vue-recaptcha-v3";
+import Vue from "vue";
+
 export default {
   name: "cookie-notice",
   data: function() {
     const cookieArray = document.cookie.replace(" ", "").split(";");
-    
+
     let consentSet, matomoConsent, recaptchaConsent;
+    consentSet = matomoConsent = recaptchaConsent = false;
 
-    if(cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false") || cookieArray.includes("recaptcha=true") || cookieArray.includes("recaptcha=false")) {
+    if (cookieArray.includes("piwik_ignore=true")) {
+      matomoConsent = false;
+
       consentSet = true;
+    } else if (cookieArray.includes("piwik_ignore=false")) {
+      matomoConsent = true;
 
-      if(cookieArray.includes("piwik_ignore=true")) {
-        matomoConsent = false;
-      } else {
-        matomoConsent = true;
-      }
-
-      if(cookieArray.includes("recaptcha=true")) {
-        recaptchaConsent = true;
-      } else {
-        recaptchaConsent = false;
-      }
+      consentSet = true;
     } else {
       consentSet = false;
     }
+
+    if (cookieArray.includes("recaptcha=true")) {
+      recaptchaConsent = true;
+
+      Vue.use(VueReCaptcha, {
+        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+      });
+
+      consentSet &= true;
+    } else if (cookieArray.includes("recaptcha=false")) {
+      recaptchaConsent = false;
+
+      consentSet &= true;
+    } else {
+      consentSet &= false;
+    }
+
+    if (!consentSet) recaptchaConsent = matomoConsent = false;
 
     return {
       consentSet,
@@ -65,15 +87,18 @@ export default {
   },
   methods: {
     submitConsent() {
-
-      if(!this.matomoConsent) {
+      if (!this.matomoConsent) {
         document.cookie = "piwik_ignore=true";
       } else {
         document.cookie = "piwik_ignore=false";
       }
 
-      if(this.recaptchaConsent) {
+      if (this.recaptchaConsent) {
         document.cookie = "recaptcha=true";
+
+        Vue.use(VueReCaptcha, {
+          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        });
       } else {
         document.cookie = "recaptcha=false";
       }

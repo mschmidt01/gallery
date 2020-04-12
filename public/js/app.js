@@ -1948,6 +1948,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha-v3 */ "./node_modules/vue-recaptcha-v3/dist/ReCaptchaVuePlugin.js");
+/* harmony import */ var vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1981,30 +1985,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "cookie-notice",
   data: function data() {
     var cookieArray = document.cookie.replace(" ", "").split(";");
     var consentSet, matomoConsent, recaptchaConsent;
+    consentSet = matomoConsent = recaptchaConsent = false;
 
-    if (cookieArray.includes("piwik_ignore=true") || cookieArray.includes("piwik_ignore=false") || cookieArray.includes("recaptcha=true") || cookieArray.includes("recaptcha=false")) {
+    if (cookieArray.includes("piwik_ignore=true")) {
+      matomoConsent = false;
       consentSet = true;
-
-      if (cookieArray.includes("piwik_ignore=true")) {
-        matomoConsent = false;
-      } else {
-        matomoConsent = true;
-      }
-
-      if (cookieArray.includes("recaptcha=true")) {
-        recaptchaConsent = true;
-      } else {
-        recaptchaConsent = false;
-      }
+    } else if (cookieArray.includes("piwik_ignore=false")) {
+      matomoConsent = true;
+      consentSet = true;
     } else {
       consentSet = false;
     }
 
+    if (cookieArray.includes("recaptcha=true")) {
+      recaptchaConsent = true;
+      vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
+        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+      });
+      consentSet &= true;
+    } else if (cookieArray.includes("recaptcha=false")) {
+      recaptchaConsent = false;
+      consentSet &= true;
+    } else {
+      consentSet &= false;
+    }
+
+    if (!consentSet) recaptchaConsent = matomoConsent = false;
     return {
       consentSet: consentSet,
       matomoConsent: matomoConsent,
@@ -2021,6 +2040,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.recaptchaConsent) {
         document.cookie = "recaptcha=true";
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
+          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        });
       } else {
         document.cookie = "recaptcha=false";
       }
@@ -2487,30 +2509,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              token = "";
+
               if (!this.recaptchaConsent) {
                 _context.next = 7;
                 break;
               }
 
-              _context.next = 3;
+              _context.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 3:
-              _context.next = 5;
+            case 4:
+              _context.next = 6;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
 
-            case 5:
+            case 6:
               token = _context.sent;
+
+            case 7:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
                 rating: rating
               });
-
-            case 7:
               this.fetchData(); // Do stuff with the received token.
 
-            case 8:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -2523,30 +2547,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              token = "";
+
               if (!this.recaptchaConsent) {
                 _context2.next = 7;
                 break;
               }
 
-              _context2.next = 3;
+              _context2.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 3:
-              _context2.next = 5;
+            case 4:
+              _context2.next = 6;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("comment"));
 
-            case 5:
+            case 6:
               token = _context2.sent;
+
+            case 7:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
                 text: text
               });
-
-            case 7:
               this.fetchData(); // Do stuff with the received token.
 
-            case 8:
+            case 9:
             case "end":
               return _context2.stop();
           }
