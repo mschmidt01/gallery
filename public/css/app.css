@@ -17664,3 +17664,9 @@ code.hljs span.hljs-string {
   margin: 2rem 0;
 }
 
+/* Input */
+
+.contact-field {
+  display: none;
+}
+

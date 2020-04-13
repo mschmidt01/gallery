@@ -91,6 +91,14 @@
         @rating-selected="setRating(image.PID,$event)"
       ></star-rating>
       <input type="text" :id="'comment_' + image.PID" />
+      <div class="contact-field">
+        Bitte Feld leer lassen
+        <input v-model="contact" type="text" name="contact" />
+      </div>
+      <div v-show="!hideInput" class="text-field">
+        Bitte Feld nicht ändern
+        <input v-model="email" type="text" name="email" />
+      </div>
       <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
     </div>
   </div>
@@ -121,7 +129,10 @@ export default {
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
       filterType: ["modules", "classes"],
-      recaptchaConsent
+      recaptchaConsent,
+      hideInput: true,
+      contact: '',
+      email: 'test@email.com'
     };
   },
   created() {
@@ -152,11 +163,13 @@ export default {
         // Execute reCAPTCHA with action "login".
         token = await this.$recaptcha("starrating");
       }
-      
+
       axios.post("/api/pictures/vote", {
         token: token,
         imagid: id,
-        rating: rating
+        rating: rating,
+        email: this.email,
+        contact: this.contact
       });
 
       this.fetchData();
@@ -176,7 +189,9 @@ export default {
       axios.post("/api/pictures/comment", {
         token: token,
         imagid: id,
-        text: text
+        text: text,
+        email: this.email,
+        contact: this.contact
       });
 
       this.fetchData();

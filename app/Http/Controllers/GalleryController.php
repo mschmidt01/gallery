@@ -20,35 +20,40 @@ class GalleryController extends Controller
   }
   public function ratePicture(Request $request)
   {
-    $sPictureId = $request->json("imagid");
-    $rating = $request->json("rating");
+    $email = $request->json("email");
+    $contact = $request->json("contact");
 
-    if (array_key_exists('recaptcha', $_COOKIE)) {
-      if ($_COOKIE["recaptcha"] == 'true') {
+    if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
+      $sPictureId = $request->json("imagid");
+      $rating = $request->json("rating");
 
-        $sToken = $request->json("token");
+      if (array_key_exists('recaptcha', $_COOKIE)) {
+        if ($_COOKIE["recaptcha"] == 'true') {
 
-        $client = new Client();
-        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
-          'form_params' => [
-            'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
-            'response' => $sToken,
-          ]
-        ]);
+          $sToken = $request->json("token");
 
-        $response = json_decode($response->getBody(), true);
+          $client = new Client();
+          $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+              'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+              'response' => $sToken,
+            ]
+          ]);
 
-        if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
+          $response = json_decode($response->getBody(), true);
+
+          if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
+            Picture::ratePicture($sPictureId, $rating);
+            return "success";
+          }
+        } else if ($_COOKIE["recaptcha"] == 'false') {
           Picture::ratePicture($sPictureId, $rating);
           return "success";
         }
-      } else if ($_COOKIE["recaptcha"] == 'false') {
+      } else {
         Picture::ratePicture($sPictureId, $rating);
         return "success";
       }
-    } else {
-      Picture::ratePicture($sPictureId, $rating);
-      return "success";
     }
 
     return "invalid";
@@ -56,35 +61,40 @@ class GalleryController extends Controller
 
   public function commentPicture(Request $request)
   {
-    $sPictureId = $request->json("imagid");
-    $rating = $request->json("text");
+    $email = $request->json("email");
+    $contact = $request->json("contact");
 
-    if (array_key_exists('recaptcha', $_COOKIE)) {
-      if ($_COOKIE["recaptcha"] == 'true') {
+    if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
+      $sPictureId = $request->json("imagid");
+      $rating = $request->json("text");
 
-        $sToken = $request->json("token");
+      if (array_key_exists('recaptcha', $_COOKIE)) {
+        if ($_COOKIE["recaptcha"] == 'true') {
 
-        $client = new Client();
-        $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
-          'form_params' => [
-            'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
-            'response' => $sToken,
-          ]
-        ]);
+          $sToken = $request->json("token");
 
-        $response = json_decode($response->getBody(), true);
+          $client = new Client();
+          $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+              'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+              'response' => $sToken,
+            ]
+          ]);
 
-        if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
+          $response = json_decode($response->getBody(), true);
+
+          if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
+            Comment::createNewComment($sPictureId, $rating);
+            return "success";
+          }
+        } else if ($_COOKIE["recaptcha"] == 'false') {
           Comment::createNewComment($sPictureId, $rating);
           return "success";
         }
-      } else if ($_COOKIE["recaptcha"] == 'false') {
+      } else {
         Comment::createNewComment($sPictureId, $rating);
         return "success";
       }
-    } else {
-      Comment::createNewComment($sPictureId, $rating);
-      return "success";
     }
 
     return "invalid";

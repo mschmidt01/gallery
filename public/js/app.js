@@ -2458,6 +2458,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2479,7 +2487,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
       filterType: ["modules", "classes"],
-      recaptchaConsent: recaptchaConsent
+      recaptchaConsent: recaptchaConsent,
+      hideInput: true,
+      contact: '',
+      email: 'test@email.com'
     };
   },
   created: function created() {
@@ -2530,7 +2541,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
-                rating: rating
+                rating: rating,
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
@@ -2568,7 +2581,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
-                text: text
+                text: text,
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
@@ -34375,6 +34390,68 @@ var render = function() {
             _c("input", {
               attrs: { type: "text", id: "comment_" + image.PID }
             }),
+            _vm._v(" "),
+            _c("div", { staticClass: "contact-field" }, [
+              _vm._v("\n      Bitte Feld leer lassen\n      "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contact,
+                    expression: "contact"
+                  }
+                ],
+                attrs: { type: "text", name: "contact" },
+                domProps: { value: _vm.contact },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.contact = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.hideInput,
+                    expression: "!hideInput"
+                  }
+                ],
+                staticClass: "text-field"
+              },
+              [
+                _vm._v("\n      Bitte Feld nicht ändern\n      "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  attrs: { type: "text", name: "email" },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                })
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
