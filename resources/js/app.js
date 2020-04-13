@@ -3,12 +3,19 @@ import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 import VueHighlightJS from 'vue-highlightjs'
 import StarRating from 'vue-star-rating'
-import { VueReCaptcha } from 'vue-recaptcha-v3'
+import { VueReCaptcha } from 'vue-recaptcha-v3';
+
 
 Vue.use(VueRouter)
 Vue.use(VueLazyload)
 Vue.use(VueHighlightJS)
-Vue.use(VueReCaptcha, { siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ' })
+
+/* Check if consent for ReCAPTCHA is given */
+const cookieArray = document.cookie.replace(" ", "").split(";");
+if(cookieArray.includes("recaptcha=true")) {
+  Vue.use(VueReCaptcha, { siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ' });
+} 
+
 import App from './components/App'
 import Project from './components/content/Project'
 import Quiz from './components/content/Quiz'
@@ -24,6 +31,8 @@ import Galleryfooter from "./components/galleryfooter";
 import Gallerynav from "./components/Gallerynav";
 import Skeleton from "./components/content/skeleton";
 import CookieNotice from "./components/CookieNotice";
+import Impressum from "./components/content/Impressum";
+import PrivacyPolicy from "./components/content/PrivacyPolicy";
 
 Vue.component('galleryfooter', Galleryfooter);
 Vue.component('gallerynav', Gallerynav);
@@ -83,6 +92,16 @@ const router = new VueRouter({
             path: '/gallery',
             name: 'gallery',
             component: Gallery
+        },
+        {
+          path: '/impressum',
+          name: 'impressum',
+          component: Impressum
+        },
+        {
+          path: '/privacypolicy',
+          name: 'privacypolicy',
+          component: PrivacyPolicy
         },
         {
             path: '/',

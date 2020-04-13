@@ -1,8 +1,9 @@
 <template>
     <footer class="mt-5 pt-2">
         <p class="text-center">Ein Projekt der Web&amp;Mobile Gruppe der Fachbereiche IEM/MND
-            | <a href="https://www.thm.de/site/impressum.html" title="Impressum">Impressum</a>
-            | <a href="https://www.thm.de/site/datenschutz.html" title="Datenschutz">Datenschutz</a>
+          <router-link title="Impressum" :to="{name: 'impressum'}">Impressum</router-link>
+          <span class="link-separator">|</span>
+          <router-link title="Datenschutz" :to="{name: 'privacypolicy'}">Datenschutz</router-link>
         </p>
     </footer>
 </template>

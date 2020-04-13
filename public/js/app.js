@@ -1948,6 +1948,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha-v3 */ "./node_modules/vue-recaptcha-v3/dist/ReCaptchaVuePlugin.js");
+/* harmony import */ var vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1977,38 +1981,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "cookie-notice",
   data: function data() {
     var cookieArray = document.cookie.replace(" ", "").split(";");
-    var consentSet, matomoConsent;
+    var consentSet, matomoConsent, recaptchaConsent;
+    consentSet = matomoConsent = recaptchaConsent = false;
 
-    if (cookieArray.includes("matomo=true") || cookieArray.includes("matomo=false")) {
+    if (cookieArray.includes("piwik_ignore=true")) {
+      matomoConsent = false;
       consentSet = true;
-
-      if (cookieArray.includes("matomo=true")) {
-        matomoConsent = true;
-      } else {
-        matomoConsent = false;
-      }
+    } else if (cookieArray.includes("piwik_ignore=false")) {
+      matomoConsent = true;
+      consentSet = true;
     } else {
       consentSet = false;
     }
 
+    if (cookieArray.includes("recaptcha=true")) {
+      recaptchaConsent = true;
+      vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
+        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+      });
+      consentSet &= true;
+    } else if (cookieArray.includes("recaptcha=false")) {
+      recaptchaConsent = false;
+      consentSet &= true;
+    } else {
+      consentSet &= false;
+    }
+
+    if (!consentSet) recaptchaConsent = matomoConsent = false;
     return {
       consentSet: consentSet,
-      matomoConsent: matomoConsent
+      matomoConsent: matomoConsent,
+      recaptchaConsent: recaptchaConsent
     };
   },
   methods: {
     submitConsent: function submitConsent() {
-      /**
-       * ToDo: Set cookie
-       */
-      if (this.matomoConsent) {
-        document.cookie = "matomo=true";
+      if (!this.matomoConsent) {
+        document.cookie = "piwik_ignore=true";
       } else {
-        document.cookie = "matomo=false";
+        document.cookie = "piwik_ignore=false";
+      }
+
+      if (this.recaptchaConsent) {
+        document.cookie = "recaptcha=true";
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
+          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        });
+      } else {
+        document.cookie = "recaptcha=false";
       }
 
       this.consentSet = true;
@@ -2395,9 +2431,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var cookieArray = document.cookie.replace(" ", "").split(";");
+    var recaptchaConsent = cookieArray.includes("recaptcha=true") ? true : false;
     return {
       loading: false,
       error: null,
@@ -2413,17 +2486,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       classfilter: [],
       starfilter: [],
       sortOptions: ["alphabetical", "date"],
-      filterType: ["modules", "classes"]
+      filterType: ["modules", "classes"],
+      recaptchaConsent: recaptchaConsent,
+      hideInput: true,
+      contact: '',
+      email: 'test@email.com'
     };
   },
   created: function created() {
     this.topic = this.$route.params.name;
 
-    if (typeof this.$route.params.name !== 'undefined') {
+    if (typeof this.$route.params.name !== "undefined") {
       this.topicfilter[0] = this.topic;
     }
 
-    if (typeof this.$route.params.stars !== 'undefined') {
+    if (typeof this.$route.params.stars !== "undefined") {
       this.starfilter[0] = this.$route.params.stars;
     }
 
@@ -2443,23 +2520,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              token = "";
+
+              if (!this.recaptchaConsent) {
+                _context.next = 7;
+                break;
+              }
+
+              _context.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('starrating'));
-
             case 4:
+              _context.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
+
+            case 6:
               token = _context.sent;
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
+
+            case 7:
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
-                rating: rating
+                rating: rating,
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 7:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -2472,23 +2560,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              token = "";
+
+              if (!this.recaptchaConsent) {
+                _context2.next = 7;
+                break;
+              }
+
+              _context2.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 2:
-              _context2.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
-
             case 4:
+              _context2.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("comment"));
+
+            case 6:
               token = _context2.sent;
-              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
+
+            case 7:
+              axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
-                text: text
+                text: text,
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 7:
+            case 9:
             case "end":
               return _context2.stop();
           }
@@ -2500,24 +2599,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.loading = true;
       var self = this;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/modules", {
         gallery: this.topic
       }).then(function (response) {
         _this.filters.modules = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/classes", {
         gallery: this.topic
       }).then(function (response) {
         _this.filters.classes = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/filter/topics", {}).then(function (response) {
         _this.filters.topics = response.data;
 
-        if (typeof _this.topic === 'undefined') {
+        if (typeof _this.topic === "undefined") {
           _this.topicfilter = response.data;
         }
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/ordered').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/ordered").then(function (response) {
         _this.loading = false;
         var topic = _this.topic;
         self.pictures = $.map(response.data, function (value, key) {
@@ -2526,7 +2625,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.filtered = response.data[topic];
         _this.gallery = _this.filtered;
 
-        if (typeof _this.topicfilter !== 'undefined' && _this.topicfilter.length > 0) {
+        if (typeof _this.topicfilter !== "undefined" && _this.topicfilter.length > 0) {
           var bucket = [];
 
           for (var i = 0; i < _this.topicfilter.length; i++) {
@@ -2543,12 +2642,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     filterPictures: function filterPictures() {
       var _this2 = this;
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
+      if (typeof this.modulfilter !== "undefined" && this.modulfilter.length === 0 && typeof this.classfilter !== "undefined" && this.classfilter.length === 0 && typeof this.starfilter !== "undefined" && this.starfilter.length === 0 && typeof this.topicfilter !== "undefined" && this.topicfilter.length === 0) {
         this.filtered = [];
         return false;
       }
 
-      if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+      if (typeof this.topicfilter !== "undefined" && this.topicfilter.length > 0) {
         console.log("topic filter set");
         var bucket = [];
 
@@ -2569,7 +2668,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
+      if (typeof this.modulfilter !== "undefined" && this.modulfilter.length > 0) {
         console.log("modul filter set");
         var bucket = [];
 
@@ -2590,7 +2689,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.filtered = bucket;
       }
 
-      if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
+      if (typeof this.classfilter !== "undefined" && this.classfilter.length > 0) {
         console.log("class filter set");
         var bucket = [];
 
@@ -2611,7 +2710,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.filtered = bucket;
       }
 
-      if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
+      if (typeof this.starfilter !== "undefined" && this.starfilter.length > 0) {
         console.log("star filter set");
         console.log(this.filtered);
         var bucket = [];
@@ -2664,6 +2763,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/Impressum.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/content/Impressum.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Impressum"
 });
 
 /***/ }),
@@ -3242,6 +3404,243 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "PrivacyPolicy"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/Project.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/content/Project.vue?vue&type=script&lang=js& ***!
@@ -3659,6 +4058,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -33133,8 +33533,52 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "essentiell-cookies" } }, [
+                _c("label", { attrs: { for: "matomo-cookies" } }, [
                   _vm._v("Web-Analytics")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { id: "recaptcha-container" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.recaptchaConsent,
+                      expression: "recaptchaConsent"
+                    }
+                  ],
+                  attrs: { type: "checkbox", id: "recaptcha-cookies" },
+                  domProps: {
+                    checked: Array.isArray(_vm.recaptchaConsent)
+                      ? _vm._i(_vm.recaptchaConsent, null) > -1
+                      : _vm.recaptchaConsent
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.recaptchaConsent,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.recaptchaConsent = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.recaptchaConsent = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.recaptchaConsent = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "recaptcha-cookies" } }, [
+                  _vm._v("ReCAPTCHA v3")
                 ])
               ])
             ]),
@@ -33153,7 +33597,30 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(1)
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { title: "Impressum", to: { name: "impressum" } } },
+                  [_vm._v("Impressum")]
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "link-separator" }, [_vm._v("|")]),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      title: "Datenschutz",
+                      to: { name: "privacypolicy" }
+                    }
+                  },
+                  [_vm._v("Datenschutz")]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -33177,36 +33644,6 @@ var staticRenderFns = [
       _c("label", { attrs: { for: "essentiell-cookies" } }, [
         _vm._v("Essenzielle Cookies")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "https://www.thm.de/site/impressum.html",
-            title: "Impressum"
-          }
-        },
-        [_vm._v("Impressum")]
-      ),
-      _vm._v(" "),
-      _c("span", { staticClass: "link-separator" }, [_vm._v("|")]),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          attrs: {
-            href: "https://www.thm.de/site/datenschutz.html",
-            title: "Datenschutz"
-          }
-        },
-        [_vm._v("Datenschutz")]
-      )
     ])
   }
 ]
@@ -33635,7 +34072,7 @@ var render = function() {
     "div",
     { staticClass: "container-fluid" },
     [
-      _c("h2", [_vm._v("Gallery ")]),
+      _c("h2", [_vm._v("Gallery")]),
       _vm._v(" "),
       _c("div", [
         _c("p", [_vm._v("Themen")]),
@@ -33689,6 +34126,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", { attrs: { for: topic } }, [_vm._v(_vm._s(topic))]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -33752,6 +34190,7 @@ var render = function() {
               _c("label", { attrs: { for: filtername } }, [
                 _vm._v(_vm._s(filtername))
               ]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -33813,6 +34252,7 @@ var render = function() {
               _c("label", { attrs: { for: filtername } }, [
                 _vm._v(_vm._s(filtername))
               ]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -33872,6 +34312,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", [_vm._v(_vm._s(index))]),
+              _vm._v(" "),
               _c("br")
             ])
           }),
@@ -33923,7 +34364,8 @@ var render = function() {
                 src: "/img/gallery/" + image.Path + "/" + image.Filename
               }
             }),
-            _vm._v("\n            Kommentare:\n            "),
+            _vm._v(" "),
+            _vm._v("\n    Kommentare:\n    "),
             _vm._l(image.comments, function(comment) {
               return _c("div", [
                 _c("p", [_vm._v(_vm._s(comment.Text))]),
@@ -33949,6 +34391,68 @@ var render = function() {
               attrs: { type: "text", id: "comment_" + image.PID }
             }),
             _vm._v(" "),
+            _c("div", { staticClass: "contact-field" }, [
+              _vm._v("\n      Bitte Feld leer lassen\n      "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contact,
+                    expression: "contact"
+                  }
+                ],
+                attrs: { type: "text", name: "contact" },
+                domProps: { value: _vm.contact },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.contact = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.hideInput,
+                    expression: "!hideInput"
+                  }
+                ],
+                staticClass: "text-field"
+              },
+              [
+                _vm._v("\n      Bitte Feld nicht ändern\n      "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  attrs: { type: "text", name: "email" },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
             _c(
               "button",
               {
@@ -33969,6 +34473,115 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("h1", { staticClass: "title" }, [_vm._v("Impressum")]),
+      _vm._v(" "),
+      _c("section", [
+        _c("h2", [
+          _vm._v("\n      Technische Hochschule Mittelhessen (THM)\n      "),
+          _c("br"),
+          _vm._v("University of Applied Sciences\n    ")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("\n      Wiesenstraße 14\n      "),
+          _c("br"),
+          _vm._v("35390 Gießen\n      "),
+          _c("br"),
+          _vm._v("Germany\n    ")
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("\n      Tel.: +49 641 309-0\n      "),
+          _c("br"),
+          _vm._v("Fax: +49 641 309-2901\n      "),
+          _c("br"),
+          _vm._v("E-Mail:\n      "),
+          _c("a", { attrs: { href: "mailto:praesident@thm.de" } }, [
+            _vm._v("praesident@thm.de")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Die Technische Hochschule Mittelhessen ist eine rechtsfähige Körperschaft des öffentlichen Rechts und zugleich staatliche Einrichtung gemäß § 1 (1) HHG (Hessisches Hochschulgesetz vom 14. Dezember 2009, GVBl. I, S. 666)."
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "\n      Sie wird gesetzlich vertreten durch den Präsidenten\n      "
+          ),
+          _c("b", [_vm._v("Prof. Dr. Matthias Willems")]),
+          _vm._v(".\n    ")
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "\n      Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:\n      "
+          ),
+          _c("br"),
+          _vm._v(" "),
+          _c("b", [_vm._v("DE 813885934")])
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _c("b", [_vm._v("Zuständige Aufsichtsbehörde:")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(
+            "\n      Hessisches Ministerium für Wissenschaft und Kunst\n      "
+          ),
+          _c("br"),
+          _vm._v("\n      Rheinstraße 23 - 25\n      "),
+          _c("br"),
+          _vm._v("\n      65185 Wiesbaden\n    ")
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _c("b", [
+            _vm._v("Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV")
+          ]),
+          _vm._v(":\n      "),
+          _c("br"),
+          _vm._v(
+            "\n      Das Präsidium hat die allgemeine inhaltliche Verantwortung und entscheidet in Zweifelsfällen über die Zulässigkeit von Daten. Die Einrichtungen und Organe der Technischen Hochschule Mittelhessen (u.a. Fachbereiche, Bibliothek, AStA, Personalräte) erstellen ihre Webseiten in eigener Verantwortung. Die inhaltliche Verantwortung dieser Webseiten liegt bei der/dem Vertretungsberechtigten der jeweils zuständigen Einrichtung bzw. bei der von ihr/ihm autorisierten Person. Die Kontaktdaten dieser Personen sind dort jeweils im Impressum angegeben.\n    "
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -34233,6 +34846,1537 @@ var staticRenderFns = [
         _vm._v("BG: Eine Form wird als Hintergrund ("),
         _c("em", [_vm._v("background")]),
         _vm._v(") verwendet.")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("h1", { staticClass: "title" }, [_vm._v("Datenschutzerklärung")]),
+      _vm._v(" "),
+      _c("h2", [
+        _vm._v(
+          "A. Name und Anschrift des Verantwortlichen und seines Vertreters"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Der Verantwortliche im Sinne der EU-Datenschutzgrundverordnung ("
+        ),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://de.wikipedia.org/wiki/Datenschutz-Grundverordnung",
+              target: "_blank"
+            }
+          },
+          [_vm._v("DSGVO")]
+        ),
+        _vm._v(
+          ") und anderer nationaler Datenschutzgesetze - insbesondere des "
+        ),
+        _c(
+          "a",
+          {
+            attrs: {
+              href:
+                "https://datenschutz.hessen.de/sites/datenschutz.hessen.de/files/HDSIG%20und%20andere_0.pdf",
+              target: "_blank"
+            }
+          },
+          [
+            _vm._v(
+              "Hessischen Datenschutz- und Informationsfreiheitsgesetzes (HDSIG)"
+            )
+          ]
+        ),
+        _vm._v(
+          " - sowie sonstiger datenschutzrechtlicher Bestimmungen ist die:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("\n      Technische Hochschule Mittelhessen (THM)\n      "),
+        _c("br"),
+        _vm._v(" \n      Wiesenstraße 14\n      "),
+        _c("br"),
+        _vm._v("\n      Tel.: + 49 641 309-0\n      "),
+        _c("br"),
+        _vm._v("\n      E-Mail: "),
+        _c("a", { attrs: { href: "mailto:info@thm.de" } }, [
+          _vm._v("info@thm.de")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Gesetzlich vertreten durch ihren Präsidenten")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("\n      Prof. Dr. Matthias Willems\n      "),
+        _c("br"),
+        _vm._v(" \n      Wiesenstraße 14\n      "),
+        _c("br"),
+        _vm._v("\n      Tel.: + 49 641 309-0\n      "),
+        _c("br"),
+        _vm._v("\n      E-Mail: "),
+        _c("a", { attrs: { href: "mailto:praesident@thm.de" } }, [
+          _vm._v("praesident@thm.de")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("B. Kontaktdaten des Datenschutzbeauftragten")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Der Datenschutzbeauftragte des Verantwortlichen ist:")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("\n      Prof. Thomas Friedl\n      "),
+        _c("br"),
+        _vm._v("\n      Wiesenstraße 14\n      "),
+        _c("br"),
+        _vm._v("\n      Tel.: + 49 641 309-0\n      "),
+        _c("br"),
+        _vm._v("\n      E-Mail: "),
+        _c("a", { attrs: { href: "mailto:datenschutzbeauftragter@thm.de" } }, [
+          _vm._v("datenschutzbeauftragter@thm.de")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("C. Allgemeines zur Datenverarbeitung")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("1. Umfang der Verarbeitung personenbezogener Daten")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Personenbezogene Daten sind Informationen, mit deren Hilfe eine natürliche Person bestimmbar ist, also Angaben, durch die Personen identifizierbar sind. Dazu gehören insbesondere Namen, E-Mail-Adressen, Matrikelnummern oder Telefonnummern. Aber auch Daten über Vorlieben, Hobbies, Mitgliedschaften oder auch Informationen über Webseiten, die aufgesucht wurden, zählen zu personenbezogenen Daten."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Verarbeitung personenbezogener Daten erfolgt stets im Einklang mit der Datenschutz-Grundverordnung (DSGVO) und dem Hessischen Datenschutz- und Informationsfreiheitsgesetz (HDSIG) sowie ggf. den einschlägigen Bestimmungen weiterer Gesetze, insbesondere des Hessischen Hochschulgesetzes (HHG)."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wir erheben und verarbeiten personenbezogene Daten unserer Nutzer grundsätzlich nur, soweit dies zur Bereitstellung einer funktionsfähigen Website sowie unserer Inhalte und Leistungen erforderlich ist, eine Rechtsgrundlage uns dies gestattet oder Sie hierzu eingewilligt haben."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Eine Ausnahme gilt in solchen Fällen, in denen eine vorherige Einholung einer Einwilligung aus tatsächlichen Gründen nicht möglich ist und die Verarbeitung der Daten durch gesetzliche Vorschriften gestattet ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v(
+          "2. Rechtsgrundlage für die Verarbeitung personenbezogener Daten"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Soweit wir für Verarbeitungsvorgänge personenbezogener Daten eine Einwilligung der betroffenen Person einholen, dient "
+        ),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_c("strong", [_vm._v("Art. 6 Abs. 1 lit. a DSGVO")])]
+        ),
+        _vm._v(" als Rechtsgrundlage für die Verarbeitung.")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Bei der Verarbeitung von personenbezogenen Daten, die zur Erfüllung eines Vertrages, dessen Vertragspartei die betroffene Person ist, erforderlich ist, dient "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_c("strong", [_vm._v("Art. 6 Abs. 1 lit. b) DSGVO")])]
+        ),
+        _vm._v(
+          " als Rechtsgrundlage. Dies gilt auch für Verarbeitungsvorgänge, die zur Durchführung vorvertraglicher Maßnahmen erforderlich sind."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Soweit eine Verarbeitung personenbezogener Daten zur Erfüllung einer rechtlichen Verpflichtung erforderlich ist, der die THM unterliegt, dient "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_c("strong", [_vm._v("Art. 6 Abs. 1 lit. c DSGVO")])]
+        ),
+        _vm._v(" als Rechtsgrundlage.")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Für den Fall, dass lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person eine Verarbeitung personenbezogener Daten erforderlich machen, dient "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_c("strong", [_vm._v("Art. 6 Abs. 1 lit. d DSGVO")])]
+        ),
+        _vm._v(" als Rechtsgrundlage.")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Ist die Verarbeitung für die Wahrnehmung einer Aufgabe erforderlich, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die der THM übertragen wurde, so dient "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_c("strong", [_vm._v("Art. 6 Abs. 1 lit. e DSGVO")])]
+        ),
+        _vm._v(" als Rechtsgrundlage für die Verarbeitung.")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Ist die Verarbeitung zur Wahrung eines berechtigten Interesses der THM oder eines Dritten erforderlich und überwiegen die Interessen, Grundrechte und Grundfreiheiten des Betroffenen das erstgenannte Interesse nicht, so dient "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. f DSGVO")]
+        ),
+        _vm._v(
+          " als Rechtsgrundlage für die Verarbeitung. Dies gilt nicht, soweit die THM bei der entsprechenden Verarbeitung hoheitlich tätig wird."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("3. Dauer der Speicherung personenbezogener Daten")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die personenbezogenen Daten des Betroffenen werden von uns nur solange gespeichert, wie der Zweck der Speicherung besteht. Die personenbezogenen Daten der betroffenen Person werden gelöscht oder gesperrt, sobald der Zweck der Speicherung entfällt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wenn die Verarbeitung auf einer Einwilligung des Betroffenen beruht, werden die Daten nur solange gespeichert, bis der Betroffene seine Einwilligung widerruft, es sei denn, es besteht eine andere Rechtsgrundlage für die Verarbeitung. Eine Speicherung kann darüber hinaus erfolgen, wenn dies durch den europäischen oder nationalen Gesetzgeber in unionsrechtlichen Verordnungen, Gesetzen oder sonstigen Vorschriften, denen der Verantwortliche unterliegt, vorgesehen wurde. Eine Sperrung oder Löschung der Daten erfolgt auch dann, wenn eine durch die genannten Normen vorgeschriebene Speicherfrist abläuft, es sei denn, dass eine Erforderlichkeit zur weiteren Speicherung der Daten für einen Vertragsabschluss oder eine Vertragserfüllung besteht."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h2", [
+        _vm._v("D. Bereitstellung der Website und Erstellung von Logfiles")
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("1. Umfang der Datenverarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Bei jedem Aufruf unserer Internetseite erfasst unser System automatisiert Daten und Informationen vom Computersystem des aufrufenden Rechners."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Folgende Daten werden hierbei erhoben:")]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v("Informationen über den Browsertyp und die verwendete Version")
+        ]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Das Betriebssystem des Nutzers")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Den Internet-Service-Provider des Nutzers")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Die IP-Adresse des Nutzers")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Datum und Uhrzeit des Zugriffs")]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Websites, von denen das System des Nutzers auf unsere Internetseite gelangt"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Websites, die vom System des Nutzers über unsere Website aufgerufen werden"
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Daten werden ebenfalls in den Logfiles unseres Systems gespeichert. Eine Speicherung dieser Daten zusammen mit anderen personenbezogenen Daten des Nutzers findet nicht statt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("2. Rechtsgrundlage für die Verarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Rechtsgrundlage für die vorübergehende Speicherung der Daten und der Logfiles ist "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: { href: "https://dsgvo-gesetz.de/art-6-dsgvo/" }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. f DSGVO")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("3. Zweck der Verarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die vorübergehende Speicherung der IP-Adresse durch das System ist notwendig, um eine Auslieferung der Website an den Rechner des Nutzers zu ermöglichen. Hierfür muss die IP-Adresse des Nutzers für die Dauer der Sitzung gespeichert bleiben."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Speicherung in Logfiles erfolgt, um die Funktionsfähigkeit der Website sicherzustellen. Zudem dienen uns die Daten zur Optimierung der Website und zur Sicherstellung der Sicherheit unserer informationstechnischen Systeme. Eine Auswertung der Daten zu Marketingzwecken findet in diesem Zusammenhang nicht statt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "In diesen Zwecken liegt auch unser berechtigtes Interesse an der Datenverarbeitung nach "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. f DSGVO")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v("4. Dauer der Speicherung der personenbezogenen Daten")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Daten werden gelöscht, wenn die jeweilige Sitzung beendet ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Im Falle einer Speicherung der Daten in Logfiles werden diese nach spätestens 14 Tagen gelöscht. Eine darüberhinausgehende Speicherung ist möglich. In diesem Fall werden die IP-Adressen der Nutzer gelöscht oder verfremdet, sodass eine Zuordnung des aufrufenden Clients nicht mehr möglich ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Erfassung der Daten zur Bereitstellung der Website und die Speicherung der Daten in Logfiles sind für den Betrieb der Internetseite zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("E. Verwendung von Cookies")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("1. Umfang der Datenverarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Unsere Website verwendet Cookies. Bei Cookies handelt es sich um Textdateien, die im Internetbrowser bzw. vom Internetbrowser auf dem Computersystem des Nutzers gespeichert werden. Ruft ein Nutzer eine Website auf, so kann ein Cookie auf dem Betriebssystem des Nutzers gespeichert werden. Dieser Cookie enthält eine charakteristische Zeichenfolge, die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Website ermöglicht."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wir setzen Cookies ein, um unsere Website nutzerfreundlicher zu gestalten. Einige Elemente unserer Internetseite erfordern es, dass der aufrufende Browser auch nach einem Seitenwechsel identifiziert werden kann. In den Cookies werden dabei folgende Daten gespeichert und übermittelt:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [_vm._v("Log-In-Informationen")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Sitzungseinstellungen")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Analytics-Tool")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Drittanbieter Cookies")])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n  Soweit Cookies von Drittunternehmen oder zu Analysezwecken eingesetzt werden, werden wir Sie hierüber\n  im Rahmen dieser Datenschutzerklärung gesondert informieren und ggf. eine Einwilligung abfragen.\n"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Natürlich können Sie unsere Website grundsätzlich auch ohne Cookies betrachten. Internet-Browser sind regelmäßig so eingestellt, dass sie Cookies akzeptieren. Im Allgemeinen können Sie die Verwendung von Cookies jederzeit über die Einstellungen Ihres Browsers deaktivieren. Bitte verwenden Sie die Hilfefunktionen Ihres Internetbrowsers, um zu erfahren, wie Sie diese Einstellungen ändern können. Bitte beachten Sie, dass einzelne Funktionen unserer Website möglicherweise nicht funktionieren, wenn Sie die Verwendung von Cookies deaktiviert haben."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("2. Rechtsgrundlage für die Verarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung technisch notwendiger Cookies ist "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. f DSGVO")]
+        ),
+        _vm._v(
+          ". Die Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung von Cookies zu anderen Zwecken ist bei Vorliegen einer diesbezüglichen Einwilligung des Nutzers "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. a DSGVO")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("3. Zweck der Verarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Der Zweck der Verwendung technisch notwendiger Cookies ist, die Nutzung von Websites für die Nutzer zu vereinfachen. Einige Funktionen unserer Interseite können ohne den Einsatz von Cookies nicht angeboten werden. Für diese ist es erforderlich, dass der Browser auch nach einem Seitenwechsel wiedererkannt wird. In diesen Zwecken liegt auch unser berechtigtes Interesse in der Verarbeitung der personenbezogenen Daten nach "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. f DSGVO")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Für folgende Anwendungen benötigen wird Cookies:")]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [_vm._v("Laravel")]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Bindung von Login-Sitzungen an bestimmte Server („sticky sessions“)"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Matomo")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Google reCAPTCHA")])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die durch technisch notwendige Cookies erhobenen Nutzerdaten werden nicht zur Erstellung von Nutzerprofilen verwendet."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v("4. Dauer der Speicherung der personenbezogenen Daten")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Cookies werden auf dem Rechner des Nutzers gespeichert und von diesem an unsere Seite übermittelt. Daher haben Sie als Nutzer auch die volle Kontrolle über die Verwendung von Cookies. Durch eine Änderung der Einstellungen in Ihrem Internetbrowser können Sie die Übertragung von Cookies deaktivieren oder einschränken. Bereits gespeicherte Cookies können jederzeit gelöscht werden. Dies kann auch automatisiert erfolgen. Werden Cookies für unsere Website deaktiviert, können möglicherweise nicht mehr alle Funktionen der Website vollumfänglich genutzt werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("F. Analyse-Tool")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Matomo (ehemals Piwik)")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Diese Website benutzt den Open Source Webanalysedienst Matomo. Matomo verwendet so genannte „Cookies“. Das sind Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch sie ermöglichen. Dazu werden die durch den Cookie erzeugten Informationen über die Benutzung dieser Website auf unserem Server gespeichert. Die IP-Adresse wird vor der Speicherung anonymisiert."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Matomo-Cookies verbleiben auf Ihrem Endgerät, bis Sie sie löschen."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Speicherung von Matomo-Cookies und die Nutzung dieses Analyse-Tools erfolgen auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der anonymisierten Analyse des Nutzerverhaltens, um sowohl sein Webangebot als auch seine Werbung zu optimieren. Sofern eine entsprechende Einwilligung abgefragt wurde (z. B. eine Einwilligung zur Speicherung von Cookies), erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die durch den Cookie erzeugten Informationen über die Benutzung dieser Website werden nicht an Dritte weitergegeben. Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wenn Sie mit der Speicherung und Nutzung Ihrer Daten nicht einverstanden sind, können Sie die Speicherung und Nutzung hier deaktivieren. In diesem Fall wird in Ihrem Browser ein Opt-Out-Cookie hinterlegt, der verhindert, dass Matomo Nutzungsdaten speichert. Wenn Sie Ihre Cookies löschen, hat dies zur Folge, dass auch das Matomo Opt-Out-Cookie gelöscht wird. Das Opt-Out muss bei einem erneuten Besuch dieser Website wieder aktiviert werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("em", [
+          _c("strong", [
+            _c(
+              "a",
+              {
+                staticStyle: { color: "#F00" },
+                attrs: {
+                  href: "https://matomo.org/docs/privacy/",
+                  target: "_blank",
+                  rel: "nofollow noopener noreferrer"
+                }
+              },
+              [
+                _vm._v(
+                  "[Hier Matomo iframe-Code einfügen] (Klick für die Anleitung)"
+                )
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("G. Plugins und Tools")]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Google reCAPTCHA")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wir nutzen „Google reCAPTCHA“ (im Folgenden „reCAPTCHA“) auf dieser Website. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Mit reCAPTCHA soll überprüft werden, ob die Dateneingabe auf dieser Website (z. B. in einem Kontaktformular) durch einen Menschen oder durch ein automatisiertes Programm erfolgt. Hierzu analysiert reCAPTCHA das Verhalten des Websitebesuchers anhand verschiedener Merkmale. Diese Analyse beginnt automatisch, sobald der Websitebesucher die Website betritt. Zur Analyse wertet reCAPTCHA verschiedene Informationen aus (z. B. IP-Adresse, Verweildauer des Websitebesuchers auf der Website oder vom Nutzer getätigte Mausbewegungen). Die bei der Analyse erfassten Daten werden an Google weitergeleitet."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die reCAPTCHA-Analysen laufen vollständig im Hintergrund. Websitebesucher werden nicht darauf hingewiesen, dass eine Analyse stattfindet."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Speicherung und Analyse der Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse daran, seine Webangebote vor missbräuchlicher automatisierter Ausspähung und vor SPAM zu schützen. Sofern eine entsprechende Einwilligung abgefragt wurde (z. B. eine Einwilligung zur Speicherung von Cookies), erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Weitere Informationen zu Google reCAPTCHA entnehmen Sie den Google-Datenschutzbestimmungen und den Google Nutzungsbedingungen unter folgenden Links: "
+        ),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://policies.google.com/privacy?hl=de",
+              target: "_blank",
+              rel: "noopener noreferrer"
+            }
+          },
+          [_vm._v("https://policies.google.com/privacy?hl=de")]
+        ),
+        _vm._v(" und "),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://policies.google.com/terms?hl=de",
+              target: "_blank",
+              rel: "noopener noreferrer"
+            }
+          },
+          [_vm._v("https://policies.google.com/terms?hl=de")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("h2", [_vm._v("H. Rechte der betroffenen Person")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Werden Ihre personenbezogenen Daten verarbeitet, stehen Ihnen als betroffener Person i.S.d. DSGVO folgende Rechte gegenüber dem Verantwortlichen zu:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("a", { attrs: { href: "#R1" } }, [_vm._v("Recht auf Auskunft")]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R2" } }, [
+            _vm._v("Recht auf Berichtigung")
+          ]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R3" } }, [_vm._v("Recht auf Löschung")]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R4" } }, [
+            _vm._v("Recht auf Einschränkung der Verarbeitung")
+          ]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R8" } }, [
+            _vm._v("Recht auf Widerruf Ihrer Einwilligung")
+          ]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R7" } }, [
+            _vm._v("Recht auf Widerspruch gegen die Verarbeitung")
+          ]),
+          _vm._v(",")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#R6" } }, [
+            _vm._v(
+              "Recht auf Datenübertragbarkeit, in einer gängigen, strukturierten und maschinenlesbaren Form (ab dem 25. Mai 2018)"
+            )
+          ]),
+          _vm._v("."),
+          _c("a", {
+            staticStyle: {
+              "font-size": "14.0014px",
+              "background-color": "#ffffff"
+            },
+            attrs: { href: "mailto:datenschutz@thm.de" }
+          }),
+          _c("a", {
+            staticStyle: {
+              "font-size": "14.0014px",
+              color: "#394a59",
+              "background-color": "#ffffff",
+              outline: "0px"
+            },
+            attrs: { id: "R1" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Zur Geltendmachung dieser Rechte wenden Sie sich an "),
+        _c("span", [
+          _c("a", { attrs: { href: "mailto:datenschutz@thm.de" } }, [
+            _vm._v("datenschutz@thm.de")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("1. Auskunftsrecht")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie können von dem Verantwortlichen eine Bestätigung darüber verlangen, ob personenbezogene Daten, die Sie betreffen, verarbeitet werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Liegt eine solche Verarbeitung vor, können Sie von dem Verantwortlichen über folgende Informationen Auskunft verlangen:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v(
+            "die Zwecke, zu denen die personenbezogenen Daten verarbeitet werden;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "die Kategorien von personenbezogenen Daten, welche verarbeitet werden;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "die Empfänger bzw. die Kategorien von Empfängern, gegenüber denen die Sie betreffenden personenbezogenen Daten offengelegt wurden oder noch offengelegt werden;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "die geplante Dauer der Speicherung der Sie betreffenden personenbezogenen Daten oder, falls konkrete Angaben hierzu nicht möglich sind, Kriterien für die Festlegung der Speicherdauer;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "das Bestehen eines Rechts auf Berichtigung oder Löschung der Sie betreffenden personenbezogenen Daten, eines Rechts auf Einschränkung der Verarbeitung durch den Verantwortlichen oder eines Widerspruchsrechts gegen diese Verarbeitung;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "das Bestehen eines Beschwerderechts bei einer Aufsichtsbehörde;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "alle verfügbaren Informationen über die Herkunft der Daten, wenn die personenbezogenen Daten nicht bei der betroffenen Person erhoben werden;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "das Bestehen einer automatisierten Entscheidungsfindung einschließlich Profiling gemäß "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-22-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 22 Abs. 1 und 4 DSGVO")]
+          ),
+          _vm._v(
+            " und – zumindest in diesen Fällen – aussagekräftige Informationen über die involvierte Logik sowie die Tragweite und die angestrebten Auswirkungen einer derartigen Verarbeitung für die betroffene Person."
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Ihnen steht das Recht zu, Auskunft darüber zu verlangen, ob die Sie betreffenden personenbezogenen Daten in ein Drittland oder an eine internationale Organisation übermittelt werden. In diesem Zusammenhang können Sie verlangen, über die geeigneten Garantien gem. "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-46-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 46 DSGVO")]
+        ),
+        _vm._v(" im Zusammenhang mit der Übermittlung unterrichtet zu werden.")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R2" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sofern die Datenverarbeitung zu wissenschaftlichen, historischen oder statistischen Forschungszwecken erfolgt, kann das Auskunftsrecht insoweit beschränkt werden, als es voraussichtlich die Verwirklichung der Forschungs- oder Statistikzwecke unmöglich macht oder ernsthaft beeinträchtigt und die Beschränkung für die Erfüllung der Forschungs- oder Statistikzwecke notwendig ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("2. Recht auf Berichtigung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben ein Recht auf Berichtigung und/oder Vervollständigung Ihrer Daten gegenüber dem Verantwortlichen, sofern die verarbeiteten personenbezogenen Daten, die Sie betreffen, unrichtig oder unvollständig sind. Der Verantwortliche hat die Berichtigung unverzüglich vorzunehmen."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R3" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Bei einer Datenverarbeitung zu wissenschaftlichen, historischen oder statistischen Forschungszwecken kann Ihr Recht auf Berichtigung insoweit beschränkt werden, als es voraussichtlich die Verwirklichung der Forschungs- oder Statistikzwecke unmöglich macht oder ernsthaft beeinträchtigt und die Beschränkung für die Erfüllung der Forschungs- oder Statistikzwecke notwendig ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("3. Recht auf Löschung")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("a) Löschungspflicht")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie können von dem Verantwortlichen verlangen, dass die Sie betreffenden personenbezogenen Daten unverzüglich gelöscht werden. Der Verantwortliche ist verpflichtet, diese Daten unverzüglich zu löschen, sofern einer der folgenden Gründe zutrifft:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v(
+            "Die Sie betreffenden personenbezogenen Daten sind für die Zwecke, für die sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig."
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Sie widerrufen Ihre Einwilligung, auf die sich die Verarbeitung gem. "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 6 Abs. 1 lit. a)")]
+          ),
+          _vm._v(" oder "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 9 Abs. 2 lit. a) DSGVO")]
+          ),
+          _vm._v(
+            " stützte, und es fehlt an einer anderweitigen Rechtsgrundlage für die Verarbeitung."
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v("Sie legen gem. "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-21-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 21 Abs. 1 DSGVO")]
+          ),
+          _vm._v(
+            " Widerspruch gegen die Verarbeitung ein und es liegen keine vorrangigen berechtigten Gründe für die Verarbeitung vor, oder Sie legen gem. "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: { href: "https://dsgvo-gesetz.de/art-21-dsgvo/" }
+            },
+            [_vm._v("Art. 21 Abs. 2 DSGVO")]
+          ),
+          _vm._v(" Widerspruch gegen die Verarbeitung ein.")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Die Sie betreffenden personenbezogenen Daten wurden unrechtmäßig verarbeitet."
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Die Löschung der Sie betreffenden personenbezogenen Daten ist zur Erfüllung einer rechtlichen Verpflichtung nach dem Unionsrecht oder dem Recht der Mitgliedstaaten erforderlich, dem der Verantwortliche unterliegt."
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "Die Sie betreffenden personenbezogenen Daten wurden in Bezug auf angebotene Dienste der Informationsgesellschaft gemäß "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-8-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 8 Abs. 1 DSGVO")]
+          ),
+          _vm._v(" erhoben.")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("b) Information an Dritte")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Hat der Verantwortliche die Sie betreffenden personenbezogenen Daten öffentlich gemacht und ist er gem. "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-17-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 17 Abs. 1 DSGVO")]
+        ),
+        _vm._v(
+          " zu deren Löschung verpflichtet, so trifft er unter Berücksichtigung der verfügbaren Technologie und der Implementierungskosten angemessene Maßnahmen, auch technischer Art, um für die Datenverarbeitung Verantwortliche, die die personenbezogenen Daten verarbeiten, darüber zu informieren, dass Sie als betroffene Person von ihnen die Löschung aller Links zu diesen personenbezogenen Daten oder von Kopien oder Replikationen dieser personenbezogenen Daten verlangt haben."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("c) Ausnahmen")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Das Recht auf Löschung besteht nicht, soweit die Verarbeitung erforderlich ist"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v(
+            "zur Ausübung des Rechts auf freie Meinungsäußerung und Information;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "zur Erfüllung einer rechtlichen Verpflichtung, die die Verarbeitung nach dem Recht der Union oder der Mitgliedstaaten, dem der Verantwortliche unterliegt, erfordert, oder zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die dem Verantwortlichen übertragen wurde;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "aus Gründen des öffentlichen Interesses im Bereich der öffentlichen Gesundheit gemäß "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 9 Abs. 2 lit. h) und i ")]
+          ),
+          _vm._v("sowie "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 9 Abs. 3 DSGVO")]
+          ),
+          _vm._v(";")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("span", { staticStyle: { "font-size": "14px" } }),
+          _c("a", {
+            staticStyle: {
+              "font-size": "14.0014px",
+              color: "#394a59",
+              "background-color": "#ffffff",
+              outline: "0px"
+            },
+            attrs: { id: "R4" }
+          }),
+          _vm._v(
+            "für im öffentlichen Interesse liegende Archivzwecke, wissenschaftliche oder historische Forschungszwecke oder für statistische Zwecke gem. "
+          ),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-89-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 89 Abs. 1 DSGVO")]
+          ),
+          _vm._v(
+            ", soweit das unter Abschnitt a) genannte Recht voraussichtlich die Verwirklichung der Ziele dieser Verarbeitung unmöglich macht oder ernsthaft beeinträchtigt, oder"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen"
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("4. Recht auf Einschränkung der Verarbeitung")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Unter den folgenden Voraussetzungen können Sie die Einschränkung der Verarbeitung der Sie betreffenden personenbezogenen Daten verlangen:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v(
+            "wenn Sie die Richtigkeit der Sie betreffenden personenbezogenen für eine Dauer bestreiten, die es dem Verantwortlichen ermöglicht, die Richtigkeit der personenbezogenen Daten zu überprüfen;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "die Verarbeitung unrechtmäßig ist und Sie die Löschung der personenbezogenen Daten ablehnen und stattdessen die Einschränkung der Nutzung der personenbezogenen Daten verlangen;"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "der Verantwortliche die personenbezogenen Daten für die Zwecke der Verarbeitung nicht länger benötigt, Sie diese jedoch zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen benötigen, oder"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v("wenn Sie Widerspruch gegen die Verarbeitung gemäß "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-21-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 21 Abs. 1 DSGVO")]
+          ),
+          _vm._v(
+            " eingelegt haben und noch nicht feststeht, ob die berechtigten Gründe des Verantwortlichen gegenüber Ihren Gründen überwiegen."
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wurde die Verarbeitung der Sie betreffenden personenbezogenen Daten eingeschränkt, dürfen diese Daten – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses der Union oder eines Mitgliedstaats verarbeitet werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Wurde die Verarbeitung nach den o.g. Voraussetzungen eingeschränkt, werden Sie von dem Verantwortlichen unterrichtet, bevor die Einschränkung aufgehoben wird."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R5" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Bei einer Datenverarbeitung zu wissenschaftlichen, historischen oder statistischen Forschungszwecken kann Ihr Recht auf Einschränkung der Verarbeitung insoweit beschränkt werden, als es voraussichtlich die Verwirklichung der Forschungs- oder Statistikzwecke unmöglich macht oder ernsthaft beeinträchtigt und die Beschränkung für die Erfüllung der Forschungs- oder Statistikzwecke notwendig ist."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("5. Recht auf Unterrichtung")]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R6" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Haben Sie das Recht auf Berichtigung, Löschung oder Einschränkung der Verarbeitung gegenüber dem Verantwortlichen geltend gemacht, ist dieser verpflichtet, allen Empfängern, denen die Sie betreffenden personenbezogenen Daten offengelegt wurden, diese Berichtigung oder Löschung der Daten oder Einschränkung der Verarbeitung mitzuteilen, es sei denn, dies erweist sich als unmöglich oder ist mit einem unverhältnismäßigen Aufwand verbunden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Ihnen steht gegenüber dem Verantwortlichen das Recht zu, über diese Empfänger unterrichtet zu werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("6. Recht auf Datenübertragbarkeit")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben das Recht, die Sie betreffenden personenbezogenen Daten, die Sie dem Verantwortlichen bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten. Außerdem haben Sie das Recht diese Daten einem anderen Verantwortlichen ohne Behinderung durch den Verantwortlichen, dem die personenbezogenen Daten bereitgestellt wurden, zu übermitteln, sofern"
+        )
+      ]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v("die Verarbeitung auf einer Einwilligung gem. "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 6 Abs. 1 lit. a) DSGVO")]
+          ),
+          _vm._v(" oder "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 9 Abs. 2 lit. a) DSGVO")]
+          ),
+          _vm._v(" oder auf einem Vertrag gem. "),
+          _c(
+            "a",
+            {
+              staticClass: "outer",
+              attrs: {
+                href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+                target: "_blank",
+                rel: "noopener"
+              }
+            },
+            [_vm._v("Art. 6 Abs. 1 lit. b) DSGVO")]
+          ),
+          _vm._v(" beruht und")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v("die Verarbeitung mithilfe automatisierter Verfahren erfolgt.")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "In Ausübung dieses Rechts haben Sie ferner das Recht, zu erwirken, dass die Sie betreffenden personenbezogenen Daten direkt von einem Verantwortlichen einem anderen Verantwortlichen übermittelt werden, soweit dies technisch machbar ist. Freiheiten und Rechte anderer Personen dürfen hierdurch nicht beeinträchtigt werden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R7" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Das Recht auf Datenübertragbarkeit gilt nicht für eine Verarbeitung personenbezogener Daten, die für die Wahrnehmung einer Aufgabe erforderlich ist, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die dem Verantwortlichen übertragen wurde."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("7. Widerspruchsrecht")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben das Recht, aus Gründen, die sich aus ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung der Sie betreffenden personenbezogenen Daten, die aufgrund von "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-6-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 6 Abs. 1 lit. e) DSGVO")]
+        ),
+        _vm._v(
+          " erfolgt, Widerspruch einzulegen; dies gilt auch für ein etwaiges auf diese Bestimmungen gestütztes Profiling."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Im Falle des Widerspruchs verarbeitet der Verantwortliche die Sie betreffenden personenbezogenen Daten nicht mehr, es sei denn, er kann zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R8" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Bei einer Datenverarbeitung zu wissenschaftlichen, historischen oder statistischen Forschungszwecken gemäß "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-89-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 89 Abs. 1 DSGVO")]
+        ),
+        _vm._v(
+          " haben Sie zudem das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, der Verarbeitung Sie betreffender personenbezogener Datenzu widersprechen, es sei denn, die Verarbeitung ist zur Erfüllung einer im öffentlichen Interesse liegenden Aufgabe erforderlich."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v(
+          "8. Recht auf Widerruf der datenschutzrechtlichen Einwilligungserklärung"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticStyle: { "font-size": "14px" } }),
+        _c("a", {
+          staticStyle: {
+            "font-size": "14.0014px",
+            color: "#394a59",
+            "background-color": "#ffffff",
+            outline: "0px"
+          },
+          attrs: { id: "R9" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben das Recht, Ihre datenschutzrechtliche Einwilligungserklärung jederzeit zu widerrufen. Durch den Widerruf der Einwilligung wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v(
+          "9. Automatisierte Entscheidung im Einzelfall einschließlich Profiling"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben das Recht, nicht einer ausschließlich auf einer automatisierten Verarbeitung – einschließlich Profiling – beruhenden Entscheidung unterworfen zu werden, die Ihnen gegenüber rechtliche Wirkung entfaltet oder Sie in ähnlicher Weise erheblich beeinträchtigt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Dies gilt nicht, wenn die Entscheidung")]),
+      _vm._v(" "),
+      _c("ol", [
+        _c("li", [
+          _vm._v(
+            "für den Abschluss oder die Erfüllung eines Vertrags zwischen Ihnen und dem Verantwortlichen erforderlich ist,"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v(
+            "aufgrund von Rechtsvorschriften der Union oder der Mitgliedstaaten, denen der Verantwortliche unterliegt, zulässig ist und diese Rechtsvorschriften angemessene Maßnahmen zur Wahrung Ihrer Rechte und Freiheiten sowie Ihrer berechtigten Interessen enthalten oder"
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [_vm._v("mit Ihrer ausdrücklichen Einwilligung erfolgt.")])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Allerdings dürfen diese Entscheidungen nicht auf besonderen Kategorien personenbezogener Daten nach "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 9 Abs. 1 DSGVO")]
+        ),
+        _vm._v(" beruhen, sofern nicht "),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-9-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 9 Abs. 2 lit. a) oder g) DSGVO")]
+        ),
+        _vm._v(
+          " gilt und angemessene Maßnahmen zum Schutz der Rechte und Freiheiten sowie Ihrer berechtigten Interessen getroffen wurden."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Hinsichtlich der in (1) und (3) genannten Fälle trifft der Verantwortliche angemessene Maßnahmen, um die Rechte und Freiheiten sowie Ihre berechtigten Interessen zu wahren, wozu mindestens das Recht auf Erwirkung des Eingreifens einer Person seitens des Verantwortlichen, auf Darlegung des eigenen Standpunkts und auf Anfechtung der Entscheidung gehört."
+        )
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("K. Rechte und Beschwerdemöglichkeiten")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Unbeschadet eines anderweitigen verwaltungsrechtlichen oder gerichtlichen Rechtsbehelfs steht Ihnen das Recht auf Beschwerde bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres Aufenthaltsorts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu, wenn Sie der Ansicht sind, dass die Verarbeitung der Sie betreffenden personenbezogenen Daten gegen die EU- Datenschutzgrundverordnung verstößt."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Die Aufsichtsbehörde, bei der die Beschwerde eingereicht wurde, unterrichtet den Beschwerdeführer über den Stand und die Ergebnisse der Beschwerde einschließlich der Möglichkeit eines gerichtlichen Rechtsbehelfs nach "
+        ),
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://dsgvo-gesetz.de/art-78-dsgvo/",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("Art. 78 DSGVO")]
+        ),
+        _vm._v(".")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Sie haben das Recht sich bei datenschutzrechtlichen Problemen bei der zuständigen Aufsichtsbehörde des Landes Hessen zu beschweren."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Kontaktadresse der Fachaufsichtsbehörde der Technischen Hochschule Mittelhessen:"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Der Hessische Datenschutzbeauftragte"),
+        _c("br"),
+        _vm._v(" Postfach 3163"),
+        _c("br"),
+        _vm._v(" 65021 Wiesbaden")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c(
+          "a",
+          {
+            staticClass: "outer",
+            attrs: {
+              href: "https://datenschutz.hessen.de/%C3%BCber-uns/kontakt",
+              target: "_blank",
+              rel: "noopener"
+            }
+          },
+          [_vm._v("E-Mail an HDSB ")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Telefon: +49 611 1408 – 0"),
+        _c("br"),
+        _vm._v("Telefax: +49 611 1408 – 611")
+      ]),
+      _c("p"),
+      _vm._v(" "),
+      _c("p"),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Quellen: "),
+        _c("a", { attrs: { href: "https://www.e-recht24.de" } }, [
+          _vm._v("e-recht24.de")
+        ]),
+        _vm._v(" & "),
+        _c(
+          "a",
+          {
+            attrs: {
+              href: "https://www.thm.de/site/datenschutz.html",
+              title: "Datenschutz THM"
+            }
+          },
+          [_vm._v("Datenschutzerklärung der THM")]
+        )
       ])
     ])
   }
@@ -34838,43 +36982,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "mt-5 pt-2" }, [
-      _c("p", { staticClass: "text-center" }, [
+  return _c("footer", { staticClass: "mt-5 pt-2" }, [
+    _c(
+      "p",
+      { staticClass: "text-center" },
+      [
         _vm._v(
-          "Ein Projekt der Web&Mobile Gruppe der Fachbereiche IEM/MND\n        | "
+          "Ein Projekt der Web&Mobile Gruppe der Fachbereiche IEM/MND\n      "
         ),
         _c(
-          "a",
-          {
-            attrs: {
-              href: "https://www.thm.de/site/impressum.html",
-              title: "Impressum"
-            }
-          },
+          "router-link",
+          { attrs: { title: "Impressum", to: { name: "impressum" } } },
           [_vm._v("Impressum")]
         ),
-        _vm._v("\n        | "),
+        _vm._v(" "),
+        _c("span", { staticClass: "link-separator" }, [_vm._v("|")]),
+        _vm._v(" "),
         _c(
-          "a",
-          {
-            attrs: {
-              href: "https://www.thm.de/site/datenschutz.html",
-              title: "Datenschutz"
-            }
-          },
+          "router-link",
+          { attrs: { title: "Datenschutz", to: { name: "privacypolicy" } } },
           [_vm._v("Datenschutz")]
         )
-      ])
-    ])
-  }
-]
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50069,6 +52203,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_content_Login__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/content/Login */ "./resources/js/components/content/Login.vue");
 /* harmony import */ var _components_galleryfooter__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/galleryfooter */ "./resources/js/components/galleryfooter.vue");
 /* harmony import */ var _components_Gallerynav__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Gallerynav */ "./resources/js/components/Gallerynav.vue");
+/* harmony import */ var _components_content_skeleton__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/content/skeleton */ "./resources/js/components/content/skeleton.vue");
+/* harmony import */ var _components_CookieNotice__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/CookieNotice */ "./resources/js/components/CookieNotice.vue");
+/* harmony import */ var _components_content_Impressum__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/content/Impressum */ "./resources/js/components/content/Impressum.vue");
+/* harmony import */ var _components_content_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/content/PrivacyPolicy */ "./resources/js/components/content/PrivacyPolicy.vue");
 
 
 
@@ -50078,9 +52216,20 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_highlightjs__WEBPACK_IMPORTED_MODULE_3___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-  siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
-});
+/* Check if consent for ReCAPTCHA is given */
+
+var cookieArray = document.cookie.replace(" ", "").split(";");
+
+if (cookieArray.includes("recaptcha=true")) {
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
+    siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
+  });
+}
+
+
+
+
+
 
 
 
@@ -50096,6 +52245,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTE
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('galleryfooter', _components_galleryfooter__WEBPACK_IMPORTED_MODULE_17__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('gallerynav', _components_Gallerynav__WEBPACK_IMPORTED_MODULE_18__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('skeleton-box', _components_content_skeleton__WEBPACK_IMPORTED_MODULE_19__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('cookie-notice', _components_CookieNotice__WEBPACK_IMPORTED_MODULE_20__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('star-rating', vue_star_rating__WEBPACK_IMPORTED_MODULE_4___default.a);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -50139,6 +52290,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/gallery',
     name: 'gallery',
     component: _components_content_Gallery__WEBPACK_IMPORTED_MODULE_15__["default"]
+  }, {
+    path: '/impressum',
+    name: 'impressum',
+    component: _components_content_Impressum__WEBPACK_IMPORTED_MODULE_21__["default"]
+  }, {
+    path: '/privacypolicy',
+    name: 'privacypolicy',
+    component: _components_content_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_22__["default"]
   }, {
     path: '/',
     redirect: '/project'
@@ -50517,6 +52676,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/content/Impressum.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/content/Impressum.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Impressum.vue?vue&type=template&id=16425b06& */ "./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06&");
+/* harmony import */ var _Impressum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Impressum.vue?vue&type=script&lang=js& */ "./resources/js/components/content/Impressum.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Impressum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/content/Impressum.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/content/Impressum.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/content/Impressum.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Impressum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Impressum.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/Impressum.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Impressum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Impressum.vue?vue&type=template&id=16425b06& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/Impressum.vue?vue&type=template&id=16425b06&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Impressum_vue_vue_type_template_id_16425b06___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/content/Live.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/content/Live.vue ***!
@@ -50755,6 +52983,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pattern_vue_vue_type_template_id_05bf335f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pattern_vue_vue_type_template_id_05bf335f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/content/PrivacyPolicy.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/content/PrivacyPolicy.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrivacyPolicy.vue?vue&type=template&id=54597c69& */ "./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69&");
+/* harmony import */ var _PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrivacyPolicy.vue?vue&type=script&lang=js& */ "./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/content/PrivacyPolicy.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrivacyPolicy.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/PrivacyPolicy.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PrivacyPolicy.vue?vue&type=template&id=54597c69& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/content/PrivacyPolicy.vue?vue&type=template&id=54597c69&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_54597c69___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
