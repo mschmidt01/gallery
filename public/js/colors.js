@@ -244,7 +244,7 @@ var WHITE = '#FFFFFF';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\colors.js */"./resources/js/colors.js");
+module.exports = __webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\js\colors.js */"./resources/js/colors.js");
 
 
 /***/ })

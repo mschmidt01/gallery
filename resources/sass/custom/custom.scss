@@ -276,3 +276,32 @@ code.hljs {
 
 /* Input */
 .contact-field { display: none; }
+
+/* Gallery Comment */
+input[type="checkbox"] + label::before {
+  border: 2px solid $merlot!important;
+}
+input[type="checkbox"]:checked + label::before {
+  background-color: $merlot!important;
+}
+.active-button {
+  background: $moccaccino;
+}
+.sort-buttons {
+  button {
+    &:hover {
+      background: $link-hover!important;
+    }
+
+    &:active, &:focus, &:hover {
+      box-shadow: none!important;
+      border:none!important;
+    }
+
+    &:active, &:focus {
+      background: $moccaccino!important;
+    }
+  }
+   
+}
+

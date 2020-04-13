@@ -100,16 +100,18 @@
             </span>
           </div>
           <div class="col-md-10">
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group sort-buttons" role="group" aria-label="Basic example">
               <button
                 type="button"
                 class="btn btn-secondary"
                 v-on:click="sort($event,sortOptions[0])"
+                :class="{ 'active-button': !order }"
               >Alphabet</button>
               <button
                 type="button"
                 class="btn btn-secondary"
                 v-on:click="sort($event,sortOptions[1])"
+                :class="{ 'active-button': order }"
               >Datum</button>
             </div>
           </div>
@@ -245,7 +247,6 @@ input[type="checkbox"] {
 input[type="checkbox"] + label::before {
   width: 15px;
   height: 15px;
-  border: 2px solid blue;
   background-color: #fff;
   display: block;
   content: "";
@@ -256,7 +257,6 @@ input[type="checkbox"] + label::before {
 }
 input[type="checkbox"]:checked + label::before {
   box-shadow: inset 0px 0px 0px 2px #fff;
-  background-color: blue;
 }
 #filter-panel {
   background-color: white;
@@ -311,7 +311,8 @@ export default {
       filterType: ["modules", "classes"],
       showPictureAmount: 0,
       selectedImage: null,
-      rating: 0
+      rating: 0,
+      order: false 
     };
   },
   created() {
@@ -522,8 +523,12 @@ export default {
       vm.$forceUpdate();
     },
     sort(event, name) {
+      console.log("SORT");
+
       event.preventDefault();
       if (name === "alphabetical") {
+        this.order = false;
+
         this.filtered = this.filtered.sort(function(a, b) {
           if (a.Filename < b.Filename) {
             return -1;
@@ -535,6 +540,8 @@ export default {
         });
       }
       if (name === "date") {
+        this.order = true;
+
         this.filtered = this.filtered.sort(function(a, b) {
           return new Date(b.Timestamp) - new Date(a.Timestamp);
         });
