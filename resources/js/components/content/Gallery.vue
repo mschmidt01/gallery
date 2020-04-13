@@ -159,7 +159,7 @@
                 </div>-->
             </div>
         </section>
-
+        <button type="button" title="Scroll up" class="btn scroll-top fas fa-arrow-up shadow" id="scroll-btn" v-on:click="scrollUp()"></button>
     </div>
 </template>
 
@@ -224,6 +224,25 @@
         height: 100px;
         overflow-y: scroll;
     }
+    .scroll-top{
+        /*display: none;*/
+        position: fixed;
+        bottom: 84px;
+        right: 20px;
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: blue; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 50%; /* Rounded corners */
+    }
+    .scroll-top:hover, .scroll-top:focus{
+        background-color: #0000b7;
+        color: white;
+    }
+
 </style>
 
 <script>
@@ -270,6 +289,10 @@
 
         },
         methods: {
+            scrollUp: function(){
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            },
             openImageDialog: function (image) {
                 console.log(image);
                 this.selectedImage = image;

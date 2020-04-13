@@ -2410,6 +2410,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2455,6 +2474,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchData();
   },
   methods: {
+    scrollUp: function scrollUp() {
+      document.body.scrollTop = 0; // For Safari
+
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    },
     openImageDialog: function openImageDialog(image) {
       console.log(image);
       this.selectedImage = image;
@@ -3401,7 +3425,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\n    height: 100px;\n    overflow-y: scroll;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\n    width: 15px;\n    height: 15px;\n    border: 2px solid blue;\n    background-color: #fff;\n    display: block;\n    content: \"\";\n    float: left;\n    margin-right: 5px;\n    margin-top: 5px;\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\n    box-shadow: inset 0px 0px 0px 2px #fff;\n    background-color: blue;\n}\n#filter-panel[data-v-2db9e3be] {\n    background-color: white;\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\n    background-color: #343A40;\n    color: white;\n    border-radius: 0px;\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\n    height: 100px;\n    overflow-y: scroll;\n}\n.scroll-top[data-v-2db9e3be]{\n    /*display: none;*/\n    position: fixed;\n    bottom: 84px;\n    right: 20px;\n    z-index: 99; /* Make sure it does not overlap */\n    border: none; /* Remove borders */\n    outline: none; /* Remove outline */\n    background-color: blue; /* Set a background color */\n    color: white; /* Text color */\n    cursor: pointer; /* Add a mouse pointer on hover */\n    padding: 15px; /* Some padding */\n    border-radius: 50%; /* Rounded corners */\n}\n.scroll-top[data-v-2db9e3be]:hover, .scroll-top[data-v-2db9e3be]:focus{\n    background-color: #0000b7;\n    color: white;\n}\n\n", ""]);
 
 // exports
 
@@ -33784,7 +33808,17 @@ var render = function() {
             0
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn scroll-top fas fa-arrow-up shadow",
+        attrs: { type: "button", title: "Scroll up", id: "scroll-btn" },
+        on: {
+          click: function($event) {
+            return _vm.scrollUp()
+          }
+        }
+      })
     ]
   )
 }
@@ -51622,8 +51656,8 @@ function sleep(ms) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
