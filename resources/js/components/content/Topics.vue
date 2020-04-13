@@ -12,12 +12,15 @@
                     </router-link>
                 </div>
       </div>-->
-      <template v-if="loading">
-        <div v-for="count in topicCount" :key="count">
-          <skeleton-box width="100px" height="100px" />
-          <skeleton-box width="200px" />
+      <div class="row" v-if="loading">
+        <div
+          v-for="count in topicCount"
+          :key="count"
+          class="col-sm-6 col-lg-3 d-flex align-items-stretch"
+        >
+          <skeleton-box class="card mb-4 shadow-sm" style="width: 18rem; height: 22rem" />
         </div>
-      </template>
+      </div>
       <slot v-else />
       <div class="row" v-if="topics">
         <div
@@ -61,7 +64,7 @@ export default {
     fetchData() {
       this.error = this.topics = null;
       this.loading = true;
-      this.topicCount = 3;
+      this.topicCount = 4;
       axios.get("/api/topics/count").then(response => {
         this.topicCount = response.data;
       });
@@ -95,4 +98,3 @@ export default {
   float: none; /* Added */
 }
 </style>
->>>>>>> origin/master
