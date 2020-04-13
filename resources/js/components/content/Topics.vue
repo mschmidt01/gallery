@@ -1,36 +1,56 @@
 <template>
-  <div class="container-fluid">
-    <h2>Themen</h2>
-    <template v-if="loading">
-      <div v-for="count in topicCount" :key="count">
-        <skeleton-box width="100px" height="100px" />
-        <skeleton-box width="200px" />
-      </div>
-    </template>
-    <slot v-else />
-    <ul v-if="topics">
-      <div v-for="topic in topics" :key="topic.name">
-        <router-link :to="{name: 'gallery', params: {name: topic.name}}">
-          <img height="100" width="100" v-bind:src="'/img/gallery/' +  topic.randomPicture " />
-          <div>
-            <p></p>
-            <strong>Name:</strong>
-            {{ topic.name }}
-            ({{ topic.count }})
+  <div>
+    <h1 class="title">Themen</h1>
+    <section>
+      <!--<div class="row" v-if="topics">
+                <div class="col-md" v-for="topic in topics">
+                    <router-link :to="{name: 'gallery', params: {name: topic.name}}">
+                        <div v-bind:style="{backgroundImage: 'url(/img/gallery/' +  topic.randomPicture}"></div>
+                        <div><p></p><strong>Name:</strong> {{ topic.name }}
+                            ({{ topic.count }})
+                        </div>
+                    </router-link>
+                </div>
+      </div>-->
+      <template v-if="loading">
+        <div v-for="count in topicCount" :key="count">
+          <skeleton-box width="100px" height="100px" />
+          <skeleton-box width="200px" />
+        </div>
+      </template>
+      <slot v-else />
+      <div class="row" v-if="topics">
+        <div
+          class="col-sm-6 col-lg-3 d-flex align-items-stretch"
+          v-for="topic in topics"
+          :key="topic.name"
+        >
+          <div class="card mb-4 shadow-sm" style="width: 18rem;">
+            <img v-bind:src="'/img/gallery/' +  topic.randomPicture" class="card-img-top" />
+            <div class="card-body">
+              <h5 class="card-title">{{ topic.name }}</h5>
+              <p class="card-text text-center">
+                <small>Anzahl: {{ topic.count }}</small>
+              </p>
+              <router-link
+                :to="{name: 'gallery', params: {name: topic.name}}"
+                class="btn btn-blue"
+              >Anschauen</router-link>
+            </div>
           </div>
-        </router-link>
+        </div>
       </div>
-    </ul>
+    </section>
   </div>
 </template>
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
       loading: false,
       topics: null,
-      topicCount: null,
       error: null
     };
   },
@@ -40,8 +60,8 @@ export default {
   methods: {
     fetchData() {
       this.error = this.topics = null;
-      this.topicCount = 3;
       this.loading = true;
+      this.topicCount = 3;
       axios.get("/api/topics/count").then(response => {
         this.topicCount = response.data;
       });
@@ -50,13 +70,29 @@ export default {
         this.topics = response.data;
       });
       /* axios
-                    .get('/api/pictures/ordered')
-                    .then(response => {
-                        this.loading = false;
-                        this.pictures = response.data;
-                        console.log(this.pictures)
-                    });*/
+                     .get('/api/pictures/ordered')
+                     .then(response => {
+                         this.loading = false;
+                         this.pictures = response.data;
+                         console.log(this.pictures)
+                     });*/
     }
   }
 };
 </script>
+<style scoped>
+.row {
+  text-align: center;
+}
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card {
+  min-width: 200px;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+}
+</style>
+>>>>>>> origin/master

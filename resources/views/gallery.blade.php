@@ -24,6 +24,14 @@
     })();
     </script>
     <!-- End Matomo Code -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/addon/lint/lint.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/javascript/javascript.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/css/css.js"></script>
+    <script src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/addon/lint/lint.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/addon/lint/javascript-lint.js"></script>
 </head>
 <body>
 <div id="app">

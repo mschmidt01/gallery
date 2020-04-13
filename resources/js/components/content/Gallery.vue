@@ -105,14 +105,12 @@
 </template>
 <script>
 import axios from "axios";
-
 export default {
   data() {
     const cookieArray = document.cookie.replace(" ", "").split(";");
     const recaptchaConsent = cookieArray.includes("recaptcha=true")
       ? true
       : false;
-
     return {
       loading: false,
       error: null,
@@ -155,15 +153,12 @@ export default {
     },
     async rateAndValidate(id, rating) {
       let token = "";
-
       if (this.recaptchaConsent) {
         // (optional) Wait until recaptcha has been loaded.
         await this.$recaptchaLoaded();
-
         // Execute reCAPTCHA with action "login".
         token = await this.$recaptcha("starrating");
       }
-
       axios.post("/api/pictures/vote", {
         token: token,
         imagid: id,
@@ -171,21 +166,17 @@ export default {
         email: this.email,
         contact: this.contact
       });
-
       this.fetchData();
       // Do stuff with the received token.
     },
     async commentAndValidate(id, text) {
       let token = "";
-
       if (this.recaptchaConsent) {
         // (optional) Wait until recaptcha has been loaded.
         await this.$recaptchaLoaded();
-
         // Execute reCAPTCHA with action "login".
         token = await this.$recaptcha("comment");
       }
-
       axios.post("/api/pictures/comment", {
         token: token,
         imagid: id,
@@ -193,7 +184,6 @@ export default {
         email: this.email,
         contact: this.contact
       });
-
       this.fetchData();
       // Do stuff with the received token.
     },
@@ -207,7 +197,6 @@ export default {
         .then(response => {
           this.filters.modules = response.data;
         });
-
       axios
         .post("/api/pictures/filter/classes", {
           gallery: this.topic
@@ -279,7 +268,6 @@ export default {
         this.modulfilter.length > 0
       ) {
         console.log("modul filter set");
-
         var bucket = [];
         for (let i = 0; i < this.modulfilter.length; i++) {
           let images = this.filtered.filter(
@@ -291,13 +279,11 @@ export default {
         }
         this.filtered = bucket;
       }
-
       if (
         typeof this.classfilter !== "undefined" &&
         this.classfilter.length > 0
       ) {
         console.log("class filter set");
-
         var bucket = [];
         for (let i = 0; i < this.classfilter.length; i++) {
           let images = this.filtered.filter(
@@ -309,7 +295,6 @@ export default {
         }
         this.filtered = bucket;
       }
-
       if (
         typeof this.starfilter !== "undefined" &&
         this.starfilter.length > 0
@@ -337,7 +322,6 @@ export default {
     },
     sort(event, name) {
       event.preventDefault();
-
       if (name === "alphabetical") {
         this.filtered = this.filtered.sort(function(a, b) {
           if (a.Filename < b.Filename) {
@@ -349,7 +333,6 @@ export default {
           return 0;
         });
       }
-
       if (name === "date") {
         this.filtered = this.filtered.sort(function(a, b) {
           return new Date(b.Timestamp) - new Date(a.Timestamp);
