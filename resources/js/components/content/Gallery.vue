@@ -201,7 +201,17 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="loading">
+          <div v-for="item in 50" :key="item" class="col-lg-1 col-md-2 col-3 py-2">
+            <skeleton-box
+              class="gallery-image"
+              width="100%"
+              style="margin: 0 !important; padding-top: 100%;"
+            />
+          </div>
+        </div>
+        <slot v-else />
+        <div class="row" v-if="filtered">
           <div
             class="col-lg-1 col-md-2 col-3 py-2"
             v-for="(image, index) in filtered"
