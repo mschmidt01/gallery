@@ -8,7 +8,7 @@ import { VueReCaptcha } from 'vue-recaptcha-v3'
 Vue.use(VueRouter)
 Vue.use(VueLazyload)
 Vue.use(VueHighlightJS)
-Vue.use(VueReCaptcha, { siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ' })
+Vue.use(VueReCaptcha, { siteKey: process.env.MIX_RECAPTCHA_V3_PUBLIC_KEY })
 import App from './components/App'
 import Project from './components/content/Project'
 import Quiz from './components/content/Quiz'

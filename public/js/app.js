@@ -2521,14 +2521,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
             case 4:
-              console.log("nach captcah", x); // Execute reCAPTCHA with action "login".
+              console.log("nach captcah"); // Execute reCAPTCHA with action "login".
 
               _context2.next = 7;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
 
             case 7:
               token = _context2.sent;
-              console.log("nachn captcah 2");
+              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
                 token: token,
                 imagid: id,
@@ -49978,7 +49978,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_highlightjs__WEBPACK_IMPORTED_MODULE_3___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-  siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
+  siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
 });
 
 
@@ -51622,8 +51622,8 @@ function sleep(ms) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

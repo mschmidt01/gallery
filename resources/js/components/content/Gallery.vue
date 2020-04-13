@@ -308,10 +308,10 @@
                 try {
                     console.log("captcah")
                     await this.$recaptchaLoaded();
-                    console.log("nach captcah", x)
+                    console.log("nach captcah");
                     // Execute reCAPTCHA with action "login".
                     const token = await this.$recaptcha('comment');
-                    console.log("nachn captcah 2")
+                    console.log(token);
                     axios.post('/api/pictures/comment', {
                         token: token,
                         imagid: id,

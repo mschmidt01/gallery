@@ -25,7 +25,7 @@ class GalleryController extends Controller
         $client = new Client();
         $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-                'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+                'secret' => env('RECAPTCHA_V3_SECRET_KEY', false),
                 'response' => $sToken,
             ]
         ]);
@@ -49,7 +49,7 @@ class GalleryController extends Controller
         $client = new Client();
         $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-                'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+                'secret' => env('RECAPTCHA_V3_SECRET_KEY', false),
                 'response' => $sToken,
             ]
         ]);
