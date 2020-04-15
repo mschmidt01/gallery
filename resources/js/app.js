@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 Vue.use(VueLazyload)
 Vue.use(VueHighlightJS)
 Vue.use(VueReCaptcha, { siteKey: process.env.MIX_RECAPTCHA_V3_PUBLIC_KEY })
+Vue.use(VueLazyload)
 import App from './components/App'
 import Project from './components/content/Project'
 import Quiz from './components/content/Quiz'

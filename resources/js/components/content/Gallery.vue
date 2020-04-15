@@ -109,7 +109,8 @@
                                                          :show-rating="false" active-color="#343A40"
                                                          inactive-color="#fff" border-color="#343A40"
                                                          :border-width="2"
-                                                         :rounded-corners="true" @rating-selected ="getRating"></star-rating>
+                                                         :rounded-corners="true"
+                                                         @rating-selected="getRating"></star-rating>
                                             <div class="form-group">
                                                 <label for="'comment_' + selectedImage.PID" class="col-form-label">Kommentar:</label>
                                                 <textarea class="form-control"
@@ -122,7 +123,8 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sec" data-dismiss="modal">Schließen</button>
                                 <button type="button" class="btn btn-blue"
-                                        v-on:click="commentPicture(selectedImage.PID); setRating(selectedImage.PID)">Bewerten
+                                        v-on:click="commentPicture(selectedImage.PID); setRating(selectedImage.PID)">
+                                    Bewerten
                                 </button>
                             </div>
                         </div>
@@ -131,13 +133,15 @@
 
                 <div class="row">
                     <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered"
-                         v-if="index<showPictureAmount">
+                        >
 
                         <a data-toggle="modal">
-                            <img loading="lazy" class="gallery-image"
-                                 :src="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
-                                 alt="Some Image" @click="openImageDialog(image)"/>
-                            <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                            <figure class="image__wrapper">
+                                <img loading="lazy" class="gallery-image"
+                                     v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
+                                     alt="Some Image" v-on:click="openImageDialog(image)">
+                                <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                            </figure>
                         </a>
                     </div>
 
@@ -159,7 +163,8 @@
                 </div>-->
             </div>
         </section>
-        <button type="button" title="Scroll up" class="btn scroll-top fas fa-arrow-up shadow" id="scroll-btn" v-on:click="scrollUp()"></button>
+        <button type="button" title="Scroll up" class="btn scroll-top fas fa-arrow-up shadow" id="scroll-btn"
+                v-on:click="scrollUp()"></button>
     </div>
 </template>
 
@@ -224,7 +229,8 @@
         height: 100px;
         overflow-y: scroll;
     }
-    .scroll-top{
+
+    .scroll-top {
         /*display: none;*/
         position: fixed;
         bottom: 84px;
@@ -238,7 +244,8 @@
         padding: 15px; /* Some padding */
         border-radius: 50%; /* Rounded corners */
     }
-    .scroll-top:hover, .scroll-top:focus{
+
+    .scroll-top:hover, .scroll-top:focus {
         background-color: #0000b7;
         color: white;
     }
@@ -273,11 +280,11 @@
         },
         created() {
             this.showPictureAmount = ((window.innerHeight - 280) / 66) * 12;
-            window.addEventListener('scroll', () => {
+            /*window.addEventListener('scroll', () => {
                 let offset = (document.documentElement.scrollTop || document.body.scrollTop);
                 this.showPictureAmount = (window.innerHeight + offset) * 12 / 66;
                 //console.log(this.showPictureAmount);
-            });
+            });*/
             this.topic = this.$route.params.name;
             if (typeof this.$route.params.name !== 'undefined') {
                 this.topicfilter[0] = this.topic;
@@ -289,7 +296,7 @@
 
         },
         methods: {
-            scrollUp: function(){
+            scrollUp: function () {
                 document.body.scrollTop = 0; // For Safari
                 document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             },
@@ -301,8 +308,8 @@
             setRating: function (id) {
                 this.rateAndValidate(id, this.rating);
             },
-            getRating: function(rating){
-                this.rating= rating;
+            getRating: function (rating) {
+                this.rating = rating;
             },
             commentPicture: function (id) {
                 let text = document.getElementById("comment_" + id).value;
