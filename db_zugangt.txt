@@ -1,6 +1,6 @@
-DB_CONNECTION=mysql
-DB_HOST=db4free.net
-DB_PORT=3306
-DB_DATABASE=gallery_test
-DB_USERNAME=bewawe_test
-DB_PASSWORD=bewawe_test
+heroku config:set DB_CONNECTION=mysql
+heroku config:set DB_HOST=db4free.net
+heroku config:set DB_PORT=3306
+heroku config:set DB_DATABASE=gallery_test
+heroku config:set DB_USERNAME=bewawe_test
+heroku config:set DB_PASSWORD=bewawe_test
