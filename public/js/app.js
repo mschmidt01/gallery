@@ -2461,6 +2461,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
+    var _this = this;
+
     this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
     /*window.addEventListener('scroll', () => {
         let offset = (document.documentElement.scrollTop || document.body.scrollTop);
@@ -2478,7 +2480,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.starfilter[0] = this.$route.params.stars;
     }
 
-    this.fetchData();
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
+      _this.filters.topics = response.data;
+
+      if (typeof _this.topic === 'undefined') {
+        _this.topicfilter = response.data;
+      }
+
+      _this.fetchData();
+    });
   },
   methods: {
     scrollUp: function scrollUp() {
@@ -2487,7 +2497,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     },
     openImageDialog: function openImageDialog(image) {
-      console.log(image);
       this.selectedImage = image;
       $('#imageDialog').modal('show');
     },
@@ -2512,19 +2521,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
             case 3:
-              _context.next = 8;
+              _context.next = 7;
               break;
 
             case 5:
               _context.prev = 5;
               _context.t0 = _context["catch"](0);
-              console.log(_context.t0);
 
-            case 8:
-              _context.next = 10;
+            case 7:
+              _context.next = 9;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('starrating'));
 
-            case 10:
+            case 9:
               token = _context.sent;
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/vote', {
                 token: token,
@@ -2533,7 +2541,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 13:
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -2547,89 +2555,93 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
-              console.log("captcah");
-              _context2.next = 4;
+              _context2.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 4:
-              console.log("nach captcah"); // Execute reCAPTCHA with action "login".
-
-              _context2.next = 7;
+            case 3:
+              _context2.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha('comment'));
 
-            case 7:
+            case 5:
               token = _context2.sent;
-              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/comment', {
                 token: token,
                 imagid: id,
                 text: text.replace(/"/g, '\\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;")
               });
-              console.log("nachn post");
               this.fetchData(); // Do stuff with the received token.
 
-              _context2.next = 17;
+              _context2.next = 12;
               break;
 
-            case 14:
-              _context2.prev = 14;
+            case 10:
+              _context2.prev = 10;
               _context2.t0 = _context2["catch"](0);
-              console.log("das ging nicht", _context2.t0);
 
-            case 17:
+            case 12:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this, [[0, 14]]);
+      }, null, this, [[0, 10]]);
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       var self = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
-        gallery: this.topic
+        galleries: this.topicfilter
       }).then(function (response) {
-        _this.filters.modules = response.data;
+        _this2.filters.modules = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
-        gallery: this.topic
+        galleries: this.topicfilter
       }).then(function (response) {
-        _this.filters.classes = response.data;
-      });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
-        _this.filters.topics = response.data;
-
-        if (typeof _this.topic === 'undefined') {
-          _this.topicfilter = response.data;
-        }
+        _this2.filters.classes = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/ordered').then(function (response) {
-        _this.loading = false;
-        var topic = _this.topic;
+        _this2.loading = false;
+        var topic = _this2.topic;
         self.pictures = $.map(response.data, function (value, key) {
           return _defineProperty({}, key, value);
         });
-        _this.filtered = response.data[topic];
-        _this.gallery = _this.filtered;
+        _this2.filtered = response.data[topic];
+        _this2.gallery = _this2.filtered;
 
-        if (typeof _this.topicfilter !== 'undefined' && _this.topicfilter.length > 0) {
+        if (typeof _this2.topicfilter !== 'undefined' && _this2.topicfilter.length > 0) {
           var bucket = [];
 
-          for (var i = 0; i < _this.topicfilter.length; i++) {
-            var images = self.pictures[i][_this.topicfilter[i]];
+          for (var i = 0; i < _this2.topicfilter.length; i++) {
+            var images = self.pictures[i][_this2.topicfilter[i]];
             bucket.push.apply(bucket, _toConsumableArray(images));
           }
 
-          _this.filtered = bucket;
+          _this2.filtered = bucket;
         }
 
         self.filterPictures();
       });
     },
     filterPictures: function filterPictures() {
-      var _this2 = this;
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
+        galleries: this.topicfilter
+      }).then(function (response) {
+        _this3.filters.modules = response.data;
+        console.log(_this3.topicfilter);
+        console.log(_this3.filters.modules);
+
+        _this3.$forceUpdate();
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
+        galleries: this.topicfilter
+      }).then(function (response) {
+        _this3.filters.classes = response.data;
+
+        _this3.$forceUpdate();
+      });
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0 && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0 && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0 && typeof this.topicfilter !== 'undefined' && this.topicfilter.length === 0) {
         this.filtered = [];
@@ -2637,7 +2649,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
-        console.log("topic filter set");
         var bucket = [];
 
         for (var i = 0; i < this.topicfilter.length; i++) {
@@ -2658,15 +2669,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
-        console.log("modul filter set");
         var bucket = [];
 
         var _loop = function _loop(_i) {
           var _bucket2;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.THMModule === this.modulfilter[_i];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
         };
@@ -2679,15 +2689,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
-        console.log("class filter set");
         var bucket = [];
 
         var _loop2 = function _loop2(_i2) {
           var _bucket3;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.Class === this.classfilter[_i2];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket3 = bucket).push.apply(_bucket3, _toConsumableArray(images));
         };
@@ -2700,20 +2709,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
-        console.log("star filter set");
-        console.log(this.filtered);
         var bucket = [];
 
         var _loop3 = function _loop3(_i3) {
           var _bucket4;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             if (el.Votes === 0) {
               return false;
             }
 
             return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i3]) < 1;
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket4 = bucket).push.apply(_bucket4, _toConsumableArray(images));
         };
@@ -2724,9 +2731,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         this.filtered = bucket;
       }
-
-      console.log(this.filtered);
-      vm.$forceUpdate();
     },
     sort: function sort(event, name) {
       event.preventDefault();
@@ -33691,6 +33695,7 @@ var render = function() {
                                             _c("small", [
                                               _vm._v(_vm._s(comment.Text))
                                             ]),
+                                            _vm._v(" "),
                                             _c("br")
                                           ])
                                         }

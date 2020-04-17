@@ -42,12 +42,12 @@ class Picture extends Model
         return Picture::all()->where("Gallery","=", $sTopic)->random(1)->toArray();
     }
 
-    public static  function  getModuleNames( $sGallery ) {
-        return  DB::table('pictures')->select('THMModule')->where("Gallery", "=", $sGallery )->distinct()->pluck("THMModule")->toArray();
+    public static  function  getModuleNames( $aGalleries ) {
+        return  DB::table('pictures')->select('THMModule')->whereIn("Gallery", $aGalleries )->distinct()->pluck("THMModule")->toArray();
     }
 
-    public static  function  getClassNames( $sGallery ) {
-        return  DB::table('pictures')->select('Class')->where("Gallery", "=", $sGallery )->distinct()->pluck("Class")->toArray();
+    public static  function  getClassNames( $aGalleries ) {
+        return  DB::table('pictures')->select('Class')->whereIn("Gallery", $aGalleries )->distinct()->pluck("Class")->toArray();
     }
 
     public static  function  ratePicture( $sPictureId, $rating ) {

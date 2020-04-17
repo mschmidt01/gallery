@@ -10,11 +10,11 @@ use GuzzleHttp\Client;
 class GalleryController extends Controller
 {
     public function getModuleFilters(Request $request){
-        return Picture::getModuleNames($request->json("gallery"));
+        return Picture::getModuleNames($request->json("galleries"));
     }
 
     public function getClassFilters(Request $request){
-        return Picture::getClassNames($request->json("gallery"));
+        return Picture::getClassNames($request->json("galleries"));
     }
     public function ratePicture(Request $request){
 

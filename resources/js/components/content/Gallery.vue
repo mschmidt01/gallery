@@ -48,7 +48,7 @@
                                    v-model="starfilter"
                                    v-on:change="filterPictures()">
                             <label class="form-check-label" :for="index">{{index}} <span
-                                class="fa fa-star"></span></label>
+                                    class="fa fa-star"></span></label>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,8 @@
                                                      :rounded-corners="true"></star-rating>
                                         <div v-if="selectedImage.comments.length>0" class="scroll-container">
                                             <div v-for="comment in selectedImage.comments">
-                                                <small>{{comment.Text}}</small><br>
+                                                <small>{{comment.Text}}</small>
+                                                <br>
                                             </div>
                                         </div>
                                         <hr>
@@ -133,7 +134,7 @@
 
                 <div class="row">
                     <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered"
-                        >
+                    >
 
                         <a data-toggle="modal">
                             <figure class="image__wrapper">
@@ -185,7 +186,6 @@
         margin-top: 5px;
         cursor: pointer;
     }
-
 
     input[type="checkbox"]:checked + label::before {
         box-shadow: inset 0px 0px 0px 2px #fff;
@@ -292,7 +292,15 @@
             if (typeof this.$route.params.stars !== 'undefined') {
                 this.starfilter[0] = this.$route.params.stars;
             }
-            this.fetchData();
+            axios.get('/api/pictures/filter/topics', {})
+                .then(response => {
+                    this.filters.topics = response.data;
+                    if (typeof this.topic === 'undefined') {
+                        this.topicfilter = response.data;
+                    }
+                    this.fetchData();
+                });
+
 
         },
         methods: {
@@ -301,7 +309,6 @@
                 document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             },
             openImageDialog: function (image) {
-                console.log(image);
                 this.selectedImage = image;
                 $('#imageDialog').modal('show');
             },
@@ -320,7 +327,6 @@
                 try {
                     await this.$recaptchaLoaded();
                 } catch (e) {
-                    console.log(e);
                 }
 
                 // Execute reCAPTCHA with action "login".
@@ -330,52 +336,43 @@
                     imagid: id,
                     rating: rating,
                 });
+
                 this.fetchData();
                 // Do stuff with the received token.
             },
             async commentAndValidate(id, text) {
                 // (optional) Wait until recaptcha has been loaded.
                 try {
-                    console.log("captcah")
                     await this.$recaptchaLoaded();
-                    console.log("nach captcah");
                     // Execute reCAPTCHA with action "login".
                     const token = await this.$recaptcha('comment');
-                    console.log(token);
                     axios.post('/api/pictures/comment', {
                         token: token,
                         imagid: id,
                         text: text.replace(/"/g, '\\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;"),
                     });
-                    console.log("nachn post")
                     this.fetchData();
                     // Do stuff with the received token.
                 } catch (e) {
-                    console.log("das ging nicht", e);
                 }
             },
             fetchData() {
+
                 this.loading = true;
                 let self = this;
                 axios.post('/api/pictures/filter/modules', {
-                    gallery: this.topic,
+                    galleries: this.topicfilter,
                 })
                     .then(response => {
                         this.filters.modules = response.data;
+
                     });
 
                 axios.post('/api/pictures/filter/classes', {
-                    gallery: this.topic,
+                    galleries: this.topicfilter,
                 })
                     .then(response => {
                         this.filters.classes = response.data;
-                    });
-                axios.get('/api/pictures/filter/topics', {})
-                    .then(response => {
-                        this.filters.topics = response.data;
-                        if (typeof this.topic === 'undefined') {
-                            this.topicfilter = response.data;
-                        }
                     });
                 axios.get('/api/pictures/ordered')
                     .then(response => {
@@ -399,6 +396,24 @@
                     });
             },
             filterPictures() {
+                axios.post('/api/pictures/filter/modules', {
+                    galleries: this.topicfilter,
+                })
+                    .then(response => {
+                        this.filters.modules = response.data;
+                        console.log(this.topicfilter)
+                        console.log(this.filters.modules)
+                        this.$forceUpdate();
+                    });
+
+                axios.post('/api/pictures/filter/classes', {
+                    galleries: this.topicfilter,
+                })
+                    .then(response => {
+                        this.filters.classes = response.data;
+                        this.$forceUpdate();
+                    });
+
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length === 0
                     && typeof this.classfilter !== 'undefined' && this.classfilter.length === 0
                     && typeof this.starfilter !== 'undefined' && this.starfilter.length === 0
@@ -407,7 +422,6 @@
                     return false;
                 }
                 if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
-                    console.log("topic filter set");
                     var bucket = [];
                     for (var i = 0; i < this.topicfilter.length; i++) {
                         var topic = this.topicfilter[i];
@@ -421,8 +435,6 @@
                     }
                 }
                 if (typeof this.modulfilter !== 'undefined' && this.modulfilter.length > 0) {
-                    console.log("modul filter set");
-
                     var bucket = [];
                     for (let i = 0; i < this.modulfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -434,8 +446,6 @@
                 }
 
                 if (typeof this.classfilter !== 'undefined' && this.classfilter.length > 0) {
-                    console.log("class filter set");
-
                     var bucket = [];
                     for (let i = 0; i < this.classfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -447,8 +457,6 @@
                 }
 
                 if (typeof this.starfilter !== 'undefined' && this.starfilter.length > 0) {
-                    console.log("star filter set");
-                    console.log(this.filtered);
                     var bucket = [];
                     for (let i = 0; i < this.starfilter.length; i++) {
                         let images = this.filtered.filter(function (el) {
@@ -461,8 +469,6 @@
                     }
                     this.filtered = bucket;
                 }
-                console.log(this.filtered);
-                vm.$forceUpdate();
             },
             sort(event, name) {
                 event.preventDefault();
