@@ -303,6 +303,11 @@ input[type="checkbox"]:checked + label::before {
 import axios from "axios";
 export default {
   data() {
+    const cookieArray = document.cookie.replace(" ", "").split(";");
+    const recaptchaConsent = cookieArray.includes("recaptcha=true")
+      ? true
+      : false;
+
     return {
       loading: false,
       error: null,
@@ -322,7 +327,8 @@ export default {
       showPictureAmount: 0,
       selectedImage: null,
       rating: 0,
-      order: false 
+      order: false,
+      recaptchaConsent
     };
   },
   created() {
@@ -359,14 +365,19 @@ export default {
       this.commentAndValidate(id, text);
     },
     async rateAndValidate(id, rating) {
-      // (optional) Wait until recaptcha has been loaded.
-      try {
-        await this.$recaptchaLoaded();
-      } catch (e) {
-        console.log(e);
+      let token = "";
+
+      if (this.recaptchaConsent) {
+        // (optional) Wait until recaptcha has been loaded.
+        try {
+          await this.$recaptchaLoaded();
+        } catch (e) {
+          console.error(e);
+        }
+        // Execute reCAPTCHA with action "login".
+        token = await this.$recaptcha("starrating");
       }
-      // Execute reCAPTCHA with action "login".
-      const token = await this.$recaptcha("starrating");
+
       axios.post("/api/pictures/vote", {
         token: token,
         imagid: id,
@@ -376,28 +387,30 @@ export default {
       // Do stuff with the received token.
     },
     async commentAndValidate(id, text) {
-      // (optional) Wait until recaptcha has been loaded.
-      try {
-        console.log("captcah");
-        await this.$recaptchaLoaded();
-        console.log("nach captcah", x);
-        // Execute reCAPTCHA with action "login".
-        const token = await this.$recaptcha("comment");
-        console.log("nachn captcah 2");
-        axios.post("/api/pictures/comment", {
-          token: token,
-          imagid: id,
-          text: text
-            .replace(/"/g, '\\"')
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-        });
-        console.log("nachn post");
-        this.fetchData();
-        // Do stuff with the received token.
-      } catch (e) {
-        console.log("das ging nicht", e);
+      let token = "";
+
+      if (this.recaptchaConsent) {
+        // (optional) Wait until recaptcha has been loaded.
+        try {
+          await this.$recaptchaLoaded();
+          // Execute reCAPTCHA with action "login".
+          const token = await this.$recaptcha("comment");
+        } catch (e) {
+          console.error(e);
+        }
       }
+
+      axios.post("/api/pictures/comment", {
+        token: token,
+        imagid: id,
+        text: text
+          .replace(/"/g, '\\"')
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+      });
+      
+      this.fetchData();
+      // Do stuff with the received token.
     },
     fetchData() {
       this.loading = true;
