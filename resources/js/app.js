@@ -49,11 +49,11 @@ const router = new VueRouter({
             name: "project",
             component: Project,
             meta: {
-                title: "Project",
+                title: "BoS Project",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Die Homepage des BoS Projekts."
+                        content: "Die Homepage des Board of Symbols Projekts."
                     }
                 ]
             }
@@ -77,11 +77,12 @@ const router = new VueRouter({
             name: "quiz",
             component: Quiz,
             meta: {
-                title: "Quiz",
+                title: "BoS Quiz",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Stelle dein Können unter Beweis!"
+                        content:
+                            "Stelle in dem BoS Quiz dein Können unter Beweis."
                     }
                 ]
             }
@@ -95,7 +96,7 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "Lerne diverse Muster zu erzeugen."
+                        content: "Lerne diverse Muster für das BoS zu erzeugen."
                     }
                 ]
             }
@@ -109,7 +110,7 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "Erzeuge live deine eigenen Muster."
+                        content: "Erzeuge live deine eigenen BoS Muster."
                     }
                 ]
             }
@@ -123,7 +124,8 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "JavaScript Beispiele für die Live-Version."
+                        content:
+                            "JavaScript Beispiele für die BoS Live-Version."
                     }
                 ]
             }
@@ -162,11 +164,12 @@ const router = new VueRouter({
             name: "topics",
             component: Topics,
             meta: {
-                title: "Themen",
+                title: "BoS Themen",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Übersicht der verschiedenen Themengebiete."
+                        content:
+                            "Übersicht der verschiedenen BoS Themengebiete."
                     }
                 ]
             }
