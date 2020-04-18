@@ -49,11 +49,11 @@ const router = new VueRouter({
             name: "project",
             component: Project,
             meta: {
-                title: "Project",
+                title: "BoS Project",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Die Homepage des BoS Projekts."
+                        content: "Die Homepage des Board of Symbols Projekts."
                     }
                 ]
             }
@@ -77,11 +77,12 @@ const router = new VueRouter({
             name: "quiz",
             component: Quiz,
             meta: {
-                title: "Quiz",
+                title: "BoS Quiz",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Stelle dein Können unter Beweis!"
+                        content:
+                            "Stelle in dem BoS Quiz dein Können unter Beweis."
                     }
                 ]
             }
@@ -95,7 +96,7 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "Lerne diverse Muster zu erzeugen."
+                        content: "Lerne diverse Muster für das BoS zu erzeugen."
                     }
                 ]
             }
@@ -109,7 +110,7 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "Erzeuge live deine eigenen Muster."
+                        content: "Erzeuge live deine eigenen BoS Muster."
                     }
                 ]
             }
@@ -123,7 +124,8 @@ const router = new VueRouter({
                 metaTags: [
                     {
                         name: "description",
-                        content: "JavaScript Beispiele für die Live-Version."
+                        content:
+                            "JavaScript Beispiele für die BoS Live-Version."
                     }
                 ]
             }
@@ -162,11 +164,12 @@ const router = new VueRouter({
             name: "topics",
             component: Topics,
             meta: {
-                title: "Themen",
+                title: "BoS Themen",
                 metaTags: [
                     {
                         name: "description",
-                        content: "Übersicht der verschiedenen Themengebiete."
+                        content:
+                            "Übersicht der verschiedenen BoS Themengebiete."
                     }
                 ]
             }
@@ -223,16 +226,13 @@ const router = new VueRouter({
     ]
 });
 
-// This callback runs before every route change, including on page load.
+// Used to add meta tags to different pages
+// Explanation can be found here: https://alligator.io/vuejs/vue-router-modify-head/
 router.beforeEach((to, from, next) => {
-    // This goes through the matched routes from last to first, finding the closest route with a title.
-    // eg. if we have /some/deep/nestee and /some, /deep, and /nested have titles, nested's will be chosen.
     const nearestWithTitle = to.matched
         .slice()
         .reverse()
         .find(r => r.meta && r.meta.title);
-
-    // Find the nearest route element with meta tags.
     const nearestWithMeta = to.matched
         .slice()
         .reverse()
@@ -241,19 +241,11 @@ router.beforeEach((to, from, next) => {
         .slice()
         .reverse()
         .find(r => r.meta && r.meta.metaTags);
-
-    // If a route with a title was found, set the document (page) title to that value.
     if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
-
-    // Remove any stale meta tags from the document using the key attribute we set below.
     Array.from(
         document.querySelectorAll("[data-vue-router-controlled]")
     ).map(el => el.parentNode.removeChild(el));
-
-    // Skip rendering meta tags if there are none.
     if (!nearestWithMeta) return next();
-
-    // Turn the meta tag definitions into actual elements in the head.
     nearestWithMeta.meta.metaTags
         .map(tagDef => {
             const tag = document.createElement("meta");
@@ -262,12 +254,10 @@ router.beforeEach((to, from, next) => {
                 tag.setAttribute(key, tagDef[key]);
             });
 
-            // We use this to track which meta tags we create, so we don't interfere with other ones.
             tag.setAttribute("data-vue-router-controlled", "");
 
             return tag;
         })
-        // Add the meta tags to the document head.
         .forEach(tag => document.head.appendChild(tag));
 
     next();
