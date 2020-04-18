@@ -20,8 +20,12 @@ class GalleryController extends Controller
   }
   public function ratePicture(Request $request)
   {
-    $email = $request->json("email");
-    $contact = $request->json("contact");
+    //$email = $request->json("email");
+    //$contact = $request->json("contact");
+
+    /* TODO Honeypot */
+    $email = 'test@email.com';
+    $contact = null;
 
     if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
       $sPictureId = $request->json("imagid");
@@ -35,7 +39,7 @@ class GalleryController extends Controller
           $client = new Client();
           $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-              'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+              'secret' => env('RECAPTCHA_V3_SECRET_KEY', false),
               'response' => $sToken,
             ]
           ]);
@@ -61,14 +65,24 @@ class GalleryController extends Controller
 
   public function commentPicture(Request $request)
   {
-    $email = $request->json("email");
-    $contact = $request->json("contact");
+    //$email = $request->json("email");
+    //$contact = $request->json("contact");
+
+    dump("COMMENT PICTURE");
+
+    /* TODO Honeypot */
+    $email = 'test@email.com';
+    $contact = null;
 
     if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
       $sPictureId = $request->json("imagid");
       $rating = $request->json("text");
 
+      dump("IN IF");
+
       if (array_key_exists('recaptcha', $_COOKIE)) {
+        dump("COOKIE EXISTS");
+
         if ($_COOKIE["recaptcha"] == 'true') {
 
           $sToken = $request->json("token");
@@ -76,12 +90,14 @@ class GalleryController extends Controller
           $client = new Client();
           $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-              'secret' => '6Leu_-EUAAAAAG3jvOMNGcPMziyYshOepyNnXQt_',
+              'secret' => env('RECAPTCHA_V3_SECRET_KEY', false),
               'response' => $sToken,
             ]
           ]);
 
           $response = json_decode($response->getBody(), true);
+
+          dump($response);
 
           if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
             Comment::createNewComment($sPictureId, $rating);

@@ -2652,9 +2652,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var cookieArray = document.cookie.replace(" ", "").split(";");
+    var recaptchaConsent = cookieArray.includes("recaptcha=true") ? true : false;
     return {
       loading: false,
       error: null,
@@ -2674,7 +2686,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showPictureAmount: 0,
       selectedImage: null,
       rating: 0,
-      order: false
+      order: false,
+      recaptchaConsent: recaptchaConsent
     };
   },
   created: function created() {
@@ -2719,25 +2732,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
+              token = "";
+
+              if (!this.recaptchaConsent) {
+                _context.next = 13;
+                break;
+              }
+
+              _context.prev = 2;
+              _context.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 3:
-              _context.next = 8;
+            case 5:
+              _context.next = 10;
               break;
 
-            case 5:
-              _context.prev = 5;
-              _context.t0 = _context["catch"](0);
-              console.log(_context.t0);
-
-            case 8:
-              _context.next = 10;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](2);
+              console.error(_context.t0);
 
             case 10:
+              _context.next = 12;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
+
+            case 12:
               token = _context.sent;
+
+            case 13:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
@@ -2745,55 +2767,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 13:
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[0, 5]]);
+      }, null, this, [[2, 7]]);
     },
     commentAndValidate: function commentAndValidate(id, text) {
-      var token;
+      var token, _token;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function commentAndValidate$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.prev = 0;
-              console.log("captcah");
-              _context2.next = 4;
+              token = "";
+
+              if (!this.recaptchaConsent) {
+                _context2.next = 13;
+                break;
+              }
+
+              _context2.prev = 2;
+              _context2.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 4:
-              console.log("nach captcah", x); // Execute reCAPTCHA with action "login".
-
+            case 5:
               _context2.next = 7;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("comment"));
 
             case 7:
-              token = _context2.sent;
-              console.log("nachn captcah 2");
+              _token = _context2.sent;
+              _context2.next = 13;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](2);
+              console.error(_context2.t0);
+
+            case 13:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
                 text: text.replace(/"/g, '\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;")
               });
-              console.log("nachn post");
               this.fetchData(); // Do stuff with the received token.
 
-              _context2.next = 17;
-              break;
-
-            case 14:
-              _context2.prev = 14;
-              _context2.t0 = _context2["catch"](0);
-              console.log("das ging nicht", _context2.t0);
-
-            case 17:
+            case 15:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this, [[0, 14]]);
+      }, null, this, [[2, 10]]);
     },
     fetchData: function fetchData() {
       var _this2 = this;
@@ -3869,6 +3895,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3887,7 +3916,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.error = this.topics = null;
       this.loading = true;
-      this.topicCount = 3;
+      this.topicCount = 4;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/topics/count").then(function (response) {
         _this.topicCount = response.data;
       });
@@ -34506,220 +34535,264 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "mt-5" }, [
-          _vm.selectedImage
-            ? _c(
-                "div",
-                {
-                  staticClass: "modal fade bd-example-modal-lg",
-                  attrs: {
-                    id: "imageDialog",
-                    tabindex: "-1",
-                    role: "dialog",
-                    "aria-labelledby": "imageDialog",
-                    "aria-hidden": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal-dialog modal-lg",
-                      attrs: { role: "document" }
-                    },
-                    [
-                      _c("div", { staticClass: "modal-content" }, [
-                        _c("div", { staticClass: "modal-header" }, [
-                          _c("h5", { staticClass: "modal-title" }, [
-                            _vm._v(_vm._s(_vm.selectedImage.Filename))
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(5)
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "modal-body" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-12 col-lg-6" }, [
-                              _c("img", {
-                                attrs: {
-                                  width: "100%",
-                                  src:
-                                    "/img/gallery/" +
-                                    _vm.selectedImage.Path +
-                                    "/" +
-                                    _vm.selectedImage.Filename,
-                                  id: "exampleModalLabel"
-                                }
-                              })
+        _c(
+          "div",
+          { staticClass: "mt-5" },
+          [
+            _vm.selectedImage
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "modal fade bd-example-modal-lg",
+                    attrs: {
+                      id: "imageDialog",
+                      tabindex: "-1",
+                      role: "dialog",
+                      "aria-labelledby": "imageDialog",
+                      "aria-hidden": "true"
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "modal-dialog modal-lg",
+                        attrs: { role: "document" }
+                      },
+                      [
+                        _c("div", { staticClass: "modal-content" }, [
+                          _c("div", { staticClass: "modal-header" }, [
+                            _c("h5", { staticClass: "modal-title" }, [
+                              _vm._v(_vm._s(_vm.selectedImage.Filename))
                             ]),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-12 col-lg-6 mt-3 mt-lg-0" },
-                              [
-                                _c("h5", [_vm._v("Bewertungen")]),
-                                _vm._v(" "),
-                                _c("star-rating", {
-                                  staticClass: "mb-2 stars",
+                            _vm._m(5)
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-body" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-12 col-lg-6" }, [
+                                _c("img", {
                                   attrs: {
-                                    "round-start-rating": false,
-                                    rating:
-                                      _vm.selectedImage.Rating /
-                                      _vm.selectedImage.Votes,
-                                    "star-size": 20,
-                                    "show-rating": false,
-                                    "active-color": "#343A40",
-                                    "inactive-color": "#fff",
-                                    "border-color": "#343A40",
-                                    "border-width": 2,
-                                    "rounded-corners": true
+                                    width: "100%",
+                                    src:
+                                      "/img/gallery/" +
+                                      _vm.selectedImage.Path +
+                                      "/" +
+                                      _vm.selectedImage.Filename,
+                                    id: "exampleModalLabel"
                                   }
-                                }),
-                                _vm._v(" "),
-                                _vm.selectedImage.comments.length > 0
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "scroll-container" },
-                                      _vm._l(
-                                        _vm.selectedImage.comments,
-                                        function(comment) {
-                                          return _c(
-                                            "div",
-                                            { key: comment.Text },
-                                            [
-                                              _c("small", [
-                                                _vm._v(_vm._s(comment.Text))
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("br")
-                                            ]
-                                          )
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("hr"),
-                                _vm._v(" "),
-                                _c("h5", [_vm._v("Eigene Bewertung abgeben")]),
-                                _vm._v(" "),
-                                _c(
-                                  "form",
-                                  [
-                                    _c("star-rating", {
-                                      staticClass: "mb-1 stars",
-                                      attrs: {
-                                        "round-start-rating": false,
-                                        rating: 0,
-                                        "star-size": 20,
-                                        "show-rating": false,
-                                        "active-color": "#343A40",
-                                        "inactive-color": "#fff",
-                                        "border-color": "#343A40",
-                                        "border-width": 2,
-                                        "rounded-corners": true
-                                      },
-                                      on: { "rating-selected": _vm.getRating }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "col-form-label",
-                                          attrs: {
-                                            for:
-                                              "'comment_' + selectedImage.PID"
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-12 col-lg-6 mt-3 mt-lg-0" },
+                                [
+                                  _c("h5", [_vm._v("Bewertungen")]),
+                                  _vm._v(" "),
+                                  _c("star-rating", {
+                                    staticClass: "mb-2 stars",
+                                    attrs: {
+                                      "round-start-rating": false,
+                                      rating:
+                                        _vm.selectedImage.Rating /
+                                        _vm.selectedImage.Votes,
+                                      "star-size": 20,
+                                      "show-rating": false,
+                                      "active-color": "#343A40",
+                                      "inactive-color": "#fff",
+                                      "border-color": "#343A40",
+                                      "border-width": 2,
+                                      "rounded-corners": true
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.selectedImage.comments.length > 0
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "scroll-container" },
+                                        _vm._l(
+                                          _vm.selectedImage.comments,
+                                          function(comment) {
+                                            return _c(
+                                              "div",
+                                              { key: comment.Text },
+                                              [
+                                                _c("small", [
+                                                  _vm._v(_vm._s(comment.Text))
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("br")
+                                              ]
+                                            )
                                           }
-                                        },
-                                        [_vm._v("Kommentar:")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("textarea", {
-                                        staticClass: "form-control",
+                                        ),
+                                        0
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("hr"),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v("Eigene Bewertung abgeben")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "form",
+                                    [
+                                      _c("star-rating", {
+                                        staticClass: "mb-1 stars",
                                         attrs: {
-                                          id: "comment_" + _vm.selectedImage.PID
-                                        }
-                                      })
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
+                                          "round-start-rating": false,
+                                          rating: 0,
+                                          "star-size": 20,
+                                          "show-rating": false,
+                                          "active-color": "#343A40",
+                                          "inactive-color": "#fff",
+                                          "border-color": "#343A40",
+                                          "border-width": 2,
+                                          "rounded-corners": true
+                                        },
+                                        on: { "rating-selected": _vm.getRating }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "form-group" }, [
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "col-form-label",
+                                            attrs: {
+                                              for:
+                                                "'comment_' + selectedImage.PID"
+                                            }
+                                          },
+                                          [_vm._v("Kommentar:")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("textarea", {
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            id:
+                                              "comment_" + _vm.selectedImage.PID
+                                          }
+                                        })
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "modal-footer" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sec",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                }
+                              },
+                              [_vm._v("Schließen")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-blue",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.commentPicture(_vm.selectedImage.PID)
+                                    _vm.setRating(_vm.selectedImage.PID)
+                                  }
+                                }
+                              },
+                              [_vm._v("Bewerten")]
                             )
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "modal-footer" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sec",
-                              attrs: { type: "button", "data-dismiss": "modal" }
-                            },
-                            [_vm._v("Schließen")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-blue",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  _vm.commentPicture(_vm.selectedImage.PID)
-                                  _vm.setRating(_vm.selectedImage.PID)
-                                }
-                              }
-                            },
-                            [_vm._v("Bewerten")]
-                          )
                         ])
-                      ])
-                    ]
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row" },
-            _vm._l(_vm.filtered, function(image, index) {
-              return index < _vm.showPictureAmount
-                ? _c(
-                    "div",
-                    { key: index, staticClass: "col-lg-1 col-md-2 col-3 py-2" },
-                    [
-                      _c("a", { attrs: { "data-toggle": "modal" } }, [
-                        _c("img", {
+                      ]
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.loading
+              ? _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(50, function(item) {
+                    return _c(
+                      "div",
+                      {
+                        key: item,
+                        staticClass: "col-lg-1 col-md-2 col-3 py-2"
+                      },
+                      [
+                        _c("skeleton-box", {
                           staticClass: "gallery-image",
-                          attrs: {
-                            loading: "lazy",
-                            src:
-                              "/img/gallery/" +
-                              image.Path +
-                              "/" +
-                              image.Filename.split(".")[0] +
-                              "-thumb.png",
-                            alt: "Some Image"
+                          staticStyle: {
+                            margin: "0 !important",
+                            "padding-top": "100%"
                           },
-                          on: {
-                            click: function($event) {
-                              return _vm.openImageDialog(image)
-                            }
-                          }
+                          attrs: { width: "100%" }
                         })
-                      ])
-                    ]
-                  )
-                : _vm._e()
-            }),
-            0
-          )
-        ])
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              : _vm._t("default"),
+            _vm._v(" "),
+            _vm.filtered
+              ? _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.filtered, function(image, index) {
+                    return index < _vm.showPictureAmount
+                      ? _c(
+                          "div",
+                          {
+                            key: index,
+                            staticClass: "col-lg-1 col-md-2 col-3 py-2"
+                          },
+                          [
+                            _c("a", { attrs: { "data-toggle": "modal" } }, [
+                              _c("img", {
+                                staticClass: "gallery-image",
+                                attrs: {
+                                  loading: "lazy",
+                                  src:
+                                    "/img/gallery/" +
+                                    image.Path +
+                                    "/" +
+                                    image.Filename.split(".")[0] +
+                                    "-thumb.png",
+                                  alt: "Some Image"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.openImageDialog(image)
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      : _vm._e()
+                  }),
+                  0
+                )
+              : _vm._e()
+          ],
+          2
+        )
       ])
     ]
   )
@@ -37232,20 +37305,27 @@ var render = function() {
       "section",
       [
         _vm.loading
-          ? _vm._l(_vm.topicCount, function(count) {
-              return _c(
-                "div",
-                { key: count },
-                [
-                  _c("skeleton-box", {
-                    attrs: { width: "100px", height: "100px" }
-                  }),
-                  _vm._v(" "),
-                  _c("skeleton-box", { attrs: { width: "200px" } })
-                ],
-                1
-              )
-            })
+          ? _c(
+              "div",
+              { staticClass: "row" },
+              _vm._l(_vm.topicCount, function(count) {
+                return _c(
+                  "div",
+                  {
+                    key: count,
+                    staticClass: "col-sm-6 col-lg-3 d-flex align-items-stretch"
+                  },
+                  [
+                    _c("skeleton-box", {
+                      staticClass: "card mb-4 shadow-sm",
+                      staticStyle: { width: "18rem", height: "22rem" }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
           : _vm._t("default"),
         _vm._v(" "),
         _vm.topics
@@ -52604,7 +52684,7 @@ var cookieArray = document.cookie.replace(" ", "").split(";");
 
 if (cookieArray.includes("recaptcha=true")) {
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-    siteKey: '6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ'
+    siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
   });
 }
 
@@ -52625,68 +52705,189 @@ if (cookieArray.includes("recaptcha=true")) {
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('galleryfooter', _components_galleryfooter__WEBPACK_IMPORTED_MODULE_17__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('gallerynav', _components_Gallerynav__WEBPACK_IMPORTED_MODULE_18__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('skeleton-box', _components_content_skeleton__WEBPACK_IMPORTED_MODULE_19__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('cookie-notice', _components_CookieNotice__WEBPACK_IMPORTED_MODULE_20__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('star-rating', vue_star_rating__WEBPACK_IMPORTED_MODULE_4___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("galleryfooter", _components_galleryfooter__WEBPACK_IMPORTED_MODULE_17__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("gallerynav", _components_Gallerynav__WEBPACK_IMPORTED_MODULE_18__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("skeleton-box", _components_content_skeleton__WEBPACK_IMPORTED_MODULE_19__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("cookie-notice", _components_CookieNotice__WEBPACK_IMPORTED_MODULE_20__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("star-rating", vue_star_rating__WEBPACK_IMPORTED_MODULE_4___default.a);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
+  mode: "history",
   routes: [{
-    path: '/project',
-    name: 'project',
-    component: _components_content_Project__WEBPACK_IMPORTED_MODULE_7__["default"]
+    path: "/project",
+    name: "project",
+    component: _components_content_Project__WEBPACK_IMPORTED_MODULE_7__["default"],
+    meta: {
+      title: "Project",
+      metaTags: [{
+        name: "description",
+        content: "Die Homepage des BoS Projekts."
+      }]
+    }
   }, {
-    path: '/login',
-    name: 'login',
-    component: _components_content_Login__WEBPACK_IMPORTED_MODULE_16__["default"]
+    path: "/login",
+    name: "login",
+    component: _components_content_Login__WEBPACK_IMPORTED_MODULE_16__["default"],
+    meta: {
+      title: "Login",
+      metaTags: [{
+        name: "robots",
+        content: "noindex"
+      }]
+    }
   }, {
-    path: '/quiz',
-    name: 'quiz',
-    component: _components_content_Quiz__WEBPACK_IMPORTED_MODULE_8__["default"]
+    path: "/quiz",
+    name: "quiz",
+    component: _components_content_Quiz__WEBPACK_IMPORTED_MODULE_8__["default"],
+    meta: {
+      title: "Quiz",
+      metaTags: [{
+        name: "description",
+        content: "Stelle dein Können unter Beweis!"
+      }]
+    }
   }, {
-    path: '/pattern',
-    name: 'pattern',
-    component: _components_content_Pattern__WEBPACK_IMPORTED_MODULE_9__["default"]
+    path: "/pattern",
+    name: "pattern",
+    component: _components_content_Pattern__WEBPACK_IMPORTED_MODULE_9__["default"],
+    meta: {
+      title: "Trainer Muster",
+      metaTags: [{
+        name: "description",
+        content: "Lerne diverse Muster zu erzeugen."
+      }]
+    }
   }, {
-    path: '/live',
-    name: 'live',
-    component: _components_content_Live__WEBPACK_IMPORTED_MODULE_10__["default"]
+    path: "/live",
+    name: "live",
+    component: _components_content_Live__WEBPACK_IMPORTED_MODULE_10__["default"],
+    meta: {
+      title: "BoS Live",
+      metaTags: [{
+        name: "description",
+        content: "Erzeuge live deine eigenen Muster."
+      }]
+    }
   }, {
-    path: '/snippets',
-    name: 'snippets',
-    component: _components_content_Snippets__WEBPACK_IMPORTED_MODULE_11__["default"]
+    path: "/snippets",
+    name: "snippets",
+    component: _components_content_Snippets__WEBPACK_IMPORTED_MODULE_11__["default"],
+    meta: {
+      title: "Code-Snippets",
+      metaTags: [{
+        name: "description",
+        content: "JavaScript Beispiele für die Live-Version."
+      }]
+    }
   }, {
-    path: '/functions',
-    name: 'functions',
-    component: _components_content_Functions__WEBPACK_IMPORTED_MODULE_12__["default"]
+    path: "/functions",
+    name: "functions",
+    component: _components_content_Functions__WEBPACK_IMPORTED_MODULE_12__["default"],
+    meta: {
+      title: "Über BoS",
+      metaTags: [{
+        name: "description",
+        content: "Weitere Informationen sowie eine Übersicht der implementierten Funktionen."
+      }]
+    }
   }, {
-    path: '/statistics',
-    name: 'statistics',
-    component: _components_content_Statistics__WEBPACK_IMPORTED_MODULE_14__["default"]
+    path: "/statistics",
+    name: "statistics",
+    component: _components_content_Statistics__WEBPACK_IMPORTED_MODULE_14__["default"],
+    meta: {
+      title: "Über die Website",
+      metaTags: [{
+        name: "description",
+        content: "Statistiken und verwendete Technologien."
+      }]
+    }
   }, {
-    path: '/topics',
-    name: 'topics',
-    component: _components_content_Topics__WEBPACK_IMPORTED_MODULE_13__["default"]
+    path: "/topics",
+    name: "topics",
+    component: _components_content_Topics__WEBPACK_IMPORTED_MODULE_13__["default"],
+    meta: {
+      title: "Themen",
+      metaTags: [{
+        name: "description",
+        content: "Übersicht der verschiedenen Themengebiete."
+      }]
+    }
   }, {
-    path: '/gallery',
-    name: 'gallery',
-    component: _components_content_Gallery__WEBPACK_IMPORTED_MODULE_15__["default"]
+    path: "/gallery",
+    name: "gallery",
+    component: _components_content_Gallery__WEBPACK_IMPORTED_MODULE_15__["default"],
+    meta: {
+      title: "Galerie",
+      metaTags: [{
+        name: "description",
+        content: "Für das BoS erstellte Bilder, Muster und Formen."
+      }]
+    }
   }, {
-    path: '/impressum',
-    name: 'impressum',
-    component: _components_content_Impressum__WEBPACK_IMPORTED_MODULE_21__["default"]
+    path: "/impressum",
+    name: "impressum",
+    component: _components_content_Impressum__WEBPACK_IMPORTED_MODULE_21__["default"],
+    meta: {
+      title: "Impressum",
+      metaTags: [{
+        name: "description",
+        content: "Wichtige Information über den Betreiber der BoS Seite."
+      }]
+    }
   }, {
-    path: '/privacypolicy',
-    name: 'privacypolicy',
-    component: _components_content_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_22__["default"]
+    path: "/privacypolicy",
+    name: "privacypolicy",
+    component: _components_content_PrivacyPolicy__WEBPACK_IMPORTED_MODULE_22__["default"],
+    meta: {
+      title: "Datenschutzerklärung",
+      metaTags: [{
+        name: "description",
+        content: "Wichtige Information über den Datenschutz der BoS Seite."
+      }]
+    }
   }, {
-    path: '/',
-    redirect: '/project'
+    path: "/",
+    redirect: "/project"
   }]
+}); // This callback runs before every route change, including on page load.
+
+router.beforeEach(function (to, from, next) {
+  // This goes through the matched routes from last to first, finding the closest route with a title.
+  // eg. if we have /some/deep/nestee and /some, /deep, and /nested have titles, nested's will be chosen.
+  var nearestWithTitle = to.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.title;
+  }); // Find the nearest route element with meta tags.
+
+  var nearestWithMeta = to.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.metaTags;
+  });
+  var previousNearestWithMeta = from.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.metaTags;
+  }); // If a route with a title was found, set the document (page) title to that value.
+
+  if (nearestWithTitle) document.title = nearestWithTitle.meta.title; // Remove any stale meta tags from the document using the key attribute we set below.
+
+  Array.from(document.querySelectorAll("[data-vue-router-controlled]")).map(function (el) {
+    return el.parentNode.removeChild(el);
+  }); // Skip rendering meta tags if there are none.
+
+  if (!nearestWithMeta) return next(); // Turn the meta tag definitions into actual elements in the head.
+
+  nearestWithMeta.meta.metaTags.map(function (tagDef) {
+    var tag = document.createElement("meta");
+    Object.keys(tagDef).forEach(function (key) {
+      tag.setAttribute(key, tagDef[key]);
+    }); // We use this to track which meta tags we create, so we don't interfere with other ones.
+
+    tag.setAttribute("data-vue-router-controlled", "");
+    return tag;
+  }) // Add the meta tags to the document head.
+  .forEach(function (tag) {
+    return document.head.appendChild(tag);
+  });
+  next();
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#app',
+  el: "#app",
   components: {
     App: _components_App__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
