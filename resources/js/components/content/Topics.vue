@@ -29,7 +29,11 @@
           :key="topic.name"
         >
           <div class="card mb-4 shadow-sm" style="width: 18rem;">
-            <img v-bind:src="'/img/gallery/' +  topic.randomPicture" class="card-img-top" />
+            <img
+              v-bind:src="'/img/gallery/' +  topic.randomPicture"
+              class="card-img-top"
+              alt="Random Image of Topic"
+            />
             <div class="card-body">
               <h5 class="card-title">{{ topic.name }}</h5>
               <p class="card-text text-center">
