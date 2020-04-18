@@ -186,6 +186,14 @@
                           class="col-form-label"
                         >Kommentar:</label>
                         <textarea class="form-control" :id="'comment_' + selectedImage.PID"></textarea>
+                        <div class="contact-field">
+                          Bitte Feld leer lassen
+                          <input v-model="contact" type="text" name="contact" />
+                        </div>
+                        <div v-show="!hideInput" class="text-field">
+                          Bitte Feld nicht ändern
+                          <input v-model="email" type="text" name="email" />
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -195,7 +203,7 @@
                 <button type="button" class="btn btn-sec" data-dismiss="modal">Schließen</button>
                 <button
                   type="button"
-                  class="btn btn-blue"
+                  class="btn"
                   v-on:click="commentPicture(selectedImage.PID); setRating(selectedImage.PID)"
                 >Bewerten</button>
               </div>
@@ -328,7 +336,10 @@ export default {
       selectedImage: null,
       rating: 0,
       order: false,
-      recaptchaConsent
+      recaptchaConsent,
+      hideInput: true,
+      contact: '',
+      email: 'test@email.com'
     };
   },
   created() {
@@ -381,7 +392,9 @@ export default {
       axios.post("/api/pictures/vote", {
         token: token,
         imagid: id,
-        rating: rating
+        rating: rating,
+        email: this.email,
+        contact: this.contact
       });
       this.fetchData();
       // Do stuff with the received token.
@@ -407,8 +420,11 @@ export default {
           .replace(/"/g, '\\"')
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
+          ,
+        email: this.email,
+        contact: this.contact
       });
-      
+
       this.fetchData();
       // Do stuff with the received token.
     },

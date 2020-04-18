@@ -20,12 +20,8 @@ class GalleryController extends Controller
   }
   public function ratePicture(Request $request)
   {
-    //$email = $request->json("email");
-    //$contact = $request->json("contact");
-
-    /* TODO Honeypot */
-    $email = 'test@email.com';
-    $contact = null;
+    $email = $request->json("email");
+    $contact = $request->json("contact");
 
     if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
       $sPictureId = $request->json("imagid");
@@ -65,14 +61,8 @@ class GalleryController extends Controller
 
   public function commentPicture(Request $request)
   {
-    //$email = $request->json("email");
-    //$contact = $request->json("contact");
-
-    dump("COMMENT PICTURE");
-
-    /* TODO Honeypot */
-    $email = 'test@email.com';
-    $contact = null;
+    $email = $request->json("email");
+    $contact = $request->json("contact");
 
     if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
       $sPictureId = $request->json("imagid");

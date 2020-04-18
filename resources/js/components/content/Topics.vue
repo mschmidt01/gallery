@@ -37,7 +37,7 @@
               </p>
               <router-link
                 :to="{name: 'gallery', params: {name: topic.name}}"
-                class="btn btn-blue"
+                class="btn"
               >Anschauen</router-link>
             </div>
           </div>

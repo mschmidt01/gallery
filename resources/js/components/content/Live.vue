@@ -43,7 +43,7 @@ farbe2( 3, 4, "#0000FF" )
 text2(2,2,"Hallo")
 </textarea>
                     <br>
-                    <button type="button" class="btn btn-blue" v-on:click="runJS">Ausführen</button>
+                    <button type="button" class="btn" v-on:click="runJS">Ausführen</button>
                     <!--  <button onClick='runJava()'> Java </button> -->
                     <button type="button" class="btn btn-sec" v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern</button>
                     <input type='text' class="form-control" id='fileNameField' value='snippet.txt'

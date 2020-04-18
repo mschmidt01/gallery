@@ -2662,6 +2662,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2687,7 +2695,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectedImage: null,
       rating: 0,
       order: false,
-      recaptchaConsent: recaptchaConsent
+      recaptchaConsent: recaptchaConsent,
+      hideInput: true,
+      contact: '',
+      email: 'test@email.com'
     };
   },
   created: function created() {
@@ -2763,7 +2774,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
-                rating: rating
+                rating: rating,
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
@@ -2810,7 +2823,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
-                text: text.replace(/"/g, '\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                text: text.replace(/"/g, '\\"').replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+                email: this.email,
+                contact: this.contact
               });
               this.fetchData(); // Do stuff with the received token.
 
@@ -34676,7 +34691,85 @@ var render = function() {
                                             id:
                                               "comment_" + _vm.selectedImage.PID
                                           }
-                                        })
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "contact-field" },
+                                          [
+                                            _vm._v(
+                                              "\n                        Bitte Feld leer lassen\n                        "
+                                            ),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.contact,
+                                                  expression: "contact"
+                                                }
+                                              ],
+                                              attrs: {
+                                                type: "text",
+                                                name: "contact"
+                                              },
+                                              domProps: { value: _vm.contact },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.contact =
+                                                    $event.target.value
+                                                }
+                                              }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: !_vm.hideInput,
+                                                expression: "!hideInput"
+                                              }
+                                            ],
+                                            staticClass: "text-field"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                        Bitte Feld nicht ändern\n                        "
+                                            ),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.email,
+                                                  expression: "email"
+                                                }
+                                              ],
+                                              attrs: {
+                                                type: "text",
+                                                name: "email"
+                                              },
+                                              domProps: { value: _vm.email },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.email =
+                                                    $event.target.value
+                                                }
+                                              }
+                                            })
+                                          ]
+                                        )
                                       ])
                                     ],
                                     1
@@ -34703,7 +34796,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-blue",
+                                staticClass: "btn",
                                 attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
@@ -35076,7 +35169,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-blue",
+              staticClass: "btn",
               attrs: { type: "button" },
               on: { click: _vm.runJS }
             },
@@ -37369,7 +37462,7 @@ var render = function() {
                             _c(
                               "router-link",
                               {
-                                staticClass: "btn btn-blue",
+                                staticClass: "btn",
                                 attrs: {
                                   to: {
                                     name: "gallery",
