@@ -2819,8 +2819,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               console.error(_context2.t0);
 
             case 13:
-              console.log("TOKEN:");
-              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
@@ -2830,7 +2828,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 17:
+            case 15:
             case "end":
               return _context2.stop();
           }
@@ -34853,7 +34851,7 @@ var render = function() {
                 )
               : _vm._t("default"),
             _vm._v(" "),
-            _vm.filtered
+            _vm.filtered && !_vm.loading
               ? _c(
                   "div",
                   { staticClass: "row" },

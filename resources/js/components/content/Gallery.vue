@@ -221,7 +221,7 @@
           </div>
         </div>
         <slot v-else />
-        <div class="row" v-if="filtered">
+        <div class="row" v-if="filtered && !loading">
           <div
             class="col-lg-1 col-md-2 col-3 py-2"
             v-for="(image, index) in filtered"
@@ -412,9 +412,6 @@ export default {
           console.error(e);
         }
       }
-
-      console.log("TOKEN:");
-      console.log(token);
 
       axios.post("/api/pictures/comment", {
         token: token,
