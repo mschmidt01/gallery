@@ -2,7 +2,7 @@
     <div>
         <h1 class="title">BoS Live</h1>
         <section>
-            <p>
+            <p class="live-explain-text">
                 Dies ist eine Testseite mit einer ersten Web-Version von BoS.
                 Bereits implementiert:
                 <code>form2</code>,
@@ -29,7 +29,7 @@
                     <br>
                 </div>
                 <div class="col-md-6 mb-3">
-                    JavaScript Code
+                    <label for="codeView">JavaScript Code</label>
 
                     <textarea id="codeView" rows="17">
 // setze Semicolons auf optional
@@ -41,7 +41,7 @@ form2( 3, 4, "d" )
 form2( 2, 4, "s" )
 farbe2( 3, 4, "#0000FF" )
 text2(2,2,"Hallo")
-</textarea>
+                    </textarea>
                     <br>
                     <button type="button" class="btn" v-on:click="runJS">Ausführen</button>
                     <!--  <button onClick='runJava()'> Java </button> -->

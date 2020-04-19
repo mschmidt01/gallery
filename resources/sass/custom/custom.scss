@@ -234,6 +234,10 @@ code.hljs {
     &.hljs-string {
       color: $code-variable;
     }
+
+    &.hljs-comment {
+      color: $code-comment;
+    }
   }
 }
 
@@ -249,7 +253,7 @@ code.hljs {
   justify-content: center;
 
   &.show {
-    display: flex!important;
+    display: flex !important;
   }
 
   #notice-container {
@@ -267,7 +271,7 @@ code.hljs {
       border-top: $conset-accent 3px solid;
       padding-bottom: 1rem;
     }
-    
+
     input#cookie-submit {
       margin: 2rem 0;
     }
@@ -275,14 +279,16 @@ code.hljs {
 }
 
 /* Input */
-.contact-field { display: none; }
+.contact-field {
+  display: none;
+}
 
 /* Gallery Comment */
 input[type="checkbox"] + label::before {
-  border: 2px solid $merlot!important;
+  border: 2px solid $merlot !important;
 }
 input[type="checkbox"]:checked + label::before {
-  background-color: $merlot!important;
+  background-color: $merlot !important;
 }
 .active-button {
   background: $moccaccino;
@@ -290,18 +296,30 @@ input[type="checkbox"]:checked + label::before {
 .sort-buttons {
   button {
     &:hover {
-      background: $link-hover!important;
+      background: $link-hover !important;
     }
 
-    &:active, &:focus, &:hover {
-      box-shadow: none!important;
-      border:none!important;
+    &:active,
+    &:focus,
+    &:hover {
+      box-shadow: none !important;
+      border: none !important;
     }
 
-    &:active, &:focus {
-      background: $moccaccino!important;
+    &:active,
+    &:focus {
+      background: $moccaccino !important;
     }
   }
-   
 }
 
+/* Code */
+.live-explain-text {
+  code {
+    color: $code-example !important;
+  }
+}
+
+.CodeMirror-linenumber {
+  color: #3a3a3a !important;
+}

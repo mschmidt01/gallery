@@ -2670,6 +2670,95 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2697,8 +2786,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       order: false,
       recaptchaConsent: recaptchaConsent,
       hideInput: true,
-      contact: '',
-      email: 'test@email.com'
+      contact: "",
+      email: "test@email.com"
     };
   },
   created: function created() {
@@ -4085,7 +4174,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\r\n  display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\r\n  width: 15px;\r\n  height: 15px;\r\n  background-color: #fff;\r\n  display: block;\r\n  content: \"\";\r\n  float: left;\r\n  margin-right: 5px;\r\n  margin-top: 5px;\r\n  cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\r\n  box-shadow: inset 0px 0px 0px 2px #fff;\n}\n#filter-panel[data-v-2db9e3be] {\r\n  background-color: white;\r\n  border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\r\n  background-color: #343a40;\r\n  color: white;\r\n  border-radius: 0px;\r\n  height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\r\n  box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\r\n  color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\r\n  background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\r\n  background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\r\n  width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\r\n  height: 100px;\r\n  overflow-y: scroll;\n}\r\n", ""]);
+exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\r\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: #fff;\r\n    display: block;\r\n    content: \"\";\r\n    float: left;\r\n    margin-right: 5px;\r\n    margin-top: 5px;\r\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\r\n    box-shadow: inset 0px 0px 0px 2px #fff;\n}\n#filter-panel[data-v-2db9e3be] {\r\n    background-color: white;\r\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\r\n    background-color: #343a40;\r\n    color: white;\r\n    border-radius: 0px;\r\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\r\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\r\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\r\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\r\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\r\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\r\n    height: 100px;\r\n    overflow-y: scroll;\n}\r\n", ""]);
 
 // exports
 
@@ -33865,15 +33954,17 @@ var render = function() {
                       "div",
                       {
                         ref: "learnDropdown",
-                        staticClass: "dropdown-menu bg-dark",
-                        attrs: { "aria-labelledby": "dropdownMenuButton" }
+                        staticClass: "dropdown-menu bg-dark"
                       },
                       [
                         _c(
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "live" } },
+                            attrs: {
+                              to: { name: "live" },
+                              "aria-label": "BoS Live"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setLearnChildTrue()
@@ -33887,7 +33978,10 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "snippets" } },
+                            attrs: {
+                              to: { name: "snippets" },
+                              "aria-label": "Snippets"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setLearnChildTrue()
@@ -33901,7 +33995,10 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "pattern" } },
+                            attrs: {
+                              to: { name: "pattern" },
+                              "aria-label": "Trainer"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setLearnChildTrue()
@@ -33915,7 +34012,10 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "quiz" } },
+                            attrs: {
+                              to: { name: "quiz" },
+                              "aria-label": "Quiz"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setLearnChildTrue()
@@ -33956,15 +34056,17 @@ var render = function() {
                       "div",
                       {
                         ref: "informationDropdown",
-                        staticClass: "dropdown-menu bg-dark",
-                        attrs: { "aria-labelledby": "dropdownMenuButton" }
+                        staticClass: "dropdown-menu bg-dark"
                       },
                       [
                         _c(
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "functions" } },
+                            attrs: {
+                              to: { name: "functions" },
+                              "aria-label": "Über BoS"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setInformationChildTrue()
@@ -33978,7 +34080,10 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "statistics" } },
+                            attrs: {
+                              to: { name: "statistics" },
+                              "aria-label": "Über die Website"
+                            },
                             nativeOn: {
                               click: function($event) {
                                 return _vm.setInformationChildTrue()
@@ -34200,7 +34305,7 @@ var render = function() {
               "aria-expanded": "false"
             }
           },
-          [_vm._v("Filteroptionen")]
+          [_vm._v("\n            Filteroptionen\n        ")]
         ),
         _vm._v(" "),
         _c(
@@ -34497,9 +34602,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n              " +
+                            "\n                            " +
                               _vm._s(index) +
-                              "\n              "
+                              "\n                            "
                           ),
                           _c("span", { staticClass: "fa fa-star" })
                         ]
@@ -34534,7 +34639,11 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Alphabet")]
+                      [
+                        _vm._v(
+                          "\n                            Alphabet\n                        "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -34549,7 +34658,11 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Datum")]
+                      [
+                        _vm._v(
+                          "\n                            Datum\n                        "
+                        )
+                      ]
                     )
                   ]
                 )
@@ -34586,7 +34699,11 @@ var render = function() {
                         _c("div", { staticClass: "modal-content" }, [
                           _c("div", { staticClass: "modal-header" }, [
                             _c("h5", { staticClass: "modal-title" }, [
-                              _vm._v(_vm._s(_vm.selectedImage.Filename))
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.selectedImage.Filename) +
+                                  "\n                            "
+                              )
                             ]),
                             _vm._v(" "),
                             _vm._m(5)
@@ -34706,7 +34823,7 @@ var render = function() {
                                           { staticClass: "contact-field" },
                                           [
                                             _vm._v(
-                                              "\n                        Bitte Feld leer lassen\n                        "
+                                              "\n                                                Bitte Feld leer lassen\n                                                "
                                             ),
                                             _c("input", {
                                               directives: [
@@ -34750,7 +34867,7 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                        Bitte Feld nicht ändern\n                        "
+                                              "\n                                                Bitte Feld nicht ändern\n                                                "
                                             ),
                                             _c("input", {
                                               directives: [
@@ -34798,7 +34915,11 @@ var render = function() {
                                   "data-dismiss": "modal"
                                 }
                               },
-                              [_vm._v("Schließen")]
+                              [
+                                _vm._v(
+                                  "\n                                Schließen\n                            "
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -34813,7 +34934,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Bewerten")]
+                              [
+                                _vm._v(
+                                  "\n                                Bewerten\n                            "
+                                )
+                              ]
                             )
                           ])
                         ])
@@ -35095,6 +35220,7 @@ var render = function() {
     _c("section", [
       _c(
         "p",
+        { staticClass: "live-explain-text" },
         [
           _vm._v(
             "\n                Dies ist eine Testseite mit einer ersten Web-Version von BoS.\n                Bereits implementiert:\n                "
@@ -35163,12 +35289,13 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6 mb-3" }, [
-          _vm._v(
-            "\n                    JavaScript Code\n\n                    "
-          ),
+          _c("label", { attrs: { for: "codeView" } }, [
+            _vm._v("JavaScript Code")
+          ]),
+          _vm._v(" "),
           _c("textarea", { attrs: { id: "codeView", rows: "17" } }, [
             _vm._v(
-              '// setze Semicolons auf optional\n// jshint asi:true\n\n// einige Beispiele:\nfarben(  YELLOW )\nform2( 3, 4, "d" )\nform2( 2, 4, "s" )\nfarbe2( 3, 4, "#0000FF" )\ntext2(2,2,"Hallo")\n'
+              '// setze Semicolons auf optional\n// jshint asi:true\n\n// einige Beispiele:\nfarben(  YELLOW )\nform2( 3, 4, "d" )\nform2( 2, 4, "s" )\nfarbe2( 3, 4, "#0000FF" )\ntext2(2,2,"Hallo")\n                    '
             )
           ]),
           _vm._v(" "),
@@ -52782,6 +52909,10 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_highlightjs__WEBPACK_IMPORTED_MODULE_3___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
+  siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* Check if consent for ReCAPTCHA is given */
 
 var cookieArray = document.cookie.replace(" ", "").split(";");

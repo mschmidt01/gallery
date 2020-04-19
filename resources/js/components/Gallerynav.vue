@@ -36,11 +36,11 @@
               aria-haspopup="true"
               aria-expanded="false"
             >Learn BoS</a>
-            <div ref="learnDropdown" class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'live'}" class="dropdown-item">BoS Live</router-link>
-              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'snippets'}" class="dropdown-item">Snippets</router-link>
-              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'pattern'}" class="dropdown-item">Trainer</router-link>
-              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'quiz'}" class="dropdown-item">Quiz</router-link>
+            <div ref="learnDropdown" class="dropdown-menu bg-dark">
+              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'live'}" aria-label="BoS Live" class="dropdown-item">BoS Live</router-link>
+              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'snippets'}" aria-label="Snippets" class="dropdown-item">Snippets</router-link>
+              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'pattern'}" aria-label="Trainer" class="dropdown-item">Trainer</router-link>
+              <router-link v-on:click.native="setLearnChildTrue()" :to="{name: 'quiz'}" aria-label="Quiz" class="dropdown-item">Quiz</router-link>
             </div>
           </li>
           <li class="nav-item dropdown" v-bind:class="{ 'active-parent': informationChild }">
@@ -52,9 +52,9 @@
               aria-haspopup="true"
               aria-expanded="false"
             >Informationen</a>
-            <div ref="informationDropdown" class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-              <router-link v-on:click.native="setInformationChildTrue()" :to="{name: 'functions'}" class="dropdown-item">Über BoS</router-link>
-              <router-link v-on:click.native="setInformationChildTrue()" :to="{name: 'statistics'}" class="dropdown-item">Über Website</router-link>
+            <div ref="informationDropdown" class="dropdown-menu bg-dark">
+              <router-link v-on:click.native="setInformationChildTrue()" :to="{name: 'functions'}" aria-label="Über BoS" class="dropdown-item">Über BoS</router-link>
+              <router-link v-on:click.native="setInformationChildTrue()" :to="{name: 'statistics'}" aria-label="Über die Website"  class="dropdown-item">Über Website</router-link>
             </div>
           </li>
         </ul>

@@ -17650,6 +17650,10 @@ code.hljs span.hljs-string {
   color: #3e92cc;
 }
 
+code.hljs span.hljs-comment {
+  color: #a1a8ad;
+}
+
 /* Cookie-Notice */
 
 #cookie-notice {
@@ -17725,5 +17729,15 @@ input[type=checkbox]:checked + label::before {
 .sort-buttons button:active,
 .sort-buttons button:focus {
   background: #72151A !important;
+}
+
+/* Code */
+
+.live-explain-text code {
+  color: #1c5d89 !important;
+}
+
+.CodeMirror-linenumber {
+  color: #3a3a3a !important;
 }
 
