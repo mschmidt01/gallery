@@ -670,7 +670,7 @@ function sleep(ms) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\live.js */"./resources/js/live.js");
+module.exports = __webpack_require__(/*! C:\Users\f.pipping\WebstormProjects\gallery\resources\js\live.js */"./resources/js/live.js");
 
 
 /***/ })

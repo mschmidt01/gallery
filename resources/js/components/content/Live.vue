@@ -16,16 +16,12 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <div id="titel">Plotter</div>
-
-                    <!-- <script>
-                         document.write( '<canvas id="myCanvas"  width="' + width +'" height="' + height +'"   style="border:1px solid #c3c3c3;">' )
-                     </script>-->
                     <canvas id="myCanvas" width="500px" height="500px">
                     </canvas>
                     <br>
-                    <button type="button" class="btn btn-sec" v-on:click="loadBoard"> Board</button>
-                    <button type="button" class="btn btn-sec" v-on:click="clearBoard"> L&ouml;schen</button>
-                    <button type="button" class="btn btn-sec" v-on:click="numberingBoardElements"> Nummerierung</button>
+                    <button type="button" class="btn btn-sec" v-on:click="loadBoard">Board</button>
+                    <button type="button" class="btn btn-sec" v-on:click="clearBoard">L&ouml;schen</button>
+                    <button type="button" class="btn btn-sec" v-on:click="numberingBoardElements">Nummerierung</button>
                     <br>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -44,7 +40,6 @@ text2(2,2,"Hallo")
 </textarea>
                     <br>
                     <button type="button" class="btn btn-blue" v-on:click="runJS">Ausführen</button>
-                    <!--  <button onClick='runJava()'> Java </button> -->
                     <button type="button" class="btn btn-sec" v-on:click="downloadCode" title="Speichert das Snippet in eine Datei"> Speichern</button>
                     <input type='text' class="form-control" id='fileNameField' value='snippet.txt'
                            title="Dateiname zum Speichern des Snippets"/>
@@ -55,43 +50,8 @@ text2(2,2,"Hallo")
 
         </section>
     </div>
-
-    <!--  <script type="application/javascript">
-          $(document).ready(function(){
-              var c=document.getElementById("myCanvas");
-              canvasLeft = c.offsetLeft
-              canvasTop  = c.offsetTop
-              c.addEventListener('click', function( event ){
-                  var co = $("canvas").offset();
-                  var x = event.pageX - co.top
-                  var y = event.pageY - co.left
-                  console.log("click " + x + " " + y )
-              }, false);
-
-
-              logView = document.getElementById("consoleLog");
-
-              window.onerror = function myErrorHandler(err, url, line) {
-                  var message = '<div class="alert alert-danger"><strong>ERROR! </strong>' + err
-                  if( ! /line [0-9]+/.test( err ) )  {
-                      message += " line " + line
-                  }
-                  message +=  '</div>'
-                  logView.innerHTML += message
-                  return false; // so you still log errors into console
-              }
-              ctx=c.getContext("2d");
-              board()
-
-              editor = CodeMirror.fromTextArea( document.getElementById("codeView"), {
-                  lineNumbers: true,
-                  mode:  "javascript",
-                  gutters: ["CodeMirror-lint-markers"],
-                  lint: true
-              });
-          })
-      </script>-->
 </template>
+
 <script>
 
     const live = require('../../live.js');

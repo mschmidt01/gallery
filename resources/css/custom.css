@@ -1,9 +1,6 @@
 html{
-    font-family:'Roboto',;
+    font-family:'Roboto';
 }
-
-
-/* Allgemeines */
 h1{
     text-align: center;
     padding-top: 1.5rem;
@@ -54,16 +51,3 @@ a{
     color: blue;
 }
 
-/*MediaQueries*/
-@media(min-width:576px){}
-
-@media(min-width:768px){
-}
-
-@media(min-width:992px){}
-
-@media(min-width:1200px){}
-
-@media(max-width:768px){
-
-}

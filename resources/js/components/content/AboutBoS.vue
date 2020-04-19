@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <h1 class="title">Über BoS</h1>
         <section>

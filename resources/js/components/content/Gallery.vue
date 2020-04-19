@@ -1,5 +1,5 @@
 <template>
-    <div v-on:scroll="alert()">
+    <div>
         <h1 class="title">Gallery </h1>
         <section>
             <button type="button" class="w-100 btn filter-button dropdown-toggle" data-toggle="collapse"
@@ -141,27 +141,11 @@
                                 <img loading="lazy" class="gallery-image"
                                      v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
                                      alt="Some Image" v-on:click="openImageDialog(image)">
-                                <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
                             </figure>
                         </a>
                     </div>
 
                 </div>
-
-
-                <!--<div class="row" v-for="(image, index) in filtered">
-                    <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>
-
-                    Kommentare:
-                    <div v-for="comment in image.comments">
-                        <p>{{comment.Text}}</p>
-                        <br>
-                    </div>
-                    <star-rating :round-start-rating="false" :rating="image.Rating/image.Votes" :show-rating="false"
-                                 @rating-selected="setRating(image.PID,$event)"></star-rating>
-                    <input type="text" :id="'comment_' + image.PID">
-                    <button v-on:click="commentPicture(image.PID)">Kommentieren</button>
-                </div>-->
             </div>
         </section>
         <button type="button" title="Scroll up" class="btn scroll-top fas fa-arrow-up shadow" id="scroll-btn"
@@ -231,18 +215,17 @@
     }
 
     .scroll-top {
-        /*display: none;*/
         position: fixed;
         bottom: 84px;
         right: 20px;
-        z-index: 99; /* Make sure it does not overlap */
-        border: none; /* Remove borders */
-        outline: none; /* Remove outline */
-        background-color: blue; /* Set a background color */
-        color: white; /* Text color */
-        cursor: pointer; /* Add a mouse pointer on hover */
-        padding: 15px; /* Some padding */
-        border-radius: 50%; /* Rounded corners */
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: blue;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 50%;
     }
 
     .scroll-top:hover, .scroll-top:focus {
@@ -280,11 +263,6 @@
         },
         created() {
             this.showPictureAmount = ((window.innerHeight - 280) / 66) * 12;
-            /*window.addEventListener('scroll', () => {
-                let offset = (document.documentElement.scrollTop || document.body.scrollTop);
-                this.showPictureAmount = (window.innerHeight + offset) * 12 / 66;
-                //console.log(this.showPictureAmount);
-            });*/
             this.topic = this.$route.params.name;
             if (typeof this.$route.params.name !== 'undefined') {
                 this.topicfilter[0] = this.topic;

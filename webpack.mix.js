@@ -16,4 +16,4 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/colors.js', 'public/js')
     .js('resources/js/live.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .copy('node_modules/font-awesome/fonts', 'public/fonts');
+    .copy('node_modules/font-awesome/fonts', 'public/fonts')

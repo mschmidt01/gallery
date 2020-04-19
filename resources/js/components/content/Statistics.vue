@@ -12,6 +12,7 @@
                         <tr><td>Bewertungen</td><td>{{votingcount}} </td></tr>
                     </table>
 
+                    <h3 class="mt-5">Bewertungen</h3>
                     <ul>
                         <li v-for="count in countbystars" >
                             <router-link :to="{name: 'gallery', params: {stars: count.stars}}">

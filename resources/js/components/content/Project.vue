@@ -26,7 +26,7 @@
                     </code></pre>
                 </div>
                 <div class="col-md-6">
-                    <img :src="'/img/BoS.png'" alt="BoS Screen" style="height:242px;" class="mx-auto d-block">
+                    <img :src="'/img/BoS.png'" alt="BoS Screen" style="height:242px;" class="mx-auto d-block pt-3">
                 </div>
             </div>
             <div>

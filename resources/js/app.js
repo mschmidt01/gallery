@@ -13,10 +13,10 @@ Vue.use(VueLazyload)
 import App from './components/App'
 import Project from './components/content/Project'
 import Quiz from './components/content/Quiz'
-import Pattern from './components/content/Pattern'
+import Trainer from './components/content/Trainer'
 import Live from './components/content/Live'
 import Snippets from './components/content/Snippets'
-import Functions from './components/content/Functions'
+import AboutBoS from './components/content/AboutBoS'
 import Topics from './components/content/Topics'
 import Statistics from './components/content/Statistics'
 import Gallery from './components/content/Gallery'
@@ -47,9 +47,9 @@ const router = new VueRouter({
             component: Quiz
         },
         {
-            path: '/pattern',
-            name: 'pattern',
-            component: Pattern
+            path: '/trainer',
+            name: 'trainer',
+            component: Trainer
         },
         {
             path: '/live',
@@ -62,9 +62,9 @@ const router = new VueRouter({
             component: Snippets
         },
         {
-            path: '/functions',
-            name: 'functions',
-            component: Functions
+            path: '/aboutBoS',
+            name: 'aboutBoS',
+            component: AboutBoS
         },
         {
             path: '/statistics',

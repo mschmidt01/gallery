@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <h1 class="title">Quiz</h1>
         <p class="text-center pt-4">Wie kann man die folgenden Bilder in BoS erzeugen?</p>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -29,17 +29,8 @@
             </a>
         </div>
     </div>
-
-
-    <!--<div class="flex-center position-ref full-height">
-        <p>
-            Wie kann man die folgenden Bilder in BoS erzeugen?
-        </p>
-
-        <h3>Sinus</h3>
-        <img :src="'/img/sinus.png'"class="quizImage">
-    </div>-->
 </template>
+
 <script>
     export default {}
 </script>

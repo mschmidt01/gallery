@@ -21,7 +21,7 @@
                         <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                             <router-link :to="{name: 'live'}" class="dropdown-item">BoS Live</router-link>
                             <router-link :to="{name: 'snippets'}" class="dropdown-item">Snippets</router-link>
-                            <router-link :to="{name: 'pattern'}" class="dropdown-item">Trainer</router-link>
+                            <router-link :to="{name: 'trainer'}" class="dropdown-item">Trainer</router-link>
                             <router-link :to="{name: 'quiz'}" class="dropdown-item">Quiz</router-link>
                         </div>
                     </li>
@@ -29,7 +29,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">Informationen</a>
                         <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-                            <router-link :to="{name: 'functions'}" class="dropdown-item">Über BoS</router-link>
+                            <router-link :to="{name: 'aboutBoS'}" class="dropdown-item">Über BoS</router-link>
                             <router-link :to="{name: 'statistics'}" class="dropdown-item">Über Website</router-link>
                         </div>
                     </li>
@@ -49,7 +49,6 @@
 </script>
 
 <style scoped>
-    /*Navigation*/
     .navbar-dark .navbar-nav .nav-link {
         color: white;
     }
@@ -114,16 +113,6 @@
     }
 
     @media (min-width: 768px) {
-        /*.nav>li.dropdown.open{
-            position:static;
-        }
-        .nav>li.dropdown.open.dropdown-menu{
-            display:table;
-            width:100%;
-            text-align:center;
-            left:0;
-            right:0;
-        }*/
         .dropdown-menu > li {
             display: table-cell;
         }
