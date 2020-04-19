@@ -32,6 +32,7 @@
     <script src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/addon/lint/lint.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/addon/lint/javascript-lint.js"></script>
+    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 </head>
 <body>
 <div id="app">

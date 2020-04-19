@@ -8,6 +8,8 @@ import { VueReCaptcha } from "vue-recaptcha-v3";
 Vue.use(VueRouter);
 Vue.use(VueLazyload);
 Vue.use(VueHighlightJS);
+Vue.use(VueReCaptcha, { siteKey: process.env.MIX_RECAPTCHA_V3_PUBLIC_KEY });
+Vue.use(VueLazyload);
 
 /* Check if consent for ReCAPTCHA is given */
 const cookieArray = document.cookie.replace(" ", "").split(";");
