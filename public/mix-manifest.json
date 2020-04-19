@@ -2,6 +2,13 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/codemirror.js": "/js/codemirror.js",
     "/js/colors.js": "/js/colors.js",
-    "/js/live.js": "/js/live.js"
+    "/js/css.js": "/js/css.js",
+    "/js/javascript.js": "/js/javascript.js",
+    "/js/javascript-lint.js": "/js/javascript-lint.js",
+    "/js/jshint.js": "/js/jshint.js",
+    "/js/lint.js": "/js/lint.js",
+    "/js/live.js": "/js/live.js",
+    "/js/vue-lazyload.js": "/js/vue-lazyload.js"
 }

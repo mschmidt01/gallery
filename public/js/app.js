@@ -36072,35 +36072,6 @@ var staticRenderFns = [
         )
       ]),
       _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Wenn Sie mit der Speicherung und Nutzung Ihrer Daten nicht einverstanden sind, können Sie die Speicherung und Nutzung hier deaktivieren. In diesem Fall wird in Ihrem Browser ein Opt-Out-Cookie hinterlegt, der verhindert, dass Matomo Nutzungsdaten speichert. Wenn Sie Ihre Cookies löschen, hat dies zur Folge, dass auch das Matomo Opt-Out-Cookie gelöscht wird. Das Opt-Out muss bei einem erneuten Besuch dieser Website wieder aktiviert werden."
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("em", [
-          _c("strong", [
-            _c(
-              "a",
-              {
-                staticStyle: { color: "#F00" },
-                attrs: {
-                  href: "https://matomo.org/docs/privacy/",
-                  target: "_blank",
-                  rel: "nofollow noopener noreferrer"
-                }
-              },
-              [
-                _vm._v(
-                  "[Hier Matomo iframe-Code einfügen] (Klick für die Anleitung)"
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _c("h2", [_vm._v("G. Plugins und Tools")]),
       _vm._v(" "),
       _c("h3", [_vm._v("Google reCAPTCHA")]),
