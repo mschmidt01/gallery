@@ -54,20 +54,20 @@
     }
 
     .navbar-dark .navbar-nav .nav-link:hover {
-        color: blue;
+        font-weight: bold;
     }
 
     .navbar-dark .navbar-nav .nav-link:active {
-        color: blue;
+        font-weight: bold;
     }
 
     .navbar-dark .navbar-nav .nav-link:focus {
-        color: blue;
+        font-weight: bold;
     }
 
     .dropdown-item:active {
         background-color: blue;
-        color: white;
+        ont-weight: bold;
     }
 
     .dropdown-item:hover {
@@ -91,11 +91,11 @@
     }
 
     .login:hover {
-        color: blue;
+        font-weight: bold;
     }
 
     .login:active {
-        color: blue;
+        font-weight: bold;
     }
 
     i {

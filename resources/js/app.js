@@ -1,9 +1,11 @@
+import "@babel/polyfill";
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 import VueHighlightJS from 'vue-highlightjs'
 import StarRating from 'vue-star-rating'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
+
 
 Vue.use(VueRouter)
 Vue.use(VueLazyload)

@@ -17301,6 +17301,12 @@ a {
   color: blue;
 }
 
+a:hover,
+a:focus {
+  color: blue;
+  text-decoration: underline;
+}
+
 .carousel {
   margin-top: 1.5rem;
 }

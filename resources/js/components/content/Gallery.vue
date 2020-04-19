@@ -2,6 +2,7 @@
     <div>
         <h1 class="title">Gallery </h1>
         <section>
+            <!-- Filterbar -->
             <button type="button" class="w-100 btn filter-button dropdown-toggle" data-toggle="collapse"
                     data-target="#filter-panel" aria-expanded="false">
                 Filteroptionen
@@ -57,18 +58,19 @@
                     </div>
                     <div class="col-md-10">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary" v-on:click="sort($event,sortOptions[0])">
+                            <button type="button" class="btn btn-blue" v-on:click="sort($event,sortOptions[0])">
                                 Alphabet
                             </button>
-                            <button type="button" class="btn btn-secondary" v-on:click="sort($event,sortOptions[1])">
+                            <button type="button" class="btn btn-blue" v-on:click="sort($event,sortOptions[1])">
                                 Datum
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-5">
 
+            <!-- Modal -->
+            <div class="mt-5">
                 <div v-if="selectedImage" class="modal fade bd-example-modal-lg " id="imageDialog" tabindex="-1"
                      role="dialog"
                      aria-labelledby="imageDialog" aria-hidden="true">
@@ -132,13 +134,14 @@
                     </div>
                 </div>
 
+                <!-- Gallerie -->
                 <div class="row">
                     <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered"
                     >
 
                         <a data-toggle="modal">
                             <figure class="image__wrapper">
-                                <img loading="lazy" class="gallery-image"
+                                <img class="gallery-image"
                                      v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
                                      alt="Some Image" v-on:click="openImageDialog(image)">
                             </figure>
@@ -299,6 +302,7 @@
             commentPicture: function (id) {
                 let text = document.getElementById("comment_" + id).value;
                 this.commentAndValidate(id, text);
+                $('#imageDialog').modal('hide');
             },
             async rateAndValidate(id, rating) {
                 // (optional) Wait until recaptcha has been loaded.
@@ -379,8 +383,6 @@
                 })
                     .then(response => {
                         this.filters.modules = response.data;
-                        console.log(this.topicfilter)
-                        console.log(this.filters.modules)
                         this.$forceUpdate();
                     });
 
