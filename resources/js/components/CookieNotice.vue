@@ -65,7 +65,7 @@ export default {
       recaptchaConsent = true;
 
       Vue.use(VueReCaptcha, {
-        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
       });
 
       consentSet &= true;
@@ -92,12 +92,11 @@ export default {
       } else {
         document.cookie = "piwik_ignore=false";
       }
-
       if (this.recaptchaConsent) {
         document.cookie = "recaptcha=true";
 
         Vue.use(VueReCaptcha, {
-          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+          siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
         });
       } else {
         document.cookie = "recaptcha=false";

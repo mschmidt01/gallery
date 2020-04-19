@@ -407,11 +407,14 @@ export default {
         try {
           await this.$recaptchaLoaded();
           // Execute reCAPTCHA with action "login".
-          const token = await this.$recaptcha("comment");
+          token = await this.$recaptcha("comment");
         } catch (e) {
           console.error(e);
         }
       }
+
+      console.log("TOKEN:");
+      console.log(token);
 
       axios.post("/api/pictures/comment", {
         token: token,

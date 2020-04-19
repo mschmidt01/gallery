@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
     if (cookieArray.includes("recaptcha=true")) {
       recaptchaConsent = true;
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
-        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
       });
       consentSet &= true;
     } else if (cookieArray.includes("recaptcha=false")) {
@@ -2041,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.recaptchaConsent) {
         document.cookie = "recaptcha=true";
         vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
-          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+          siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
         });
       } else {
         document.cookie = "recaptcha=false";
@@ -2788,8 +2788,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, null, this, [[2, 7]]);
     },
     commentAndValidate: function commentAndValidate(id, text) {
-      var token, _token;
-
+      var token;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function commentAndValidate$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -2810,7 +2809,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("comment"));
 
             case 7:
-              _token = _context2.sent;
+              token = _context2.sent;
               _context2.next = 13;
               break;
 
@@ -2820,6 +2819,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               console.error(_context2.t0);
 
             case 13:
+              console.log("TOKEN:");
+              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
@@ -2829,7 +2830,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 15:
+            case 17:
             case "end":
               return _context2.stop();
           }
@@ -3314,20 +3315,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       items: [{
-        title: 'ALL_SYMBOLS',
-        picture: '/img/pattern/all_symbols.png',
-        description: 'Hier werden alle vorhandenen Symbole jeweils einmal verwendet.\n' + '                    Das ist nicht unbedingt spannend zum Nachprogrammieren und soll eher die Auswahl zeigen.'
+        title: "ALL_SYMBOLS",
+        picture: "/img/pattern/all_symbols.png",
+        description: "Hier werden alle vorhandenen Symbole jeweils einmal verwendet.\n" + "                    Das ist nicht unbedingt spannend zum Nachprogrammieren und soll eher die Auswahl zeigen."
       }, {
-        title: 'SIZES',
-        picture: '/img/pattern/sizes.png',
-        description: 'In diesem Muster wird die Veränderung der Symbolgröße verwendet. Dabei werden Symbole entlang der Diagonalgen verwendet. Die Größe geht dabei von 0 bis 0,5 (also von unsichtbar bis normal) in gleichgroßen Schritten.'
+        title: "SIZES",
+        picture: "/img/pattern/sizes.png",
+        description: "In diesem Muster wird die Veränderung der Symbolgröße verwendet. Dabei werden Symbole entlang der Diagonalgen verwendet. Die Größe geht dabei von 0 bis 0,5 (also von unsichtbar bis normal) in gleichgroßen Schritten."
       }, {
-        title: 'LETTERTREE',
-        picture: '/img/pattern/lettertree.png',
+        title: "LETTERTREE",
+        picture: "/img/pattern/lettertree.png",
         description: 'Hier wird BoS nur zur Darstellung von Texten benutzt. Jede Textzeile ist ein Text im Symbol in der Mitte. Tipp: Formen auf none und dann text2(N/2, y, "....") wobei y von 1 bis N-2 läuft (bzw. umgekehrt).'
       }]
     };
@@ -3913,6 +3919,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4134,7 +4144,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pattern[data-v-05bf335f] {\n    max-width: 220px;\n}\n", ""]);
+exports.push([module.i, "\n.pattern[data-v-05bf335f] {\r\n  max-width: 220px;\n}\r\n", ""]);
 
 // exports
 
@@ -35319,19 +35329,19 @@ var render = function() {
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n            Im folgenden sind zu einigen Mustern kurze Infos zusammengestellt.\n        "
+            "Im folgenden sind zu einigen Mustern kurze Infos zusammengestellt."
           )
         ]),
         _vm._v(" "),
         _vm._l(_vm.items, function(value) {
-          return _c("div", { staticClass: "mt-5" }, [
+          return _c("div", { key: value.title, staticClass: "mt-5" }, [
             _c("h3", [_vm._v(_vm._s(value.title))]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-4 col-lg-3" }, [
                 _c("img", {
                   staticClass: "pattern",
-                  attrs: { src: value.picture }
+                  attrs: { src: value.picture, alt: "Image depicting pattern" }
                 })
               ]),
               _vm._v(" "),
@@ -35353,11 +35363,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", [
       _vm._v(
-        "Beim Üben hilft der eingebaute Trainer.\n            Er erzeugt Muster und die Aufgabe ist, diese Muster selbst zu programmieren.\n            Auf Knopfdruck prüft er, ob die Vorgabe tatsächlich erfüllt wurde.\n            Die Muster sind in sogenannten "
+        "\n      Beim Üben hilft der eingebaute Trainer.\n      Er erzeugt Muster und die Aufgabe ist, diese Muster selbst zu programmieren.\n      Auf Knopfdruck prüft er, ob die Vorgabe tatsächlich erfüllt wurde.\n      Die Muster sind in sogenannten\n      "
       ),
       _c("em", [_vm._v("Levels")]),
       _vm._v(
-        " nach zunehmendem Niveau organisiert.\n            Die Abkürzungen bei einigen Namen bedeuten:"
+        " nach zunehmendem Niveau organisiert.\n      Die Abkürzungen bei einigen Namen bedeuten:\n    "
       )
     ])
   },
@@ -35368,14 +35378,14 @@ var staticRenderFns = [
     return _c("ul", [
       _c("li", [
         _vm._v(
-          "F?: Variable Form, d. h. beim mehrfachen Aufruf von Mustern in diesem Niveau kann sich die Form\n                ändern.\n            "
+          "\n        F?: Variable Form, d. h. beim mehrfachen Aufruf von Mustern in diesem Niveau kann sich die Form\n        ändern.\n      "
         )
       ]),
       _vm._v(" "),
       _c("li", [
-        _vm._v("BG: Eine Form wird als Hintergrund ("),
+        _vm._v("\n        BG: Eine Form wird als Hintergrund (\n        "),
         _c("em", [_vm._v("background")]),
-        _vm._v(") verwendet.")
+        _vm._v(") verwendet.\n      ")
       ])
     ])
   }
@@ -37442,7 +37452,10 @@ var render = function() {
                       [
                         _c("img", {
                           staticClass: "card-img-top",
-                          attrs: { src: "/img/gallery/" + topic.randomPicture }
+                          attrs: {
+                            src: "/img/gallery/" + topic.randomPicture,
+                            alt: "Random Image of Topic"
+                          }
                         }),
                         _vm._v(" "),
                         _c(
@@ -52777,7 +52790,7 @@ var cookieArray = document.cookie.replace(" ", "").split(";");
 
 if (cookieArray.includes("recaptcha=true")) {
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-    siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+    siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
   });
 }
 
@@ -52810,10 +52823,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "project",
     component: _components_content_Project__WEBPACK_IMPORTED_MODULE_7__["default"],
     meta: {
-      title: "Project",
+      title: "BoS Project",
       metaTags: [{
         name: "description",
-        content: "Die Homepage des BoS Projekts."
+        content: "Die Homepage des Board of Symbols Projekts."
       }]
     }
   }, {
@@ -52832,10 +52845,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "quiz",
     component: _components_content_Quiz__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
-      title: "Quiz",
+      title: "BoS Quiz",
       metaTags: [{
         name: "description",
-        content: "Stelle dein Können unter Beweis!"
+        content: "Stelle in dem BoS Quiz dein Können unter Beweis."
       }]
     }
   }, {
@@ -52846,7 +52859,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       title: "Trainer Muster",
       metaTags: [{
         name: "description",
-        content: "Lerne diverse Muster zu erzeugen."
+        content: "Lerne diverse Muster für das BoS zu erzeugen."
       }]
     }
   }, {
@@ -52857,7 +52870,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       title: "BoS Live",
       metaTags: [{
         name: "description",
-        content: "Erzeuge live deine eigenen Muster."
+        content: "Erzeuge live deine eigenen BoS Muster."
       }]
     }
   }, {
@@ -52868,7 +52881,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       title: "Code-Snippets",
       metaTags: [{
         name: "description",
-        content: "JavaScript Beispiele für die Live-Version."
+        content: "JavaScript Beispiele für die BoS Live-Version."
       }]
     }
   }, {
@@ -52898,10 +52911,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: "topics",
     component: _components_content_Topics__WEBPACK_IMPORTED_MODULE_13__["default"],
     meta: {
-      title: "Themen",
+      title: "BoS Themen",
       metaTags: [{
         name: "description",
-        content: "Übersicht der verschiedenen Themengebiete."
+        content: "Übersicht der verschiedenen BoS Themengebiete."
       }]
     }
   }, {
@@ -52941,40 +52954,32 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: "/",
     redirect: "/project"
   }]
-}); // This callback runs before every route change, including on page load.
+}); // Used to add meta tags to different pages
+// Explanation can be found here: https://alligator.io/vuejs/vue-router-modify-head/
 
 router.beforeEach(function (to, from, next) {
-  // This goes through the matched routes from last to first, finding the closest route with a title.
-  // eg. if we have /some/deep/nestee and /some, /deep, and /nested have titles, nested's will be chosen.
   var nearestWithTitle = to.matched.slice().reverse().find(function (r) {
     return r.meta && r.meta.title;
-  }); // Find the nearest route element with meta tags.
-
+  });
   var nearestWithMeta = to.matched.slice().reverse().find(function (r) {
     return r.meta && r.meta.metaTags;
   });
   var previousNearestWithMeta = from.matched.slice().reverse().find(function (r) {
     return r.meta && r.meta.metaTags;
-  }); // If a route with a title was found, set the document (page) title to that value.
-
-  if (nearestWithTitle) document.title = nearestWithTitle.meta.title; // Remove any stale meta tags from the document using the key attribute we set below.
-
+  });
+  if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
   Array.from(document.querySelectorAll("[data-vue-router-controlled]")).map(function (el) {
     return el.parentNode.removeChild(el);
-  }); // Skip rendering meta tags if there are none.
-
-  if (!nearestWithMeta) return next(); // Turn the meta tag definitions into actual elements in the head.
-
+  });
+  if (!nearestWithMeta) return next();
   nearestWithMeta.meta.metaTags.map(function (tagDef) {
     var tag = document.createElement("meta");
     Object.keys(tagDef).forEach(function (key) {
       tag.setAttribute(key, tagDef[key]);
-    }); // We use this to track which meta tags we create, so we don't interfere with other ones.
-
+    });
     tag.setAttribute("data-vue-router-controlled", "");
     return tag;
-  }) // Add the meta tags to the document head.
-  .forEach(function (tag) {
+  }).forEach(function (tag) {
     return document.head.appendChild(tag);
   });
   next();

@@ -77,6 +77,8 @@ class GalleryController extends Controller
 
           $sToken = $request->json("token");
 
+          dump("TOKEN:" . $sToken);
+
           $client = new Client();
           $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [

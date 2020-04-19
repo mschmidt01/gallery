@@ -13,7 +13,7 @@ Vue.use(VueHighlightJS);
 const cookieArray = document.cookie.replace(" ", "").split(";");
 if (cookieArray.includes("recaptcha=true")) {
     Vue.use(VueReCaptcha, {
-        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
+        siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
     });
 }
 
