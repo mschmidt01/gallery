@@ -17740,6 +17740,8 @@ a {
 
 /* Button */
 
+/* Scroll Button */
+
 /**
  * Custom adaptations to the design.
  *
@@ -18072,5 +18074,14 @@ input[type=checkbox]:checked + label::before {
 
 .CodeMirror-linenumber {
   color: #3a3a3a !important;
+}
+
+.scrolltop {
+  background: #8d191f;
+}
+
+.scrolltop:hover,
+.scrolltop:focus {
+  background: #aa2738;
 }
 

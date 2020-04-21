@@ -65,7 +65,7 @@ export default {
       recaptchaConsent = true;
 
       Vue.use(VueReCaptcha, {
-        siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+        siteKey: process.env.MIX_RECAPTCHA_V3_PUBLIC_KEY
       });
 
       consentSet &= true;

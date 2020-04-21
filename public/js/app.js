@@ -2168,7 +2168,6 @@ __webpack_require__.r(__webpack_exports__);
       this.informationChild = false;
     },
     InlineButtonClickHandler: function InlineButtonClickHandler(event) {
-      console.log("CHILD CLICKED!");
       this.$emit('childClicked');
     }
   }
@@ -2759,6 +2758,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2791,13 +2796,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    var _this = this;
-
     this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
-    window.addEventListener("scroll", function () {
-      var offset = document.documentElement.scrollTop || document.body.scrollTop;
-      _this.showPictureAmount = (window.innerHeight + offset) * 12 / 66; //console.log(this.showPictureAmount);
-    });
+    /*
+    window.addEventListener("scroll", () => {
+        let offset =
+            document.documentElement.scrollTop || document.body.scrollTop;
+        this.showPictureAmount = ((window.innerHeight + offset) * 12) / 66;
+        //console.log(this.showPictureAmount);
+    });*/
+
     this.topic = this.$route.params.name;
 
     if (typeof this.$route.params.name !== "undefined") {
@@ -2811,6 +2818,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchData();
   },
   methods: {
+    scrollUp: function scrollUp() {
+      document.body.scrollTop = 0; // For Safari
+
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    },
     openImageDialog: function openImageDialog(image) {
       console.log(image);
       this.selectedImage = image;
@@ -2925,52 +2937,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, null, this, [[2, 10]]);
     },
     fetchData: function fetchData() {
-      var _this2 = this;
+      var _this = this;
 
       this.loading = true;
       var self = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/modules", {
         gallery: this.topic
       }).then(function (response) {
-        _this2.filters.modules = response.data;
+        _this.filters.modules = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/classes", {
         gallery: this.topic
       }).then(function (response) {
-        _this2.filters.classes = response.data;
+        _this.filters.classes = response.data;
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/filter/topics", {}).then(function (response) {
-        _this2.filters.topics = response.data;
+        _this.filters.topics = response.data;
 
-        if (typeof _this2.topic === "undefined") {
-          _this2.topicfilter = response.data;
+        if (typeof _this.topic === "undefined") {
+          _this.topicfilter = response.data;
         }
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/ordered").then(function (response) {
-        _this2.loading = false;
-        var topic = _this2.topic;
+        _this.loading = false;
+        var topic = _this.topic;
         self.pictures = $.map(response.data, function (value, key) {
           return _defineProperty({}, key, value);
         });
-        _this2.filtered = response.data[topic];
-        _this2.gallery = _this2.filtered;
+        _this.filtered = response.data[topic];
+        _this.gallery = _this.filtered;
 
-        if (typeof _this2.topicfilter !== "undefined" && _this2.topicfilter.length > 0) {
+        if (typeof _this.topicfilter !== "undefined" && _this.topicfilter.length > 0) {
           var bucket = [];
 
-          for (var i = 0; i < _this2.topicfilter.length; i++) {
-            var images = self.pictures[i][_this2.topicfilter[i]];
+          for (var i = 0; i < _this.topicfilter.length; i++) {
+            var images = self.pictures[i][_this.topicfilter[i]];
             bucket.push.apply(bucket, _toConsumableArray(images));
           }
 
-          _this2.filtered = bucket;
+          _this.filtered = bucket;
         }
 
         self.filterPictures();
       });
     },
     filterPictures: function filterPictures() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (typeof this.modulfilter !== "undefined" && this.modulfilter.length === 0 && typeof this.classfilter !== "undefined" && this.classfilter.length === 0 && typeof this.starfilter !== "undefined" && this.starfilter.length === 0 && typeof this.topicfilter !== "undefined" && this.topicfilter.length === 0) {
         this.filtered = [];
@@ -3005,9 +3017,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop = function _loop(_i) {
           var _bucket2;
 
-          var images = _this3.filtered.filter(function (el) {
+          var images = _this2.filtered.filter(function (el) {
             return el.THMModule === this.modulfilter[_i];
-          }.bind(_this3));
+          }.bind(_this2));
 
           (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
         };
@@ -3026,9 +3038,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop2 = function _loop2(_i2) {
           var _bucket3;
 
-          var images = _this3.filtered.filter(function (el) {
+          var images = _this2.filtered.filter(function (el) {
             return el.Class === this.classfilter[_i2];
-          }.bind(_this3));
+          }.bind(_this2));
 
           (_bucket3 = bucket).push.apply(_bucket3, _toConsumableArray(images));
         };
@@ -3048,13 +3060,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop3 = function _loop3(_i3) {
           var _bucket4;
 
-          var images = _this3.filtered.filter(function (el) {
+          var images = _this2.filtered.filter(function (el) {
             if (el.Votes === 0) {
               return false;
             }
 
             return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i3]) < 1;
-          }.bind(_this3));
+          }.bind(_this2));
 
           (_bucket4 = bucket).push.apply(_bucket4, _toConsumableArray(images));
         };
@@ -4155,7 +4167,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*Navigation*/\r\n\r\n/*\r\n    .navbar-dark .navbar-nav .nav-link {\r\n        color: white;\r\n    }\r\n    .navbar-dark .navbar-nav .nav-link:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:active {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:focus {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-item:active {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:hover {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:focus {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    nav {\r\n        min-height: 80px;\r\n    }\r\n\r\n    .login {\r\n        width: 100px;\r\n        color: white;\r\n        border: 1px solid blue;\r\n    }\r\n\r\n    .login:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .login:active {\r\n        color: blue;\r\n    }\r\n\r\n    i {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-menu {\r\n        border-top: 3px solid blue;\r\n        color: #fff;\r\n        border-radius: 0;\r\n    }\r\n\r\n    .dropdown-menu a {\r\n        color: white;\r\n    }\r\n    */\n@media (min-width: 768px) {\r\n  /*.nav>li.dropdown.open{\r\n            position:static;\r\n        }\r\n        .nav>li.dropdown.open.dropdown-menu{\r\n            display:table;\r\n            width:100%;\r\n            text-align:center;\r\n            left:0;\r\n            right:0;\r\n        }\r\n        .dropdown-menu > li {\r\n            display: table-cell;\r\n        }\r\n\r\n        .dropdown-menu {\r\n            left: 50%;\r\n            right: auto;\r\n            transform: translate(-50%, 0);\r\n            margin-top: 18px;\r\n        }\r\n        */\n}\n@media (max-width: 768px) {\r\n  /*\r\n        .responsive-logo {\r\n            margin-left: auto;\r\n            margin-right: auto;\r\n            padding-left: 56px;\r\n        }\r\n        \r\n\r\n        .dropdown-menu {\r\n            text-align: center;\r\n            border-left: 1px solid #ffffff20;\r\n            border-right: 1px solid #ffffff20;\r\n            border-bottom: 1px solid #ffffff20;\r\n            max-width: 200px;\r\n            margin-left: auto !important;\r\n            margin-right: auto !important;\r\n        }\r\n        */\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*Navigation*/\r\n\r\n/*\r\n    .navbar-dark .navbar-nav .nav-link {\r\n        color: white;\r\n    }\r\n    .navbar-dark .navbar-nav .nav-link:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:active {\r\n        color: blue;\r\n    }\r\n\r\n    .navbar-dark .navbar-nav .nav-link:focus {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-item:active {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:hover {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    .dropdown-item:focus {\r\n        background-color: blue;\r\n        color: white;\r\n    }\r\n\r\n    nav {\r\n        min-height: 80px;\r\n    }\r\n\r\n    .login {\r\n        width: 100px;\r\n        color: white;\r\n        border: 1px solid blue;\r\n    }\r\n\r\n    .login:hover {\r\n        color: blue;\r\n    }\r\n\r\n    .login:active {\r\n        color: blue;\r\n    }\r\n\r\n    i {\r\n        color: blue;\r\n    }\r\n\r\n    .dropdown-menu {\r\n        border-top: 3px solid blue;\r\n        color: #fff;\r\n        border-radius: 0;\r\n    }\r\n\r\n    .dropdown-menu a {\r\n        color: white;\r\n    }\r\n    */\n@media (min-width: 768px) {\r\n  /*.nav>li.dropdown.open{\r\n            position:static;\r\n        }\r\n        .nav>li.dropdown.open.dropdown-menu{\r\n            display:table;\r\n            width:100%;\r\n            text-align:center;\r\n            left:0;\r\n            right:0;\r\n        }\r\n        .dropdown-menu > li {\r\n            display: table-cell;\r\n        }\r\n\r\n        .dropdown-menu {\r\n            left: 50%;\r\n            right: auto;\r\n            transform: translate(-50%, 0);\r\n            margin-top: 18px;\r\n        }\r\n        */\n}\n@media (max-width: 768px) {\r\n  /*\r\n        .responsive-logo {\r\n            margin-left: auto;\r\n            margin-right: auto;\r\n            padding-left: 56px;\r\n        }\r\n        \r\n\r\n        .dropdown-menu {\r\n            text-align: center;\r\n            border-left: 1px solid #ffffff20;\r\n            border-right: 1px solid #ffffff20;\r\n            border-bottom: 1px solid #ffffff20;\r\n            max-width: 200px;\r\n            margin-left: auto !important;\r\n            margin-right: auto !important;\r\n        }\r\n        */\n}\r\n", ""]);
 
 // exports
 
@@ -4174,7 +4186,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\r\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: #fff;\r\n    display: block;\r\n    content: \"\";\r\n    float: left;\r\n    margin-right: 5px;\r\n    margin-top: 5px;\r\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\r\n    box-shadow: inset 0px 0px 0px 2px #fff;\n}\n#filter-panel[data-v-2db9e3be] {\r\n    background-color: white;\r\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\r\n    background-color: #343a40;\r\n    color: white;\r\n    border-radius: 0px;\r\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\r\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\r\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\r\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\r\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\r\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\r\n    height: 100px;\r\n    overflow-y: scroll;\n}\r\n", ""]);
+exports.push([module.i, "\ninput[type=\"checkbox\"][data-v-2db9e3be] {\r\n    display: none;\n}\ninput[type=\"checkbox\"] + label[data-v-2db9e3be]::before {\r\n    width: 15px;\r\n    height: 15px;\r\n    background-color: #fff;\r\n    display: block;\r\n    content: \"\";\r\n    float: left;\r\n    margin-right: 5px;\r\n    margin-top: 5px;\r\n    cursor: pointer;\n}\ninput[type=\"checkbox\"]:checked + label[data-v-2db9e3be]::before {\r\n    box-shadow: inset 0px 0px 0px 2px #fff;\n}\n#filter-panel[data-v-2db9e3be] {\r\n    background-color: white;\r\n    border: 1px solid #343a40;\n}\n.filter-button[data-v-2db9e3be] {\r\n    background-color: #343a40;\r\n    color: white;\r\n    border-radius: 0px;\r\n    height: 50px;\n}\n.filter-button[data-v-2db9e3be]:focus {\r\n    box-shadow: none;\n}\n.fa-star[data-v-2db9e3be] {\r\n    color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:active {\r\n    background-color: #343a40;\n}\n.btn-secondary[data-v-2db9e3be]:hover {\r\n    background-color: #343a40;\n}\n.gallery-image[data-v-2db9e3be] {\r\n    width: 100%;\n}\n.scroll-container[data-v-2db9e3be] {\r\n    height: 100px;\r\n    overflow-y: scroll;\n}\n.scroll-top[data-v-2db9e3be]{\r\n  /*display: none;*/\r\n  position: fixed;\r\n  bottom: 84px;\r\n  right: 20px;\r\n  z-index: 99; /* Make sure it does not overlap */\r\n  border: none; /* Remove borders */\r\n  outline: none; /* Remove outline */\r\n  color: white; /* Text color */\r\n  cursor: pointer; /* Add a mouse pointer on hover */\r\n  padding: 15px; /* Some padding */\r\n  border-radius: 50%; /* Rounded corners */\n}\n.scroll-top[data-v-2db9e3be]:hover, .scroll-top[data-v-2db9e3be]:focus{\r\n    color: white;\n}\r\n", ""]);
 
 // exports
 
@@ -34976,50 +34988,60 @@ var render = function() {
                 )
               : _vm._t("default"),
             _vm._v(" "),
-            _vm.filtered && !_vm.loading
-              ? _c(
+            _c(
+              "div",
+              { staticClass: "row" },
+              _vm._l(_vm.filtered, function(image, index) {
+                return _c(
                   "div",
-                  { staticClass: "row" },
-                  _vm._l(_vm.filtered, function(image, index) {
-                    return index < _vm.showPictureAmount
-                      ? _c(
-                          "div",
-                          {
-                            key: index,
-                            staticClass: "col-lg-1 col-md-2 col-3 py-2"
-                          },
-                          [
-                            _c("a", { attrs: { "data-toggle": "modal" } }, [
-                              _c("img", {
-                                staticClass: "gallery-image",
-                                attrs: {
-                                  loading: "lazy",
-                                  src:
-                                    "/img/gallery/" +
-                                    image.Path +
-                                    "/" +
-                                    image.Filename.split(".")[0] +
-                                    "-thumb.png",
-                                  alt: "Some Image"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.openImageDialog(image)
-                                  }
-                                }
-                              })
-                            ])
-                          ]
-                        )
-                      : _vm._e()
-                  }),
-                  0
+                  { staticClass: "col-lg-1 col-md-2 col-3 py-2" },
+                  [
+                    _c("a", { attrs: { "data-toggle": "modal" } }, [
+                      _c("figure", { staticClass: "image__wrapper" }, [
+                        _c("img", {
+                          directives: [
+                            {
+                              name: "lazy",
+                              rawName: "v-lazy",
+                              value:
+                                "/img/gallery/" +
+                                image.Path +
+                                "/" +
+                                image.Filename.split(".")[0] +
+                                "-thumb.png",
+                              expression:
+                                "'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
+                            }
+                          ],
+                          staticClass: "gallery-image",
+                          attrs: { loading: "lazy", alt: "Some Image" },
+                          on: {
+                            click: function($event) {
+                              return _vm.openImageDialog(image)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ]
                 )
-              : _vm._e()
+              }),
+              0
+            )
           ],
           2
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn scroll-top fas fa-arrow-up shadow",
+        attrs: { type: "button", title: "Scroll up", id: "scroll-btn" },
+        on: {
+          click: function($event) {
+            return _vm.scrollUp()
+          }
+        }
+      })
     ]
   )
 }
@@ -52880,9 +52902,6 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_highlightjs__WEBPACK_IMPORTED_MODULE_3___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-  siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
-});
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* Check if consent for ReCAPTCHA is given */
 

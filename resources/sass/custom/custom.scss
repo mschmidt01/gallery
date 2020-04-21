@@ -323,3 +323,11 @@ input[type="checkbox"]:checked + label::before {
 .CodeMirror-linenumber {
   color: #3a3a3a !important;
 }
+
+.scrolltop {
+  background: $scrollbutton-bg;
+
+  &:hover, &:focus{
+    background: $scrollbutton-hover;
+  }
+}

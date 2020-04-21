@@ -304,32 +304,21 @@
                     </div>
                 </div>
                 <slot v-else />
-                <div class="row" v-if="filtered && !loading">
-                    <div
-                        class="col-lg-1 col-md-2 col-3 py-2"
-                        v-for="(image, index) in filtered"
-                        v-if="index < showPictureAmount"
-                        :key="index"
-                    >
+                <div class="row">
+                    <div class="col-lg-1 col-md-2 col-3 py-2" v-for="(image, index) in filtered"
+                        >
+
                         <a data-toggle="modal">
-                            <img
-                                loading="lazy"
-                                class="gallery-image"
-                                :src="
-                                    '/img/gallery/' +
-                                        image.Path +
-                                        '/' +
-                                        image.Filename.split('.')[0] +
-                                        '-thumb.png'
-                                "
-                                alt="Some Image"
-                                @click="openImageDialog(image)"
-                            />
-                            <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                            <figure class="image__wrapper">
+                                <img loading="lazy" class="gallery-image"
+                                     v-lazy="'/img/gallery/' +  image.Path + '/'+ image.Filename.split('.')[0] + '-thumb.png'"
+                                     alt="Some Image" v-on:click="openImageDialog(image)">
+                                <!--<img loading="auto" class="gallery-image rounded" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>-->
+                            </figure>
                         </a>
                     </div>
-                </div>
 
+                </div>
                 <!--<div class="row" v-for="(image, index) in filtered">
                     <img height="42" width="42" :src="'/img/gallery/' +  image.Path + '/'+ image.Filename "/>
                     Kommentare:
@@ -344,7 +333,8 @@
         </div>-->
             </div>
         </section>
-    </div>
+        <button type="button" title="Scroll up" class="btn scroll-top fas fa-arrow-up shadow" id="scroll-btn"
+                v-on:click="scrollUp()"></button>    </div>
 </template>
 
 <style scoped>
@@ -394,6 +384,22 @@ input[type="checkbox"]:checked + label::before {
     height: 100px;
     overflow-y: scroll;
 }
+.scroll-top{
+  /*display: none;*/
+  position: fixed;
+  bottom: 84px;
+  right: 20px;
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 50%; /* Rounded corners */
+}
+.scroll-top:hover, .scroll-top:focus{
+    color: white;
+}
 </style>
 
 <script>
@@ -433,12 +439,13 @@ export default {
     },
     created() {
         this.showPictureAmount = ((window.innerHeight - 280) / 66) * 12;
+        /*
         window.addEventListener("scroll", () => {
             let offset =
                 document.documentElement.scrollTop || document.body.scrollTop;
             this.showPictureAmount = ((window.innerHeight + offset) * 12) / 66;
             //console.log(this.showPictureAmount);
-        });
+        });*/
         this.topic = this.$route.params.name;
         if (typeof this.$route.params.name !== "undefined") {
             this.topicfilter[0] = this.topic;
@@ -449,6 +456,10 @@ export default {
         this.fetchData();
     },
     methods: {
+      scrollUp: function(){
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            },
         openImageDialog: function(image) {
             console.log(image);
             this.selectedImage = image;

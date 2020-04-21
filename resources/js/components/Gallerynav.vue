@@ -105,7 +105,6 @@ export default {
       this.informationChild = false;
     },
     InlineButtonClickHandler(event) {
-      console.log("CHILD CLICKED!");
 
       this.$emit('childClicked');
     }
