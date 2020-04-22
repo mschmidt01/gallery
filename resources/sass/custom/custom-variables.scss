@@ -5,10 +5,12 @@
  */
 
 /* Color scheme */
+$grayChateau: #a1a8ad;
 $abbey: #464b4f;
 $outerSpace: #343a40;
 $shark: #212529;
 $shakespear: #3e92cc;
+$blumine: #1c5d89;
 $biscay: #1b4664;
 $moccaccino: #72151A;
 $merlot: #8d191f;
@@ -38,8 +40,8 @@ $headline-accent: $shakespear;
 $code-bg: $shark;
 $code-directive: $lightningYellow;
 $code-variable: $shakespear;
-$code-comment: #a1a8ad;
-$code-example: #1c5d89;
+$code-comment: $grayChateau;
+$code-example: $blumine;
 
 /* Cookie-Consent */
 $overlay-bg: rgba(0, 0, 0, 0.5);
