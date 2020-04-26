@@ -1108,7 +1108,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\js\vue-lazyload.js */"./resources/js/vue-lazyload.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\vue-lazyload.js */"./resources/js/vue-lazyload.js");
 
 
 /***/ })

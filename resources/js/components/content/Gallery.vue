@@ -439,21 +439,21 @@ export default {
     },
     created() {
         this.showPictureAmount = ((window.innerHeight - 280) / 66) * 12;
-        /*
-        window.addEventListener("scroll", () => {
-            let offset =
-                document.documentElement.scrollTop || document.body.scrollTop;
-            this.showPictureAmount = ((window.innerHeight + offset) * 12) / 66;
-            //console.log(this.showPictureAmount);
-        });*/
         this.topic = this.$route.params.name;
-        if (typeof this.$route.params.name !== "undefined") {
+        if (typeof this.$route.params.name !== 'undefined') {
             this.topicfilter[0] = this.topic;
         }
-        if (typeof this.$route.params.stars !== "undefined") {
+        if (typeof this.$route.params.stars !== 'undefined') {
             this.starfilter[0] = this.$route.params.stars;
         }
-        this.fetchData();
+        axios.get('/api/pictures/filter/topics', {})
+            .then(response => {
+                this.filters.topics = response.data;
+                if (typeof this.topic === 'undefined') {
+                    this.topicfilter = response.data;
+                }
+                this.fetchData();
+            });
     },
     methods: {
       scrollUp: function(){
@@ -474,10 +474,11 @@ export default {
         commentPicture: function(id) {
             let text = document.getElementById("comment_" + id).value;
             this.commentAndValidate(id, text);
+            $('#imageDialog').modal('hide');
         },
         async rateAndValidate(id, rating) {
             let token = "";
-
+            console.log(recaptchaConsent);
             if (this.recaptchaConsent) {
                 // (optional) Wait until recaptcha has been loaded.
                 try {
@@ -512,6 +513,7 @@ export default {
                     console.error(e);
                 }
             }
+            console.log(token);
 
             axios.post("/api/pictures/comment", {
                 token: token,
@@ -530,47 +532,35 @@ export default {
         fetchData() {
             this.loading = true;
             let self = this;
-            axios
-                .post("/api/pictures/filter/modules", {
-                    gallery: this.topic
-                })
-                .then(response => {
-                    this.filters.modules = response.data;
-                });
-            axios
-                .post("/api/pictures/filter/classes", {
-                    gallery: this.topic
-                })
-                .then(response => {
-                    this.filters.classes = response.data;
-                });
-            axios.get("/api/pictures/filter/topics", {}).then(response => {
-                this.filters.topics = response.data;
-                if (typeof this.topic === "undefined") {
-                    this.topicfilter = response.data;
-                }
+            axios.post('/api/pictures/filter/modules', {
+                galleries: this.topicfilter,
+            }).then(response => {
+                this.filters.modules = response.data;
             });
-            axios.get("/api/pictures/ordered").then(response => {
-                this.loading = false;
-                let topic = this.topic;
-                self.pictures = $.map(response.data, function(value, key) {
-                    return { [key]: value };
-                });
-                this.filtered = response.data[topic];
-                this.gallery = this.filtered;
-                if (
-                    typeof this.topicfilter !== "undefined" &&
-                    this.topicfilter.length > 0
-                ) {
-                    var bucket = [];
-                    for (let i = 0; i < this.topicfilter.length; i++) {
-                        let images = self.pictures[i][this.topicfilter[i]];
-                        bucket.push(...images);
+            axios.post('/api/pictures/filter/classes', {
+                galleries: this.topicfilter,
+            }).then(response => {
+                this.filters.classes = response.data;
+            });
+            axios.get('/api/pictures/ordered')
+                .then(response => {
+                    this.loading = false;
+                    let topic = this.topic;
+                    self.pictures = $.map(response.data, function (value, key) {
+                        return {[key]: value};
+                    });
+                    this.filtered = response.data[topic];
+                    this.gallery = this.filtered;
+                    if (typeof this.topicfilter !== 'undefined' && this.topicfilter.length > 0) {
+                        var bucket = [];
+                        for (let i = 0; i < this.topicfilter.length; i++) {
+                            let images = self.pictures[i][this.topicfilter[i]];
+                            bucket.push(...images);
+                        }
+                        this.filtered = bucket;
                     }
-                    this.filtered = bucket;
-                }
-                self.filterPictures();
-            });
+                    self.filterPictures();
+                });
         },
         filterPictures() {
             if (

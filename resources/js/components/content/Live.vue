@@ -120,7 +120,6 @@ text2(2,2,"Hallo")
                 lineNumbers: true,
                 mode: "javascript",
                 gutters: ["CodeMirror-lint-markers"],
-                lint: true
             });
         },
         methods: {

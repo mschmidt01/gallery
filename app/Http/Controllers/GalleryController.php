@@ -11,18 +11,17 @@ class GalleryController extends Controller
 {
   public function getModuleFilters(Request $request)
   {
-    return Picture::getModuleNames($request->json("gallery"));
+    return Picture::getModuleNames($request->json("galleries"));
   }
 
   public function getClassFilters(Request $request)
   {
-    return Picture::getClassNames($request->json("gallery"));
+    return Picture::getClassNames($request->json("galleries"));
   }
   public function ratePicture(Request $request)
   {
     $email = $request->json("email");
     $contact = $request->json("contact");
-
     if (($contact == null || $contact == '') && ($email == 'test@email.com')) {
       $sPictureId = $request->json("imagid");
       $rating = $request->json("rating");
@@ -68,16 +67,12 @@ class GalleryController extends Controller
       $sPictureId = $request->json("imagid");
       $rating = $request->json("text");
 
-      dump("IN IF");
-
       if (array_key_exists('recaptcha', $_COOKIE)) {
-        dump("COOKIE EXISTS");
 
         if ($_COOKIE["recaptcha"] == 'true') {
 
           $sToken = $request->json("token");
 
-          dump("TOKEN:" . $sToken);
 
           $client = new Client();
           $response = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
@@ -88,9 +83,7 @@ class GalleryController extends Controller
           ]);
 
           $response = json_decode($response->getBody(), true);
-
-          dump($response);
-
+          $test = env('RECAPTCHA_V3_SECRET_KEY', false);
           if ($response !== null && $response["success"] && $response["score"] >= 0.5) {
             Comment::createNewComment($sPictureId, $rating);
             return "success";

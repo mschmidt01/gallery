@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
     if (cookieArray.includes("recaptcha=true")) {
       recaptchaConsent = true;
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
-        siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+        siteKey: ""
       });
       consentSet &= true;
     } else if (cookieArray.includes("recaptcha=false")) {
@@ -2796,26 +2796,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
-    /*
-    window.addEventListener("scroll", () => {
-        let offset =
-            document.documentElement.scrollTop || document.body.scrollTop;
-        this.showPictureAmount = ((window.innerHeight + offset) * 12) / 66;
-        //console.log(this.showPictureAmount);
-    });*/
+    var _this = this;
 
+    this.showPictureAmount = (window.innerHeight - 280) / 66 * 12;
     this.topic = this.$route.params.name;
 
-    if (typeof this.$route.params.name !== "undefined") {
+    if (typeof this.$route.params.name !== 'undefined') {
       this.topicfilter[0] = this.topic;
     }
 
-    if (typeof this.$route.params.stars !== "undefined") {
+    if (typeof this.$route.params.stars !== 'undefined') {
       this.starfilter[0] = this.$route.params.stars;
     }
 
-    this.fetchData();
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/filter/topics', {}).then(function (response) {
+      _this.filters.topics = response.data;
+
+      if (typeof _this.topic === 'undefined') {
+        _this.topicfilter = response.data;
+      }
+
+      _this.fetchData();
+    });
   },
   methods: {
     scrollUp: function scrollUp() {
@@ -2837,6 +2839,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     commentPicture: function commentPicture(id) {
       var text = document.getElementById("comment_" + id).value;
       this.commentAndValidate(id, text);
+      $('#imageDialog').modal('hide');
     },
     rateAndValidate: function rateAndValidate(id, rating) {
       var token;
@@ -2845,33 +2848,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context.prev = _context.next) {
             case 0:
               token = "";
+              console.log(recaptchaConsent);
 
               if (!this.recaptchaConsent) {
-                _context.next = 13;
+                _context.next = 14;
                 break;
               }
 
-              _context.prev = 2;
-              _context.next = 5;
+              _context.prev = 3;
+              _context.next = 6;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 5:
-              _context.next = 10;
+            case 6:
+              _context.next = 11;
               break;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](2);
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](3);
               console.error(_context.t0);
 
-            case 10:
-              _context.next = 12;
+            case 11:
+              _context.next = 13;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
 
-            case 12:
+            case 13:
               token = _context.sent;
 
-            case 13:
+            case 14:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
@@ -2881,12 +2885,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 15:
+            case 16:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[2, 7]]);
+      }, null, this, [[3, 8]]);
     },
     commentAndValidate: function commentAndValidate(id, text) {
       var token;
@@ -2920,6 +2924,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               console.error(_context2.t0);
 
             case 13:
+              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
@@ -2929,7 +2934,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 15:
+            case 16:
             case "end":
               return _context2.stop();
           }
@@ -2937,52 +2942,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, null, this, [[2, 10]]);
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       this.loading = true;
       var self = this;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/modules", {
-        gallery: this.topic
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
+        galleries: this.topicfilter
       }).then(function (response) {
-        _this.filters.modules = response.data;
+        _this2.filters.modules = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/filter/classes", {
-        gallery: this.topic
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
+        galleries: this.topicfilter
       }).then(function (response) {
-        _this.filters.classes = response.data;
+        _this2.filters.classes = response.data;
       });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/filter/topics", {}).then(function (response) {
-        _this.filters.topics = response.data;
-
-        if (typeof _this.topic === "undefined") {
-          _this.topicfilter = response.data;
-        }
-      });
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/pictures/ordered").then(function (response) {
-        _this.loading = false;
-        var topic = _this.topic;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/pictures/ordered').then(function (response) {
+        _this2.loading = false;
+        var topic = _this2.topic;
         self.pictures = $.map(response.data, function (value, key) {
           return _defineProperty({}, key, value);
         });
-        _this.filtered = response.data[topic];
-        _this.gallery = _this.filtered;
+        _this2.filtered = response.data[topic];
+        _this2.gallery = _this2.filtered;
 
-        if (typeof _this.topicfilter !== "undefined" && _this.topicfilter.length > 0) {
+        if (typeof _this2.topicfilter !== 'undefined' && _this2.topicfilter.length > 0) {
           var bucket = [];
 
-          for (var i = 0; i < _this.topicfilter.length; i++) {
-            var images = self.pictures[i][_this.topicfilter[i]];
+          for (var i = 0; i < _this2.topicfilter.length; i++) {
+            var images = self.pictures[i][_this2.topicfilter[i]];
             bucket.push.apply(bucket, _toConsumableArray(images));
           }
 
-          _this.filtered = bucket;
+          _this2.filtered = bucket;
         }
 
         self.filterPictures();
       });
     },
     filterPictures: function filterPictures() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (typeof this.modulfilter !== "undefined" && this.modulfilter.length === 0 && typeof this.classfilter !== "undefined" && this.classfilter.length === 0 && typeof this.starfilter !== "undefined" && this.starfilter.length === 0 && typeof this.topicfilter !== "undefined" && this.topicfilter.length === 0) {
         this.filtered = [];
@@ -3017,9 +3015,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop = function _loop(_i) {
           var _bucket2;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.THMModule === this.modulfilter[_i];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket2 = bucket).push.apply(_bucket2, _toConsumableArray(images));
         };
@@ -3038,9 +3036,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop2 = function _loop2(_i2) {
           var _bucket3;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             return el.Class === this.classfilter[_i2];
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket3 = bucket).push.apply(_bucket3, _toConsumableArray(images));
         };
@@ -3060,13 +3058,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var _loop3 = function _loop3(_i3) {
           var _bucket4;
 
-          var images = _this2.filtered.filter(function (el) {
+          var images = _this3.filtered.filter(function (el) {
             if (el.Votes === 0) {
               return false;
             }
 
             return 2 * Math.abs(el.Rating / el.Votes - this.starfilter[_i3]) < 1;
-          }.bind(_this2));
+          }.bind(_this3));
 
           (_bucket4 = bucket).push.apply(_bucket4, _toConsumableArray(images));
         };
@@ -3302,8 +3300,7 @@ var color = __webpack_require__(/*! ../../live.js */ "./resources/js/live.js");
     this.editor = CodeMirror.fromTextArea(document.getElementById("codeView"), {
       lineNumbers: true,
       mode: "javascript",
-      gutters: ["CodeMirror-lint-markers"],
-      lint: true
+      gutters: ["CodeMirror-lint-markers"]
     });
   },
   methods: {
@@ -52909,7 +52906,7 @@ var cookieArray = document.cookie.replace(" ", "").split(";");
 
 if (cookieArray.includes("recaptcha=true")) {
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-    siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+    siteKey: ""
   });
 }
 
@@ -54976,8 +54973,8 @@ function sleep(ms) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

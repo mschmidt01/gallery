@@ -521,7 +521,7 @@ CodeMirror.defineMode("css", function (config, parserConfig) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Hochschule\Master\2.Semester\BAWAWE\FinalesProjekt\resources\js\css.js */"./resources/js/css.js");
+module.exports = __webpack_require__(/*! C:\Users\Melvin Schmidt\Desktop\gallery\resources\js\css.js */"./resources/js/css.js");
 
 
 /***/ })
