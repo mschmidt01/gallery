@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Mai 2020 um 17:48
+-- Erstellungszeit: 03. Mai 2020 um 18:05
 -- Server-Version: 10.1.26-MariaDB
 -- PHP-Version: 7.1.9
 
@@ -96,6 +96,15 @@ CREATE TABLE `comments` (
   `PID` int(4) DEFAULT NULL,
   `Text` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `comments`
+--
+
+INSERT INTO `comments` (`CID`, `PID`, `Text`) VALUES
+(51, 751, 'Langton Ameise (aus Vorlesung)'),
+(52, 752, 'Türme von Hanoi'),
+(53, 753, '8-Damen Problem');
 
 -- --------------------------------------------------------
 
@@ -1073,7 +1082,7 @@ ALTER TABLE `nutzer`
 -- AUTO_INCREMENT für Tabelle `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `CID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `CID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT für Tabelle `migrations`
