@@ -191,6 +191,7 @@
                                             "
                                             v-bind:star-size="20"
                                             :show-rating="false"
+                                            :read-only="true"
                                             active-color="#343A40"
                                             inactive-color="#fff"
                                             border-color="#343A40"
@@ -461,9 +462,10 @@ export default {
                 document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             },
         openImageDialog: function(image) {
-            console.log(image);
             this.selectedImage = image;
-            $("#imageDialog").modal("show");
+            setTimeout(function() {
+                $("#imageDialog").modal("show");
+            }, 100);
         },
         setRating: function(id) {
             this.rateAndValidate(id, this.rating);
@@ -478,7 +480,6 @@ export default {
         },
         async rateAndValidate(id, rating) {
             let token = "";
-            console.log(recaptchaConsent);
             if (this.recaptchaConsent) {
                 // (optional) Wait until recaptcha has been loaded.
                 try {
@@ -513,8 +514,6 @@ export default {
                     console.error(e);
                 }
             }
-            console.log(token);
-
             axios.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
@@ -563,6 +562,20 @@ export default {
                 });
         },
         filterPictures() {
+            axios.post('/api/pictures/filter/modules', {
+                galleries: this.topicfilter,
+            })
+                .then(response => {
+                    this.filters.modules = response.data;
+                    this.$forceUpdate();
+                });
+            axios.post('/api/pictures/filter/classes', {
+                galleries: this.topicfilter,
+            })
+                .then(response => {
+                    this.filters.classes = response.data;
+                    this.$forceUpdate();
+                });
             if (
                 typeof this.modulfilter !== "undefined" &&
                 this.modulfilter.length === 0 &&
@@ -580,7 +593,6 @@ export default {
                 typeof this.topicfilter !== "undefined" &&
                 this.topicfilter.length > 0
             ) {
-                console.log("topic filter set");
                 var bucket = [];
                 for (var i = 0; i < this.topicfilter.length; i++) {
                     var topic = this.topicfilter[i];
@@ -597,7 +609,6 @@ export default {
                 typeof this.modulfilter !== "undefined" &&
                 this.modulfilter.length > 0
             ) {
-                console.log("modul filter set");
                 var bucket = [];
                 for (let i = 0; i < this.modulfilter.length; i++) {
                     let images = this.filtered.filter(
@@ -613,7 +624,6 @@ export default {
                 typeof this.classfilter !== "undefined" &&
                 this.classfilter.length > 0
             ) {
-                console.log("class filter set");
                 var bucket = [];
                 for (let i = 0; i < this.classfilter.length; i++) {
                     let images = this.filtered.filter(
@@ -629,8 +639,6 @@ export default {
                 typeof this.starfilter !== "undefined" &&
                 this.starfilter.length > 0
             ) {
-                console.log("star filter set");
-                console.log(this.filtered);
                 var bucket = [];
                 for (let i = 0; i < this.starfilter.length; i++) {
                     let images = this.filtered.filter(
@@ -652,12 +660,9 @@ export default {
                 }
                 this.filtered = bucket;
             }
-            console.log(this.filtered);
             vm.$forceUpdate();
         },
         sort(event, name) {
-            console.log("SORT");
-
             event.preventDefault();
             if (name === "alphabetical") {
                 this.order = false;

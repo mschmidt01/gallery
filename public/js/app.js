@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
     if (cookieArray.includes("recaptcha=true")) {
       recaptchaConsent = true;
       vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
-        siteKey: ""
+        siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
       });
       consentSet &= true;
     } else if (cookieArray.includes("recaptcha=false")) {
@@ -2041,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.recaptchaConsent) {
         document.cookie = "recaptcha=true";
         vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_0__["VueReCaptcha"], {
-          siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+          siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
         });
       } else {
         document.cookie = "recaptcha=false";
@@ -2764,6 +2764,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2826,9 +2827,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     },
     openImageDialog: function openImageDialog(image) {
-      console.log(image);
       this.selectedImage = image;
-      $("#imageDialog").modal("show");
+      setTimeout(function () {
+        $("#imageDialog").modal("show");
+      }, 100);
     },
     setRating: function setRating(id) {
       this.rateAndValidate(id, this.rating);
@@ -2848,34 +2850,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context.prev = _context.next) {
             case 0:
               token = "";
-              console.log(recaptchaConsent);
 
               if (!this.recaptchaConsent) {
-                _context.next = 14;
+                _context.next = 13;
                 break;
               }
 
-              _context.prev = 3;
-              _context.next = 6;
+              _context.prev = 2;
+              _context.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptchaLoaded());
 
-            case 6:
-              _context.next = 11;
+            case 5:
+              _context.next = 10;
               break;
 
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context["catch"](3);
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](2);
               console.error(_context.t0);
 
-            case 11:
-              _context.next = 13;
+            case 10:
+              _context.next = 12;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$recaptcha("starrating"));
 
-            case 13:
+            case 12:
               token = _context.sent;
 
-            case 14:
+            case 13:
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/vote", {
                 token: token,
                 imagid: id,
@@ -2885,12 +2886,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 16:
+            case 15:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[3, 8]]);
+      }, null, this, [[2, 7]]);
     },
     commentAndValidate: function commentAndValidate(id, text) {
       var token;
@@ -2924,7 +2925,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               console.error(_context2.t0);
 
             case 13:
-              console.log(token);
               axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/pictures/comment", {
                 token: token,
                 imagid: id,
@@ -2934,7 +2934,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
               this.fetchData(); // Do stuff with the received token.
 
-            case 16:
+            case 15:
             case "end":
               return _context2.stop();
           }
@@ -2982,13 +2982,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     filterPictures: function filterPictures() {
       var _this3 = this;
 
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/modules', {
+        galleries: this.topicfilter
+      }).then(function (response) {
+        _this3.filters.modules = response.data;
+
+        _this3.$forceUpdate();
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/pictures/filter/classes', {
+        galleries: this.topicfilter
+      }).then(function (response) {
+        _this3.filters.classes = response.data;
+
+        _this3.$forceUpdate();
+      });
+
       if (typeof this.modulfilter !== "undefined" && this.modulfilter.length === 0 && typeof this.classfilter !== "undefined" && this.classfilter.length === 0 && typeof this.starfilter !== "undefined" && this.starfilter.length === 0 && typeof this.topicfilter !== "undefined" && this.topicfilter.length === 0) {
         this.filtered = [];
         return false;
       }
 
       if (typeof this.topicfilter !== "undefined" && this.topicfilter.length > 0) {
-        console.log("topic filter set");
         var bucket = [];
 
         for (var i = 0; i < this.topicfilter.length; i++) {
@@ -3009,7 +3023,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.modulfilter !== "undefined" && this.modulfilter.length > 0) {
-        console.log("modul filter set");
         var bucket = [];
 
         var _loop = function _loop(_i) {
@@ -3030,7 +3043,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.classfilter !== "undefined" && this.classfilter.length > 0) {
-        console.log("class filter set");
         var bucket = [];
 
         var _loop2 = function _loop2(_i2) {
@@ -3051,8 +3063,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (typeof this.starfilter !== "undefined" && this.starfilter.length > 0) {
-        console.log("star filter set");
-        console.log(this.filtered);
         var bucket = [];
 
         var _loop3 = function _loop3(_i3) {
@@ -3076,11 +3086,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.filtered = bucket;
       }
 
-      console.log(this.filtered);
       vm.$forceUpdate();
     },
     sort: function sort(event, name) {
-      console.log("SORT");
       event.preventDefault();
 
       if (name === "alphabetical") {
@@ -34749,6 +34757,7 @@ var render = function() {
                                         _vm.selectedImage.Votes,
                                       "star-size": 20,
                                       "show-rating": false,
+                                      "read-only": true,
                                       "active-color": "#343A40",
                                       "inactive-color": "#fff",
                                       "border-color": "#343A40",
@@ -52906,7 +52915,7 @@ var cookieArray = document.cookie.replace(" ", "").split(";");
 
 if (cookieArray.includes("recaptcha=true")) {
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_recaptcha_v3__WEBPACK_IMPORTED_MODULE_5__["VueReCaptcha"], {
-    siteKey: ""
+    siteKey: "6Leu_-EUAAAAAL_onmYmQKxk4tlpbyfxQm9tiZTJ"
   });
 }
 

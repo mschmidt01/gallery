@@ -96,7 +96,7 @@ export default {
         document.cookie = "recaptcha=true";
 
         Vue.use(VueReCaptcha, {
-          siteKey: "6LcgP-sUAAAAAKLnLp5lZfmXupbJXQ7Z70hQ7dAm"
+          siteKey: process.env.MIX_RECAPTCHA_V3_PUBLIC_KEY
         });
       } else {
         document.cookie = "recaptcha=false";
