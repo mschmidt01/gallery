@@ -27,6 +27,8 @@
                 <p>Diese Web-Applikation nutzt mehrere freie Bibliotheken und Module, die nachfolgend aufgef&uuml;hrt
                     sind.</p>
                 <ul>
+                    <li><a href="https://laravel.com/" target="_blank" rel="noopener noreferrer">Laravel</a></li>
+                    <li><a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">Vue.js</a></li>
                     <li><a href="https://jquery.com" target="_blank" rel="noopener noreferrer">jQuery</a></li>
                     <li><a href="https://getbootstrap.com" target="_blank" rel="noopener noreferrer">Bootstrap</a></li>
                     <li><a href="https://www-coding.de/so-gehts-eigenes-captcha-mit-php/" rel="noopener noreferrer">Captcha-Modul
