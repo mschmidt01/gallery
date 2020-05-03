@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Mai 2020 um 17:09
+-- Erstellungszeit: 03. Mai 2020 um 17:48
 -- Server-Version: 10.1.26-MariaDB
 -- PHP-Version: 7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `gallery`
 --
+CREATE DATABASE IF NOT EXISTS `gallery` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `gallery`;
 
 DELIMITER $$
 --
